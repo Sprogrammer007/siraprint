@@ -1,14 +1,47 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Siraprint</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7 ]> <html class="ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]> <html class="ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]> <html class="ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]> ><! <![endif]-->
+<html lang="en">
+<!-- <![endif] -->
+  <head>
 
-<%= yield %>
+    <meta charset="utf-8">
+    <!-- Uncomment to make IE8 render like IE7 -->
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=7" /> -->
+    <!-- Set the viewport width to device width for mobile -->
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,800,300,600,700' rel='stylesheet' type='text/css'>
+    <title><%= page_title(yield(:title)) %></title>
+    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= csrf_meta_tags %>
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
 
-</body>
+  <body>
+  <div class="container-fluid">
+    <div class="row">
+      <%= render 'layouts/top_nav' %>
+
+    </div>
+  </div>
+  
+  <div class="container">
+    <div class="row">
+      <%= yield %>
+
+    </div>
+  </div>
+
+
+  <%= render 'layouts/footer' %>
+
+
+  </body>
 </html>

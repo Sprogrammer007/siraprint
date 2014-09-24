@@ -19,7 +19,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 gem 'devise'
 gem 'bootstrap-sass', '~> 3.1.1'
-
+gem 'haml'
 
 group :development do
   gem 'faker', '1.2.0'
