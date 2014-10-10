@@ -2,11 +2,11 @@ source 'https://rubygems.org'
 # ruby '2.1.1'
 #ruby-gemset=sira
 
-# gem 'activeadmin', github: 'gregbell/active_admin'
-# gem "active_admin_import" , '2.1.1'
-# gem 'polyamorous', github: 'activerecord-hackery/polyamorous'
-# gem 'ransack',     github: 'activerecord-hackery/ransack'
-# gem "paperclip", github: 'thoughtbot/paperclip'
+gem 'activeadmin', github: 'gregbell/active_admin'
+gem "active_admin_import" , '2.1.1'
+gem 'polyamorous', github: 'activerecord-hackery/polyamorous'
+gem 'ransack',     github: 'activerecord-hackery/ransack'
+gem "paperclip", github: 'thoughtbot/paperclip'
 gem 'rails'
 gem 'pg'
 gem 'sass-rails', '~> 4.0.2'
@@ -20,6 +20,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'devise'
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'haml'
+gem 'tinymce-rails'
 
 group :development do
   gem 'faker', '1.2.0'
@@ -32,6 +33,13 @@ group :development do
   gem "binding_of_caller" # optional plusing for better errors
   gem 'meta_request' # Chrome Rails panel
 end
+
+group :test do
+  gem 'selenium-webdriver', '2.38.0'
+  gem 'capybara', '2.2.0'
+  gem 'factory_girl_rails' , '4.3.0'
+end
+
 
 gem 'tzinfo-data', platforms: [:x64_mingw,:mingw, :mswin]
 

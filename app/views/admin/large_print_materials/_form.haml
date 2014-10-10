@@ -1,0 +1,25 @@
+
+= form_for [:admin, @large_print_material], :html => { class: "large_print_form", multipart: true } do |f|
+  = f.hidden_field :large_print_id, value: params[:large_print_id] 
+  %fieldset.inputs
+    %ol
+      %h3 Material Properties
+      %li
+        = f.label :material_name, class: "label"
+        = f.text_field :material_name
+      %li
+        = f.label :material_image, class: "label"
+        = f.file_field :material_image, :as => :file, class: "file input"
+  - if f.object.new_record?
+    = f.fields_for(:material_thicknesses, MaterialThickness.new()) do |m|
+      = render 'material_thickness_fields', :f => m
+    .btn-group.group
+      = link_to_add_fields_inputs("Add New Thickness", f, :material_thicknesses, class: "link_button grouped-button add_new_thickness")
+      = f.submit "Create New Material", class: "grouped-button"
+  - else
+    - @large_print_material.material_thicknesses.each_with_index do |m, i|
+      = f.fields_for(:material_thicknesses, m, child_index: (i + 1)) do |m|
+        = render('material_thickness_fields', :f => m)
+    .btn-group.group
+      = link_to_add_fields_inputs("Add New Thickness", f, :material_thicknesses, class: "link_button grouped-button add_new_thickness")
+      = f.submit "Update Material", class: "grouped-button"

@@ -1,0 +1,7 @@
+- flash.each do |k, v|
+  - next if v == 'Invalid email or password.'
+  .alert.primary-alert{"data-alert" => "", class: "alert-#{bs_alert_helper(k)}"}
+    = v
+    %button.primary-close{"data-dismiss" => "alert", :type => "button"}
+      %span{"aria-hidden" => "true"} &times;
+      %span.sr-only Close

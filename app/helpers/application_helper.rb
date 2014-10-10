@@ -9,4 +9,16 @@ module ApplicationHelper
       "#{base_title} | #{title}"
     end
   end
+
+  # Convert Devise Alert keys to Booststrap
+  def bs_alert_helper(key)
+  	case key
+  	when 'notice'
+  		return 'success'	
+  	when 'alert'
+  		return 'danger'
+  	else
+  		return 'info'
+  	end
+  end
 end

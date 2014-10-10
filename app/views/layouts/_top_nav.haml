@@ -17,17 +17,13 @@
           = link_to "Help", "#"
         - if user_signed_in?
           %li
-            = link_to '#', data: { dropdown: 'notifications' } do
-              %span.badge.pull-right 
-                = "#{current_user.notifications_counts}"
-              Messages
           %li.dropdown
             = link_to "#", class: "dropdown-toggle", data: {toggle: "dropdown"} do
               %span.caret
-              = "#{current_user.username}"
+              = "#{current_user.email}"
             %ul.dropdown-menu
               %li
-                = link_to "Profile", profile_path(current_user)
+                = link_to "Profile", user_profile_path(current_user)
               %li
                 = link_to "Settings", '#'
               %li.divider
@@ -35,8 +31,9 @@
                 = link_to "Logout", destroy_user_session_path, method: "delete"
         - else
           %li
-            = link_to "Sign in", new_user_session_path, class: "btn btn-login"
-
+            = link_to "Create Free Account", new_user_registration_path, class: "btn btn-top-nav btn-signup"
+          %li
+            = link_to "Sign in", new_user_session_path
 
         %li
           = link_to raw('<span class="glyphicon glyphicon-shopping-cart"></span>'), "#", class: "btn-cart"

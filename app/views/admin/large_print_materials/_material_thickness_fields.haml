@@ -1,0 +1,24 @@
+%fieldset.inputs
+  %ol
+    %h3 Default Thickness
+    %li
+      = f.label "Depth", class: "label"
+      = f.text_field :thickness
+    %li
+      = f.label :unit
+      = f.select :unit, options_for_select(["cm", "mm"]), {}, class: "selection"
+    %li
+      
+  
+    .large-print-tier-field-group
+      - if f.object.new_record?
+        = f.fields_for :large_print_tiers, LargePrintTier.new() do |t|
+          = render 'large_print_tier_fields', :f => t
+      - else
+        - f.object.large_print_tiers.each_with_index do |t, i|
+          = f.fields_for :large_print_tiers, t, child_idex: i do |t|
+            = render 'large_print_tier_fields', :f => t
+    .btn-group.group
+      = f.hidden_field :_destroy
+      = link_to "Remove Thickness", "#", class: "remove_thickness_fields grouped-button link_button"
+      = link_to_add_fields_inputs("Add New Tier", f, :large_print_tiers, class: "link_button grouped-button add_new_tier")
