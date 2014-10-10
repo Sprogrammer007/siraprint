@@ -2,8 +2,7 @@ class UsersController < Devise::RegistrationsController
 
   respond_to :html, :js
 
-  before_action :authenticate_user!
-
+  before_filter :authenticate_user!
   before_filter :configure_permitted_parameters
 
   def show

@@ -18,8 +18,14 @@ $(document).ready ->
     time = new Date().getTime()
     regexp = new RegExp($(this).data('id'), 'g')
     if $(this).hasClass('add_new_tier')
-      $(this).parent().siblings('.large_print_tier_field_group').find(".w25").last()
-      .before($(this).data('fields').replace(regexp, time).replace("Default Thickness", "New Thickness"))
+
+      if $('.large-print-tier-field-group').is(':empty')
+        $(this).parent().siblings('.large-print-tier-field-group').html(
+          $(this).data('fields').replace(regexp, time).replace("Default Thickness", "New Thickness"))
+      else
+        $(this).parent().siblings('.large-print-tier-field-group').find('.w25').last()
+        .after($(this).data('fields').replace(regexp, time).replace("Default Thickness", "New Thickness"))
+    
     else
       $(this).parent().siblings('fieldset').last()
       .after($(this).data('fields').replace(regexp, time).replace("Default Thickness", "New Thickness"))

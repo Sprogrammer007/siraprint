@@ -8,8 +8,16 @@
 
     .collapse.navbar-collapse
       %ul.nav.navbar-nav.navbar-right
-        %li
-          = link_to "Products", root_path
+        %li.dropdown
+          = link_to "#", class: "dropdown-toggle", data: {toggle: "dropdown"} do
+            Product
+            %span.caret
+            
+          %ul.dropdown-menu
+            %li
+              = link_to "Large Prints", large_prints_path()
+              
+    
         %li
           = link_to "About", root_path
           

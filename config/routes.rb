@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   resources :users
   resources :delivery_addresses
+  resources :large_prints
   
   devise_scope :user do  
     get 'profile/:id', to: 'users#show', as: :user_profile

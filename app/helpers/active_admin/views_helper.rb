@@ -1,7 +1,6 @@
 module ActiveAdmin::ViewsHelper
 
 	 def link_to_add_fields_inputs(name, f, association, *args)
-	 	Rails.logger.warn "#{f}"
     options = Hash[*args]
     new_object = f.object.send(association).klass.new
     id = new_object.object_id

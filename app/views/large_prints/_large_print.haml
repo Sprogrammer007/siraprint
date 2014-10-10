@@ -1,0 +1,4 @@
+.col-lg-4.large-print-item
+  = image_tag large_print.display_image.url()
+  .p
+    = link_to("#{large_print.name}", large_print_path(large_print))
