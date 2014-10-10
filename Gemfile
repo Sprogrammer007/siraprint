@@ -21,6 +21,7 @@ gem 'devise'
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'haml'
 gem 'tinymce-rails'
+gem 'aws-sdk'
 
 group :development do
   gem 'faker', '1.2.0'
