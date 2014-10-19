@@ -18,10 +18,16 @@ class User < ActiveRecord::Base
   # validates :company_hst, format: { with: VALID_HST_REGEX }
 
   has_many :delivery_addresses
-
+  has_many :orders
   before_create :set_default_state
 
   scope :approved, -> { where(:status => "Approved") }
+
+  def new_order
+    order = self.orders.create!(status: 'Opened')
+    order.create_order_id
+    return order
+  end
 
   def set_default_state
   	self.status = "Registered"

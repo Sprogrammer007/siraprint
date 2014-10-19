@@ -11,7 +11,13 @@ Rails.application.routes.draw do
 
   resources :users
   resources :delivery_addresses
-  resources :large_prints
+  resources :large_prints do
+    member do
+      post 'get_thickness'
+      post 'get_price'
+    end
+  end
+  resources :orders
   
   devise_scope :user do  
     get 'profile/:id', to: 'users#show', as: :user_profile

@@ -1,0 +1,2 @@
+%h3 Step 3: Select Your Thickness
+= select("material", "thickness_id", thicknesses.collect {|t| [ "#{t.thickness}#{t.unit}", t.id ] }, {include_blank: 'Please select your thickness'}, class: "thickness-selection form-control")

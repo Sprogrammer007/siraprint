@@ -1,0 +1,95 @@
+.col-lg-7
+  .carousel.slide{"data-ride" => "carousel"}
+
+    / Wrapper for slides
+    .carousel-inner
+      .item.active
+        = image_tag("1.jpg")
+        .carousel-caption
+          "test"
+      .item
+        = image_tag("2.jpg")
+        .carousel-caption
+          "test"
+      .item
+        = image_tag("2.jpg")
+        .carousel-caption
+          "test"
+
+    / Indicators
+    %ol.carousel-indicators
+      %li.active{"data-slide-to" => "0", "data-target" => "#carousel-example-generic"}
+      %li{"data-slide-to" => "1", "data-target" => "#carousel-example-generic"}
+      %li{"data-slide-to" => "2", "data-target" => "#carousel-example-generic"}
+
+    / Controls
+    %a.left.carousel-control{"data-slide" => "prev", :href => "#carousel-example-generic", :role => "button"}
+      %span.glyphicon.glyphicon-chevron-left
+    %a.right.carousel-control{"data-slide" => "next", :href => "", :role => "button"}
+      %span.glyphicon.glyphicon-chevron-right
+
+.col-lg-5
+  = form_tag url_for(:controller => 'orders', :action => 'create'), class: "large-prints-form", multipart: true do
+    = hidden_field_tag 'product_type', 'large_print'
+    = hidden_field_tag 'product_rate', ''
+
+    .product-item-title
+      %h2
+        = @large_print.name
+      .item-description
+        = @large_print.description.html_safe()
+    .product-item-size
+      %h3 Step 1: Enter Desire Print Size
+      .row.mgl
+        .col-lg-2
+          = label_tag 'unit'
+        .col-lg-10
+          = select_tag 'unit', options_for_select(["inch", 'feet']), class: "form-control"
+      .row
+        .col-lg-2
+          = label_tag 'width'
+        .col-lg-4
+          = number_field_tag 'width', nil, class: "product-width form-control", in: 1...100
+        .col-lg-2
+          = label_tag 'length'
+        .col-lg-4
+          = number_field_tag 'length', nil, class: "product-length form-control", in: 1...100
+    .product-item-materials
+      %h3 Step 2: Select Your Material
+      %ol
+        - @large_print.large_print_materials.each do |m|
+          %li
+            
+            = radio_button "ordered_product" , "material", m.id
+            %label{:for => "ordered_product_material_#{m.id}"}
+              = image_tag m.material_image.url()
+              = m.material_name
+    .product-item-thickness-options
+    .product-item-upload.hidden
+      %h3 Step 4: Upload Your Design
+      .input-group
+        = text_field_tag 'design_pdf_name', nil, class: "form-control", readonly: true 
+        %span.input-group-btn
+          %span.btn.btn-primary.btn-file
+            Browse 
+            = file_field_tag 'design_pdf', class: 'design_pdf'
+    .product-item-final.hidden
+      %h3 Step 5: Place Your Order
+      .quantity-box
+        .row.mgl
+          .col-lg-6
+            = label_tag 'quantity', "Number of Prints"
+          .col-lg-6
+            = number_field_tag 'quantity', 1, class: "quantity-field form-control", in: 1...10000
+      .divider
+      .per-price-box
+        Cost Per Print:
+        %span.per-placeholder
+
+      .total-price-box
+        Total Cost:
+        %span.total-placeholder
+        = hidden_field_tag 'ordered_product_price', ''
+      .divider
+      .submit-order
+        = button_tag "Place My Order", class: "btn btn-place-order"
