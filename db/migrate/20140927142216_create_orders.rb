@@ -6,7 +6,6 @@ class CreateOrders < ActiveRecord::Migration
     	t.string :delivery_method
 
     	t.decimal :sub_total
-    	t.decimal :total
 
     	t.string :status
     	t.timestamps

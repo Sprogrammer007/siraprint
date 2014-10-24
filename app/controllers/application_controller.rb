@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   		admin_root_path()
     	
     else
-    	user_profile_path(resource)
+    	root_path()
     end
   end
 end

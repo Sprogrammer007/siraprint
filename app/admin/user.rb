@@ -2,7 +2,9 @@ ActiveAdmin.register User do
 
   menu :parent => "Adminstration"
 
-  permit_params :email, :password, :status
+  permit_params :email, :password, :status, :company_name, :company_address,
+   :company_province, :company_city, :company_postal, :company_hst, :company_phone
+   
   #Scopes
   scope :all, default: true
   scope :approved

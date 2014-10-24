@@ -1,7 +1,6 @@
-$(document).ready ->
-
+ready = ->
   calc_sqft = (w, l) ->
-    unit = $('#unit').find(':selected').val()
+    unit = $('#_order_detailsunit').find(':selected').val()
 
     if (unit == "inch")
       return ((w * l)/144)
@@ -11,23 +10,21 @@ $(document).ready ->
   calc_price = (s, r) ->
     return parseFloat(Math.round((s * r) * 100) / 100).toFixed(2) 
     
-  
-
   change_price = (w, l, t) ->
     sqft = calc_sqft(w, l)
     url = "http://localhost:3000/large_prints/#{t}/get_price/"
     quantity = $('.quantity-field').val()
 
     $.post(url, sqft: sqft, undefined, "json").done (data) ->
-      $('#product_rate').val(data.price)
+      $('#_orderproduct_rate').val(data.price)
       price = calc_price(sqft, data.price)
       $('.per-placeholder').html("$#{price}")
-
+      $('#_orderunit_price').val(price)
       if (quantity != '')
         price = price * quantity
 
       $('.total-placeholder').html("$#{price}")
-      $('#ordered_product_price').val(price)
+      $('#_ordertotal_price').val(price)
 
   convert_to_feet = (x) ->
     return parseFloat(Math.ceil((x * 0.083333) * 10) / 10).toFixed(1)
@@ -35,15 +32,14 @@ $(document).ready ->
   convert_to_inch = (x) ->
     return parseFloat(Math.floor(x * 12)).toFixed(0)
 
-    
-  $('.product-item-materials').on "click", "label", (e) ->
+  $('.product-item-materials').on 'click', 'label', (e) ->
+    e.preventDefault()
     id = $(this).prev("input[type=radio]").attr("value")
     $(this).prev("input[type=radio]").prop("checked", true)
-    e.preventDefault()
     url = "http://localhost:3000/large_prints/#{id}/get_thickness/"
     $.post(url, undefined, undefined, "script").done ->
 
-  $('#unit').change (e)->
+  $('#_order_detailsunit').change (e)->
     unit = $(this).find(':selected').val()
     width = $('.product-width').val()
     length = $('.product-length').val()
@@ -57,10 +53,10 @@ $(document).ready ->
 
 
   $('.product-width, .product-length').change (e)->
-    unit = $('#unit').find(':selected').val()
+    unit = $('#_order_detailsunit').find(':selected').val()
     width = $('.product-width').val()
     length = $('.product-length').val()
-    rate = $('#product_rate').val()
+    rate = $('#_orderproduct_rate').val()
     thickness = $('.thickness-selection').find(':selected').val()
     
     if ($(this).val() <= 0)
@@ -91,7 +87,7 @@ $(document).ready ->
     
               
   $('.product-width, .product-length').focus (e)->
-    rate = $('#product_rate').val()
+    rate = $('#_orderproduct_rate').val()
     thickness = $('.thickness-selection').find(':selected').val()
     if (rate != '' && thickness != undefined && thickness == '')
       alert("Please select a thickness")
@@ -104,7 +100,7 @@ $(document).ready ->
     id = $(this).find(':selected').val()
     url = "http://localhost:3000/large_prints/#{id}/get_price/"
     sqft = calc_sqft(width, length)
-    rate = $('#product_rate').val()
+    rate = $('#_orderproduct_rate').val()
 
     if (width == "" || length == "")
       $(this).prop('selectedIndex', 0)
@@ -120,12 +116,13 @@ $(document).ready ->
         return
       else
         $.post(url, sqft: sqft, undefined, "json").done (data) ->
-          $('#product_rate').val(data.price)
+          $('#_orderproduct_rate').val(data.price)
           $('.product-item-upload').removeClass('hidden')
           price = calc_price(sqft, data.price)
           $('.per-placeholder').html("$#{price}")
           $('.total-placeholder').html("$#{price}")
-          $('#ordered_product_price').val(price)
+          $('#_orderunit_price').val(price)
+          $('#_ordertotal_price').val(price)
 
   $('.product-item-upload').on 'change', '.btn-file :file', ->
     input = $(this)  
@@ -159,6 +156,7 @@ $(document).ready ->
       $(this).val(1)
     else
       new_price = parseFloat(Math.round((price.replace("$", '') * quantity) * 100) / 100).toFixed(2) 
+      $('#_ordertotal_price').val(new_price)
       $('.total-placeholder').html("$#{new_price}")
 
   $('.large-prints-form').submit (e) ->
@@ -175,3 +173,14 @@ $(document).ready ->
       return false
     else
       return
+
+  # Update Quantity
+  $('.qty-update-button').click (e) ->
+    e.preventDefault()
+    quantity = $(this).parents().prev("input").val()
+    url = $(this).attr('data-url')
+
+    $.post(url, {quantity: quantity} , undefined, "script")
+
+$(document).ready(ready)
+$(document).on('page:load', ready)

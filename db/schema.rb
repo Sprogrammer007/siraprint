@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141018153422) do
+ActiveRecord::Schema.define(version: 20141024215248) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,16 +95,16 @@ ActiveRecord::Schema.define(version: 20141018153422) do
   create_table "ordered_large_print_details", force: true do |t|
     t.integer "length"
     t.integer "width"
-    t.integer "sqft"
-    t.string  "material"
-    t.integer "thickness"
-    t.string  "tier"
+    t.integer "material_id"
+    t.integer "thickness_id"
+    t.string  "unit"
   end
 
   create_table "ordered_products", force: true do |t|
     t.integer  "order_id"
     t.integer  "quantity"
-    t.integer  "price"
+    t.decimal  "unit_price"
+    t.decimal  "price"
     t.string   "print_pdf_file_name"
     t.string   "print_pdf_content_type"
     t.integer  "print_pdf_file_size"
@@ -121,10 +121,10 @@ ActiveRecord::Schema.define(version: 20141018153422) do
     t.string   "order_id"
     t.string   "delivery_method"
     t.decimal  "sub_total"
-    t.decimal  "total"
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "delivery_id"
   end
 
   create_table "users", force: true do |t|

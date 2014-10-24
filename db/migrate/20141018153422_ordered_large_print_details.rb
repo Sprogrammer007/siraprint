@@ -3,10 +3,9 @@ class OrderedLargePrintDetails < ActiveRecord::Migration
     create_table :ordered_large_print_details do |t|
       t.integer :length
       t.integer :width
-      t.integer :sqft
-      t.string :material
-      t.integer :thickness
-      t.string :tier
+      t.integer :material_id
+      t.integer :thickness_id
+      t.string  :unit
     end
   end
 end

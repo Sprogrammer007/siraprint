@@ -1,0 +1,70 @@
+.checkout
+  - if @order
+    .group
+      %h1 Stuff in Your Cart
+    = form_tag url_for(:controller => 'orders', :action => 'create'), class: "large-prints-form" do
+      %table.table.table-striped.cart
+        %thead
+          %tr
+            %th 
+            %th Product Detail
+            %th Print Size(Sqft)
+            %th Quantity
+            %th Design
+            %th Sub-Total
+        %tbody
+          - @order.ordered_products.each do |p|
+            %tr
+              %td
+                = image_tag p.product.display_image.url()
+              %td
+                %strong
+                  = p.product.name
+                %br
+                = "#{p.details.material.material_name} #{p.details.thickness.thickness}#{p.details.thickness.unit}"
+                %br
+                = link_to "remove", remove_item_order_path(p), class: "remove-ordered-product", :method => :post
+              %td
+                = p.details.sqft()
+                sqft
+              %td.quantity
+                = text_field_tag "quantity_#{p.id}", p.quantity, class: "update-quantity form-control"
+                %span.update-quantity
+                  = link_to "update", "#", class: "qty-update-button edit", data: { url: update_item_order_path(p.id)}
+              %td
+                = link_to p.print_pdf_file_name, p.print_pdf.url()
+              %td
+                = "$#{p.price}"
+
+
+      %table.cart-totals{:border => "0", :cellpadding => "0", :cellspacing => "0", :width => "100%"}
+        %tbody
+          %tr
+            %td{:width => "750"} 
+            %td.totals-section
+              %dl.totals
+                %dt Subtotal:
+                %dd
+                  %span#subtotal
+                    = @order.sub_total
+                %dt Tax (HST 13%):
+                %dd
+                  %span#subtotal
+                    = @order.get_tax
+                %dt.est Estimated Total
+                %dd.estimate
+                  %dl
+                    %dt Estimated Total:
+                    %dd
+                      $
+                      %span#est_total
+                        = @order.total
+  - else
+    #empty_cart.empty_cart
+      %span.group
+        %h1 Your Cart
+      %div
+        %p
+          %strong Your cart is empty, so it's sad and lonely.
+        %p Turn its frown upside down: fill it with stuff!
+        = link_to "Shop!", root_path()

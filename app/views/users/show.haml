@@ -2,14 +2,12 @@
   .panel.panel-default.boxed-m
     .panel-heading
       %h3.panel-title.profile-title
-        Profile Information
+        Account Details:
     
     .panel-body.profile-body
       .group
         = link_to "Edit", edit_user_registration_path(), class: "profile-button pull-right", remote: true
       .account-details
-        %h3
-          Account Details:
         .profile-label.mtxs
           Email:
         .profile-info.mbs
@@ -34,14 +32,16 @@
           Company HST #:
         .profile-info.mbs
           = current_user.company_hst
-     
+
+  .panel.panel-default.boxed-m
+    .panel-heading
+      %h3.panel-title.profile-title
+        Delivery Address:
+    .panel-body.profile-body
       .shipping-details
         - if current_user.has_delivery_addressess?
           .group
             = link_to "Add Another Address", new_delivery_address_path(), class: "profile-button pull-right"
-
-        %h3
-          Delivery Details:
           
         - if current_user.has_delivery_addressess?
           - current_user.delivery_addresses.each_with_index do |a, i|
@@ -61,11 +61,12 @@
             No Delivery Address Setup Please 
             = link_to "Add New Delivery Address", new_delivery_address_path()
 
-      %h3
+  .panel.panel-default.boxed-m
+    .panel-heading
+      %h3.panel-title.profile-title
         Cancel My Account
-
+    .panel-body.profile-body  
       %p
-
         = button_to "Cancel my account", registration_path(resource_name), class: "profile-button", data: { confirm: "Are you sure?" }, method: :delete
 - else
   .not-approved

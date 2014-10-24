@@ -97,6 +97,17 @@
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
 }
+
+// Status Tag Colors
+
+.status_tag.open {
+  background-color: #31AAF2;
+}
+
+.status_tag.cancel {
+  background-color: #FC4949;
+}
+
 // TinyMce Fix
 .mce-tinymce {
   margin-left: 20% !important;

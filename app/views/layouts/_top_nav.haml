@@ -16,8 +16,6 @@
           %ul.dropdown-menu
             %li
               = link_to "Large Prints", large_prints_path()
-              
-    
         %li
           = link_to "About", root_path
           
@@ -37,12 +35,13 @@
               %li.divider
               %li
                 = link_to "Logout", destroy_user_session_path, method: "delete"
+            %li
+              = link_to raw('<span class="glyphicon glyphicon-shopping-cart"></span>'), cart_path(), class: "btn-cart"
         - else
           %li
             = link_to "Create Free Account", new_user_registration_path, class: "btn btn-top-nav btn-signup"
           %li
             = link_to "Sign in", new_user_session_path
 
-        %li
-          = link_to raw('<span class="glyphicon glyphicon-shopping-cart"></span>'), "#", class: "btn-cart"
+       
 

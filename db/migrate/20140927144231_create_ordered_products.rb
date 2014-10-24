@@ -3,7 +3,8 @@ class CreateOrderedProducts < ActiveRecord::Migration
     create_table :ordered_products do |t|
       t.references :order
       t.integer :quantity
-      t.integer :price
+      t.decimal :unit_price
+      t.decimal :price
       t.attachment :print_pdf
       t.string :product_type
       t.integer :product_detail_id

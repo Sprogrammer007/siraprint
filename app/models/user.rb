@@ -24,18 +24,26 @@ class User < ActiveRecord::Base
   scope :approved, -> { where(:status => "Approved") }
 
   def new_order
-    order = self.orders.create!(status: 'Opened')
+    order = self.orders.create!(status: 'open')
     order.create_order_id
     return order
   end
 
   def set_default_state
-  	self.status = "Registered"
+    unless self.status
+      self.status = "Registered"
+    end
+  	
   end
 
   def has_delivery_addressess?
     delivery_addresses.any?
   end
+
+  def open_order
+    orders.where(:status => "open")[0]
+  end
+
 
   def self.provinces
   	%w{Ontario Quebec Nova\ Scotia New\ Brunswick Manitoba British\ Columbia Alberta}
