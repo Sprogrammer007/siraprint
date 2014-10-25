@@ -1,16 +1,19 @@
 class Order < ActiveRecord::Base
   
-  STATE = %w{open payed delivered completed canceled}
+  STATE = %w{open payed completed canceled}
   belongs_to :user
   has_many :ordered_products, :foreign_key => :order_id
 
   scope :open, -> { where(status: "open") }
+  scope :canceled, -> { where(status: "canceled") }
+  scope :completed, -> { where(status: "completed") }
+  scope :payed, -> { where(status: "payed") }
 
   def create_order_id
     self.order_id = self.id + 100
   end
 
-  delegate :open?, :payed?, :delivered?, :completed?, :canceled?, to: :current_state?
+  delegate :open?, :payed?, :completed?, :canceled?, to: :current_state?
 
   def current_state?
     status.inquiry

@@ -10,12 +10,12 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :timeoutable
 
-  # validates :company_name, :company_province, :company_address,:company_postal,
-  # :company_phone, :company_hst, :company_city, presence: true
-  # validates :email, format: { with: VALID_EMAIL_REGEX }
-  # validates :company_postal, format: { with: VALID_POSTAL_CODE_REGEX }
-  # validates :company_phone, format: { with: VALID_PHONE_REGEX }
-  # validates :company_hst, format: { with: VALID_HST_REGEX }
+  validates :company_name, :company_province, :company_address,:company_postal,
+  :company_phone, :company_hst, :company_city, presence: true
+  validates :email, format: { with: VALID_EMAIL_REGEX }
+  validates :company_postal, format: { with: VALID_POSTAL_CODE_REGEX }
+  validates :company_phone, format: { with: VALID_PHONE_REGEX }
+  validates :company_hst, format: { with: VALID_HST_REGEX }
 
   has_many :delivery_addresses
   has_many :orders

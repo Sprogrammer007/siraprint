@@ -1,5 +1,5 @@
 ActiveAdmin.register LargePrint do
-
+  
   menu :parent => "Products"
 
   permit_params :name, :description, :display_image, :sides, :status
@@ -9,6 +9,10 @@ ActiveAdmin.register LargePrint do
   filter :sides
   filter :status
 
+  #Scopes
+  scope :all, default: true
+  scope :active
+  scope :deactive
 
   index :title => "Large Prints" do
     column "Product Name" do |l|
@@ -19,7 +23,7 @@ ActiveAdmin.register LargePrint do
     end
     column :sides
     column "status" do |l|
-      if l.status
+      if l.active?
         status_tag "Active", :ok
       else
         status_tag "Deactive"
@@ -32,6 +36,7 @@ ActiveAdmin.register LargePrint do
       item("Edit Product", edit_admin_large_print_path(l))
       item("Remove Product", admin_large_print_path(l), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
       item("Add Material", new_admin_large_print_material_path(large_print_id: l.id, name: l.name))
+      item("Active/Deactive Product", status_update_admin_large_print_path(l))
     end
   end
 
@@ -50,7 +55,7 @@ ActiveAdmin.register LargePrint do
           end
           row :sides
           row "status" do |l|
-            if l.status
+            if l.active?
               status_tag "Active", :ok
             else
               status_tag "Deactive"
@@ -97,6 +102,17 @@ ActiveAdmin.register LargePrint do
       f.input :status, :as => :select, :collection => options_for_select([['Active', true], ['Deactive', false]], f.object.status)
     end
     f.actions
+  end
+
+  #Actions
+  member_action :status_update, method: :get do
+    lp = LargePrint.find(params[:id])
+    if lp.active?
+      lp.update(status: "Deactive")
+    else
+      lp.update(status: "Active")
+    end
+    redirect_to :back
   end
 
   controller do

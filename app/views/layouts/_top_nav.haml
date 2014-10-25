@@ -25,8 +25,8 @@
           %li
           %li.dropdown
             = link_to "#", class: "dropdown-toggle", data: {toggle: "dropdown"} do
-              %span.caret
               = "#{current_user.email}"
+              %span.caret
             %ul.dropdown-menu
               %li
                 = link_to "Profile", user_profile_path(current_user)

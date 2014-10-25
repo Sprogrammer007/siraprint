@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20141024215248) do
 
   create_table "delivery_addresses", force: true do |t|
     t.integer  "user_id"
+    t.string   "full_name"
     t.string   "address"
     t.string   "province"
     t.string   "city"

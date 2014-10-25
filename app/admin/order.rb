@@ -1,10 +1,20 @@
 ActiveAdmin.register Order do
+  config.clear_action_items!
   menu :parent => "Adminstration"
 
   #Scopes
   scope :all, default: true
   scope :open
+  scope :canceled
+  scope :completed
+  scope :payed
 
+  #filters
+  filter :user, :collection => -> { User.all.map { |u| [u.email, u.id] } }
+  filter :sub_total
+  filter :created_at
+  filter :updated_at
+  
   index :title => "Orders" do
     column "User Email" do |o|
       o.user.email
@@ -34,9 +44,8 @@ ActiveAdmin.register Order do
     column :updated_at
     actions defaults: false, dropdown: true, dropdown_name: "Options" do |o|
       item("Order Details", admin_order_path(o))
-      item("Edit Product", edit_admin_order_path(o))
       item("Remove Order", admin_order_path(o), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
-      item("Mark as Complete", "#")
+      item("Mark as Complete", complete_admin_order_path(o))
     end
   end
 
@@ -130,4 +139,14 @@ ActiveAdmin.register Order do
       end
     end
   end
+
+  #Actions
+  member_action :complete, method: :get do
+    order = Order.find(params[:id])
+    if order.payed?
+      order.update(status: "completed")
+    end
+    redirect_to :back
+  end
+
 end

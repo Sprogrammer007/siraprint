@@ -30,11 +30,8 @@ h1, h2, h3, h4
   min-height: 600px
 
 .primary-alert
-  position: fixed
-  top: 5em
-  right: 0
-  display: inline-block
-  z-index: 99
+  text-align: center
+  border-radius: 0
 
 .primary-close
   margin-top: -2px
@@ -94,6 +91,9 @@ h1, h2, h3, h4
 .mts
   margin-top: 1.25em
 
+.mtl
+  margin-top: 1.5em
+
 .mbs
   margin-bottom: 1.25em
 
@@ -127,7 +127,8 @@ h1, h2, h3, h4
 // Header
 .navbar
   border-radius: 0
-
+  margin-bottom: 0
+  
 .navbar .container 
   padding: 10px 0
 
@@ -260,10 +261,14 @@ h1, h2, h3, h4
 // Profile Page
 
 .profile-title
-  font-size: 250%
+  font-size: 100%
+
+.profile-title a, .profile-title h3
+  line-height: 1.4
+  font-size: 1.5em
 
 .profile-body
-  font-size: 150%
+  font-size: 130%
 
 .profile-button
   display: inline-block
@@ -283,12 +288,13 @@ h1, h2, h3, h4
 
 .profile-label
   display: inline-block
-  width: 25%
+  width: 30%
   color: #AAA
+  margin-right: 25px
 
 .profile-info
   display: inline-block
-  width: 70%
+  width: 60%
 
 .account-details, .shipping-details
   margin-bottom: 20px
@@ -318,11 +324,8 @@ h1, h2, h3, h4
 
 // Edit Profile
 
-.profile-edit-form-html
-  font-size: 100%
-
 .profile-edit-form
-  font-size: 60%
+  font-size: 100%
 
 .profile-edit-form h3, .profile-edit-form-html h3
   font-size: 140%
