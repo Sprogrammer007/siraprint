@@ -71,7 +71,42 @@ ActiveAdmin.register Order do
       end
     end
     div class: "item-list" do
-      panel("Items", class: "group")do
+      panel("Items", class: "group") do
+        if order.ordered_products.large_print.any?
+          h2 "Large Print"
+          table_for order.ordered_products.large_print do
+            column "Product" do |p|
+              image_tag p.product.display_image.url()
+            end
+            column "Product Name" do |p|
+              link_to p.product.name, admin_large_print_path(p.product)
+            end
+            column "Material" do |p|
+              p.details.material.material_name
+            end
+            column "Thickness" do |p|
+              "#{p.details.thickness.thickness}#{p.details.thickness.unit}"
+            end
+            column "Width" do |p|
+              "#{p.details.width}#{p.details.unit}"
+            end
+            column "Length" do |p|
+              "#{p.details.length}#{p.details.unit}"
+            end
+            column "Length" do |p|
+              "#{p.details.sqft}sqft"
+            end
+            column :quantity
+            column "User Design" do |p|
+              link_to p.print_pdf_file_name, p.print_pdf.url()
+            end
+            column :unit_price
+            column :price
+            column "" do |p|
+              link_to("Remove", admin_ordered_product_path(p), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
+            end
+          end
+        end
       end
     end
   end

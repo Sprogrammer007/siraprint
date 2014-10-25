@@ -262,6 +262,16 @@ td.col-thicknesses a:hover {
   background: none repeat scroll 0% 0% #DDD;
 }
 
+.item-list img {
+  max-width: 100px;
+}
+
+.item-list h2 {
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-top: 20px;
+}
+
 //  Firefox fix
 @-moz-document url-prefix() {
     .link_button {

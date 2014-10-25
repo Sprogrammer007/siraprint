@@ -21,7 +21,6 @@ Rails.application.routes.draw do
     member do
       post 'remove_item'
       post 'update_item'
-      get 'delivery_info'
     end
   end
   
@@ -31,5 +30,5 @@ Rails.application.routes.draw do
   end
 
   get  'orders/cart' => 'orders#show', :as => 'cart'
-
+  get  'orders/delivery_info' => 'orders#delivery_info', :as => 'delivery_info'
 end

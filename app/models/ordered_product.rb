@@ -6,6 +6,7 @@ class OrderedProduct < ActiveRecord::Base
   validates_attachment :print_pdf, :presence => true,
   :content_type => { :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
   
+  scope :large_print, -> { where(product_type: "large_print") }
   def details
     "Ordered#{self.product_type.camelize.gsub("_", "")}Detail".constantize.find(self.product_detail_id)
   end

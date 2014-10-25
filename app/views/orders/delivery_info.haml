@@ -1,9 +1,31 @@
-.delivery_info
+.delivery-info
   .row
     .col-lg-8
       .panel.panel-default
         .panel-heading
           %h3.panel-title Delivery Info
+        .panel-body
+          .row
+            .col-lg-4
+              
+              %span.delivery-location.mgl
+                %strong I'll Pickup My Orders
+                %br
+                401 Magnetic Dr,
+                %br
+                Toronto, ON M3J 3H9
+                %br
+                (416) 953-8669
+              .delivery-to.delivery-button-primary.delivery-button
+                %span.delivery-button-inner
+                  = link_to "Delivery to this address", "#", class: "delivery-button-text"
+                    
+                 
+            -if current_user.delivery_addresses.any?
+            - else
+      .panel.panel-default
+        .panel-heading
+          %h3.panel-title New Delivery Address
         .panel-body
           
     .col-lg-4 

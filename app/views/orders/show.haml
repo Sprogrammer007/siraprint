@@ -59,6 +59,9 @@
                       $
                       %span#est_total
                         = @order.total
+      .checkout_buttons.group.mgl
+        = link_to "Select Delivery Method", delivery_info_path(), class: ""
+        
   - else
     #empty_cart.empty_cart
       %span.group
