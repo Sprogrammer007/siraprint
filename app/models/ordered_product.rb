@@ -7,6 +7,8 @@ class OrderedProduct < ActiveRecord::Base
   :content_type => { :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"] }
   
   scope :large_print, -> { where(product_type: "large_print") }
+  scope :metal_sign, -> { where(product_type: "metal_sign") }
+  
   def details
     "Ordered#{self.product_type.camelize.gsub("_", "")}Detail".constantize.find(self.product_detail_id)
   end

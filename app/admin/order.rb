@@ -73,7 +73,7 @@ ActiveAdmin.register Order do
     div class: "item-list" do
       panel("Items", class: "group") do
         if order.ordered_products.large_print.any?
-          h2 "Large Print"
+          h2 "Large Prints"
           table_for order.ordered_products.large_print do
             column "Product" do |p|
               image_tag p.product.display_image.url()
@@ -104,6 +104,26 @@ ActiveAdmin.register Order do
             column :price
             column "" do |p|
               link_to("Remove", admin_ordered_product_path(p), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
+            end
+          end
+        end
+        if order.ordered_products.metal_sign.any?
+          h2 "Metal Signs"
+          table_for order.ordered_products.large_print do
+            column "Product" do |p|
+              image_tag p.product.display_image.url()
+            end
+            column "Product Name" do |p|
+              link_to p.product.name, "#"
+            end
+            column :quantity
+            column "User Design" do |p|
+              link_to p.print_pdf_file_name, p.print_pdf.url()
+            end
+            column :unit_price
+            column :price
+            column "" do |p|
+              link_to("Remove", "#", method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
             end
           end
         end
