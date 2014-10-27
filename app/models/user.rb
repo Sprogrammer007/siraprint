@@ -1,9 +1,9 @@
 class User < ActiveRecord::Base
 
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-	VALID_POSTAL_CODE_REGEX = /\A([A-Za-z][0-9][A-Za-z]\s[0-9][A-Za-z][0-9])|([A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9])\z/i
+	VALID_POSTAL_CODE_REGEX = /\A([A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9])\z/i
  	VALID_PHONE_REGEX = /\A\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})\z/i
-  VALID_HST_REGEX = /\A(\d{3})+-(\d{3})+-(\d{3})+-([A-Za-z][A-Za-z]\d{4})\z/i
+  VALID_HST_REGEX = /\A(\d{9})\z/i
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

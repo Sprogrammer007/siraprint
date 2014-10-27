@@ -13,7 +13,9 @@
                 %br
                 401 Magnetic Dr,
                 %br
-                Toronto, ON M3J 3H9
+                Toronto, Ontario
+                %br
+                M3J 3H9
                 %br
                 (416) 953-8669
               .delivery-to.delivery-button-primary.delivery-button
@@ -22,6 +24,27 @@
                     
                  
             -if current_user.delivery_addresses.any?
+              - current_user.delivery_addresses.each do |a|
+                .col-lg-4
+                  %span.delivery-location.mgl
+                    %strong 
+                      = a.full_name()
+                    %br
+                    = a.address()
+                    %br
+                    = "#{a.city()}, #{a.province()}"
+                    %br
+                    %span.uppercase
+                      = "#{a.postal[0..2]} #{a.postal[3..5]}"
+                    %br
+                      = a.user.company_phone()
+                  .delivery-to.delivery-button-primary.delivery-button
+                    %span.delivery-button-inner
+                      = link_to "Delivery to this address", "#", class: "delivery-button-text"
+                  .delivery-address-buttons.mtt-xs.group
+                    = link_to "Edit", edit_delivery_address_path(a), class: "profile-button profile-button-small"
+                    = link_to "Remove", delivery_address_path(a), class: "profile-button profile-button-small", data: { confirm: "Are you sure?" }, method: :delete
+     
             - else
       .panel.panel-default
         .panel-heading
