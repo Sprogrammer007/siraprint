@@ -19,11 +19,13 @@ class OrdersController < ApplicationController
   end
 
   def show
+    @no_sidebar = true
     @order = current_user.open_order
     @order.update_price
   end
 
   def delivery_info
+    @no_sidebar = true
     @order = current_user.open_order
   end
 
@@ -32,7 +34,9 @@ class OrdersController < ApplicationController
     new_price = (item.unit_price * params[:quantity].to_i) 
     item.update(:quantity => params[:quantity], price: new_price)
     render :js => "window.location = '#{cart_path()}'"
-    
+  end
+
+  def payment
   end
   
   def remove_item

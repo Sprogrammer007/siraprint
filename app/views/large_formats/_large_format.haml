@@ -1,0 +1,5 @@
+.col-lg-4.product-item 
+  = image_tag large_format.display_image.url()
+  .product-details
+    = large_format.name
+    = link_to("View Details", large_format_path(large_format))

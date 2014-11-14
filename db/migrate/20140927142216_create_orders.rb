@@ -3,8 +3,8 @@ class CreateOrders < ActiveRecord::Migration
     create_table :orders do |t|
     	t.references :user
     	t.string :order_id
-    	t.string :delivery_method
-
+    	t.integer :delivery_id
+        t.text :delivery_address
     	t.decimal :sub_total
 
     	t.string :status

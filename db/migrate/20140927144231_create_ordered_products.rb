@@ -6,6 +6,7 @@ class CreateOrderedProducts < ActiveRecord::Migration
       t.decimal :unit_price
       t.decimal :price
       t.attachment :print_pdf
+      t.attachment :print_pdf_2
       t.string :product_type
       t.integer :product_detail_id
       t.integer :product_id

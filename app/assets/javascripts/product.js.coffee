@@ -1,4 +1,5 @@
 ready = ->
+
   calc_sqft = (w, l) ->
     unit = $('#_order_detailsunit').find(':selected').val()
 
@@ -12,7 +13,7 @@ ready = ->
     
   change_price = (w, l, t) ->
     sqft = calc_sqft(w, l)
-    url = "http://localhost:3000/large_prints/#{t}/get_price/"
+    url = "http://localhost:3000/large_formats/#{t}/get_price/"
     quantity = $('.quantity-field').val()
 
     $.post(url, sqft: sqft, undefined, "json").done (data) ->
@@ -32,27 +33,23 @@ ready = ->
   convert_to_inch = (x) ->
     return parseFloat(Math.floor(x * 12)).toFixed(0)
 
-  $('.product-item-materials').on 'click', 'label', (e) ->
-    e.preventDefault()
-    id = $(this).prev("input[type=radio]").attr("value")
-    $(this).prev("input[type=radio]").prop("checked", true)
-    url = "http://localhost:3000/large_prints/#{id}/get_thickness/"
-    $.post(url, undefined, undefined, "script").done ->
-
-  $('#_order_detailsunit').change (e)->
+  $('#_order_detailsunit').change (e) ->
     unit = $(this).find(':selected').val()
     width = $('.product-width').val()
     length = $('.product-length').val()
-    if (width != "" || length != "")
-      if (unit == "inch")
-        $('.product-width').val(convert_to_inch(width))
-        $('.product-length').val(convert_to_inch(length))
-      else
-        $('.product-width').val(convert_to_feet(width))
-        $('.product-length').val(convert_to_feet(length))
 
+    if (unit == "inch")
+      new_width = convert_to_inch(width)
+      new_length = convert_to_inch(length)
+      $('.product-width').val(new_width)
+      $('.product-length').val(new_length)
+    else
+      new_width = convert_to_feet(width)
+      new_length = convert_to_feet(length)
+      $('.product-width').val(new_width)
+      $('.product-length').val(new_length)
 
-  $('.product-width, .product-length').change (e)->
+  $('.product-width, .product-length').change (e) ->
     unit = $('#_order_detailsunit').find(':selected').val()
     width = $('.product-width').val()
     length = $('.product-length').val()
@@ -98,7 +95,7 @@ ready = ->
     width = $('.product-width').val()
     length = $('.product-length').val()
     id = $(this).find(':selected').val()
-    url = "http://localhost:3000/large_prints/#{id}/get_price/"
+    url = "http://localhost:3000/large_formats/#{id}/get_price/"
     sqft = calc_sqft(width, length)
     rate = $('#_orderproduct_rate').val()
 
@@ -117,7 +114,6 @@ ready = ->
       else
         $.post(url, sqft: sqft, undefined, "json").done (data) ->
           $('#_orderproduct_rate').val(data.price)
-          $('.product-item-upload').removeClass('hidden')
           price = calc_price(sqft, data.price)
           $('.per-placeholder').html("$#{price}")
           $('.total-placeholder').html("$#{price}")
@@ -139,8 +135,6 @@ ready = ->
     log = (if numFiles > 1 then numFiles + " files selected" else label)
     if input.length
       input.val log
-      if ($('.product-item-final').hasClass('hidden'))
-        $('.product-item-final').removeClass('hidden')
     else
       alert log  if log
     return
@@ -159,7 +153,7 @@ ready = ->
       $('#_ordertotal_price').val(new_price)
       $('.total-placeholder').html("$#{new_price}")
 
-  $('.large-prints-form').submit (e) ->
+  $('.large-formats-form').submit (e) ->
     thickness = $('.thickness-selection').find(':selected').val()
     total_price = $('.total-placeholder').html()
 
@@ -179,8 +173,25 @@ ready = ->
     e.preventDefault()
     quantity = $(this).parents().prev("input").val()
     url = $(this).attr('data-url')
-
     $.post(url, {quantity: quantity} , undefined, "script")
+
+  # Metal Signs
+
+  $('.product-item-size-options').on 'change', 'select', (e)->
+    price = parseFloat($(this).find(':selected').text().split('$')[1])
+  
+    if !isNaN(price)
+      price = price * $('.quantity-field').val()
+      $('.per-placeholder').html("$#{price}")
+      $('.total-placeholder').html("$#{price}")
+      $('#_orderunit_price').val(price)
+      $('#_ordertotal_price').val(price)
+    else
+      $('.per-placeholder').html("$0")
+      $('.total-placeholder').html("$0")
+      $('#_orderunit_price').val(0)
+      $('#_ordertotal_price').val(0)
+
 
 $(document).ready(ready)
 $(document).on('page:load', ready)

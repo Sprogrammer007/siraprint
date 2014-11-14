@@ -30,10 +30,7 @@ class User < ActiveRecord::Base
   end
 
   def set_default_state
-    unless self.status
-      self.status = "Registered"
-    end
-  	
+    self.status = "Registered"
   end
 
   def has_delivery_addressess?

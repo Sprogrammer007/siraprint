@@ -81,17 +81,15 @@ ActiveAdmin.register Order do
     end
     div class: "item-list" do
       panel("Items", class: "group") do
-        if order.ordered_products.large_print.any?
-          h2 "Large Prints"
-          table_for order.ordered_products.large_print do
+        if order.ordered_products.large_format  
+          .any?
+          h2 "Large Formats"
+          table_for order.ordered_products.large_format do
             column "Product" do |p|
               image_tag p.product.display_image.url()
             end
             column "Product Name" do |p|
               link_to p.product.name, admin_large_print_path(p.product)
-            end
-            column "Material" do |p|
-              p.details.material.material_name
             end
             column "Thickness" do |p|
               "#{p.details.thickness.thickness}#{p.details.thickness.unit}"

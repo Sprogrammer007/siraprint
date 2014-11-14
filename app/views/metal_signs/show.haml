@@ -1,0 +1,66 @@
+.col-lg-7
+  #galleria.galleria{style: "height: 518px"}
+    = image_tag("1.jpg")
+    = image_tag("2.jpg")
+    = image_tag("2.jpg")
+   
+.col-lg-5
+  = form_tag url_for(:controller => 'orders', :action => 'create'), class: "metal-sign-form", multipart: true do
+    = hidden_field_tag '[order]product_type', 'metal_sign'
+    = hidden_field_tag '[order]product_id', @metal_sign.id
+    = hidden_field_tag '[order]total_price', ''
+    = hidden_field_tag '[order]unit_price', ''
+
+    .product-item-title
+      %h2
+        = @metal_sign.name
+      .item-description
+        %p
+          = @metal_sign.description.html_safe()
+
+    .product-item-size-options
+      %h3 Step 1: Select Your Size
+      = select("order", "[details]size_id", @metal_sign.metal_sign_sizes.collect {|s| [ "#{s.width}\" x #{s.height}\" - $#{s.price}", s.id ] }, {include_blank: 'Please select your size'}, class: "size-selection form-control")
+    .product-item-upload
+      %h3 Step 2: Upload Your Design
+      .input-group
+        = text_field_tag 'design_pdf_name', nil, class: "form-control", readonly: true 
+        %span.input-group-btn
+          %span.btn.btn-primary.btn-file
+            Browse 
+            = file_field_tag '[order]design_pdf', class: 'design_pdf'
+    .product-item-final
+      %h3 Step 3: Place Your Order
+      .quantity-box
+        .row.mgl
+          .col-lg-6
+            = label_tag '[order]quantity', "Number of Prints"
+          .col-lg-6
+            = number_field_tag '[order]quantity', 1, class: "quantity-field form-control", in: 1...10000
+      .divider
+      .per-price-box
+        Cost Per Print:
+        %span.per-placeholder
+      .total-price-box
+        Total Cost:
+        %span.total-placeholder
+      .divider
+      .submit-order
+        = button_tag "Place My Order", class: "btn btn-place-order"
+
+        
+:javascript
+  $(document).ready( function() {
+    $('#galleria').galleria({
+      width: 633,
+      height: 458
+    });
+    Galleria.loadTheme('/assets/galleria.classic.js');
+    Galleria.configure({
+      autoplay: true,
+      transition: 'fade',
+      showInfo: false
+    });
+
+    Galleria.run('.galleria');
+  } );

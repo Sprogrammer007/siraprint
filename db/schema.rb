@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141024215248) do
+ActiveRecord::Schema.define(version: 20141114152523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,24 +45,21 @@ ActiveRecord::Schema.define(version: 20141024215248) do
     t.datetime "updated_at"
   end
 
-  create_table "large_print_materials", force: true do |t|
-    t.integer  "large_print_id"
-    t.string   "material_name"
-    t.string   "material_image_file_name"
-    t.string   "material_image_content_type"
-    t.integer  "material_image_file_size"
-    t.datetime "material_image_updated_at"
+  create_table "large_format_thicknesses", force: true do |t|
+    t.integer "large_format_id"
+    t.integer "thickness"
+    t.string  "unit"
   end
 
-  create_table "large_print_tiers", force: true do |t|
-    t.integer "material_thickness_id"
+  create_table "large_format_tiers", force: true do |t|
+    t.integer "large_format_thickness_id"
     t.string  "level"
     t.integer "min_sqft"
     t.integer "max_sqft"
     t.decimal "price"
   end
 
-  create_table "large_prints", force: true do |t|
+  create_table "large_formats", force: true do |t|
     t.string   "name"
     t.text     "description"
     t.integer  "sides"
@@ -75,10 +72,12 @@ ActiveRecord::Schema.define(version: 20141024215248) do
     t.datetime "updated_at"
   end
 
-  create_table "material_thicknesses", force: true do |t|
-    t.integer "large_print_material_id"
-    t.integer "thickness"
+  create_table "metal_sign_sizes", force: true do |t|
+    t.integer "metal_sign_id"
+    t.integer "width"
+    t.integer "height"
     t.string  "unit"
+    t.decimal "price"
   end
 
   create_table "metal_signs", force: true do |t|
@@ -93,12 +92,17 @@ ActiveRecord::Schema.define(version: 20141024215248) do
     t.datetime "updated_at"
   end
 
-  create_table "ordered_large_print_details", force: true do |t|
+  create_table "ordered_large_format_details", force: true do |t|
     t.integer "length"
     t.integer "width"
-    t.integer "material_id"
     t.integer "thickness_id"
+    t.string  "finishing"
+    t.integer "grommets_quantity"
     t.string  "unit"
+  end
+
+  create_table "ordered_metal_sign_details", force: true do |t|
+    t.integer "size_id"
   end
 
   create_table "ordered_products", force: true do |t|
@@ -110,6 +114,10 @@ ActiveRecord::Schema.define(version: 20141024215248) do
     t.string   "print_pdf_content_type"
     t.integer  "print_pdf_file_size"
     t.datetime "print_pdf_updated_at"
+    t.string   "print_pdf_2_file_name"
+    t.string   "print_pdf_2_content_type"
+    t.integer  "print_pdf_2_file_size"
+    t.datetime "print_pdf_2_updated_at"
     t.string   "product_type"
     t.integer  "product_detail_id"
     t.integer  "product_id"
@@ -120,12 +128,36 @@ ActiveRecord::Schema.define(version: 20141024215248) do
   create_table "orders", force: true do |t|
     t.integer  "user_id"
     t.string   "order_id"
-    t.string   "delivery_method"
+    t.integer  "delivery_id"
+    t.text     "delivery_address"
     t.decimal  "sub_total"
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "delivery_id"
+  end
+
+  create_table "posts", force: true do |t|
+    t.string   "title"
+    t.text     "excerpt"
+    t.text     "content"
+    t.string   "author"
+    t.string   "category"
+    t.string   "featured_image_file_name"
+    t.string   "featured_image_content_type"
+    t.integer  "featured_image_file_size"
+    t.datetime "featured_image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "slider_images", force: true do |t|
+    t.string   "slide_image_file_name"
+    t.string   "slide_image_content_type"
+    t.integer  "slide_image_file_size"
+    t.datetime "slide_image_updated_at"
+    t.string   "product_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: true do |t|

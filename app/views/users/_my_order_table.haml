@@ -1,0 +1,26 @@
+%tr
+  %td
+    = order.order_id
+  %td
+    %strong 
+      = order.address.full_name()
+    %br
+    = order.address.address()
+    %br
+    = "#{order.address.city()}, #{order.address.province()}"
+    %span.uppercase
+      = "#{order.address.postal[0..2]} #{order.address.postal[3..5]}"
+  %td
+    - order.ordered_products.each do |p|
+      %ul
+        %li
+          = "#{p.quantity}x #{p.product_type.camelize.split("_").join(" ")}"
+  %td
+    = "$#{order.total}"
+  %td
+    = order.status.camelize
+  %th 
+    - if order.status == "open"
+      = link_to "Cancel Order", "#"
+      | 
+      = link_to "Update Order", cart_path()

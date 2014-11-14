@@ -1,8 +1,11 @@
 #= require active_admin/base
 #= require tinymce-jquery
-
+#= require jquery-fileupload/basic
 
 $(document).ready ->
+  $('#slider_image_slide_image').fileupload
+    dataType: "script"
+
   tinyMCE.init
     #General options
     mode : "textareas",

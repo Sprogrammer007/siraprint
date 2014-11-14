@@ -16,7 +16,7 @@
 // Global
 body
   font-family: "OpenSans",Helvetica,Arial,sans-serif
-  background-color: #f9f9f9
+  background-color: #FFFFFF
 
 h1, h2, h3, h4 
   color: #393d40
@@ -61,7 +61,7 @@ h1, h2, h3, h4
 // Helpers
 .divider
   display: block
-  width: 90%
+  width: 100%
   margin: auto
   margin-top: 13px
   margin-bottom: 13px
@@ -85,6 +85,7 @@ h1, h2, h3, h4
   color: #AAA
 
 // Margins Helper
+
 .mtt-xs
   margin-top: 0.5em 
 
@@ -115,7 +116,6 @@ h1, h2, h3, h4
 
 // Size Helpers
 
-
 .boxed-l
   max-width: 80em
 
@@ -131,6 +131,7 @@ h1, h2, h3, h4
   position: relative
 
 // Header
+
 .navbar
   border-radius: 0
   margin-bottom: 0
@@ -139,12 +140,16 @@ h1, h2, h3, h4
   padding: 10px 0
 
 .navbar-inverse
-  background-color: #8955DB
-  border-color: #342054
+  background-color: #FFFFFF
+  border-color: #FFFFFF
 
 .navbar-inverse .navbar-nav > li > a
-  color: #fff
+  color: #191919
   font-size: 18px
+  font-weight: 600
+
+.navbar-inverse .navbar-nav > li > a:hover
+  color: #555555
 
 .navbar .navbar-right
   margin-top: 4px
@@ -153,30 +158,61 @@ h1, h2, h3, h4
   margin-top: -15px
 
 .btn-top-nav
-  color: #fff
+  color: #2A2A2A
   border: none
-
-.btn-signup
-  background-color: #A2D053
   margin-right: 10px
   font-size: 85% !important
   text-transform: uppercase
 
+.btn-signup
+  background-color: #A2D053
+
+.btn-signin
+  background-color: #E6E6E6
+
 .navbar-inverse .btn-signup:hover
   background-color: #a9da54 !important
 
+.navbar-inverse .btn-signin:hover
+  background-color: #E3E3E3 !important
+
 .navbar-nav > li > a 
-  padding-top: 8px
-  padding-bottom: 10px
+  padding: 10px 10px 
   line-height: 20px
+
 .btn-cart
   font-size: 20px !important
+
+.navbar .dropdown-menu 
+  width: 100%
+
+// Side Nav
+
+.side-nav
+  width: 100%
+  box-shadow: 1px 2px 5px #888
+
+.side-nav .btn
+  border-radius: 0 
+  text-align: left
+
+.side-nav  > .btn:last-child:not(:first-child)
+  border-radius: 0
+
+.btn-sidebar
+  color: #FFFFFF
+  background-color: rgb(25, 180, 208)
+  border-color: #22A7D7
+
+.side-nav .dropdown-menu
+  top: 0%
+  left: 38%
 
 // Footer
 
 #footer 
-  min-height: 330px
-  background-color: #8955DB
+  min-height: 100px
+  background-color: #232323
   color: #fff
   padding-bottom: 30px
   font-size: 18px
@@ -192,6 +228,23 @@ h1, h2, h3, h4
 
 #footer ul li
   list-style: none
+
+// Home
+
+.banner h2 
+  background: none repeat scroll 0% 0% #292929
+  color: #FFF
+  display: inline-block
+  font-size: 1.6rem
+  font-weight: 900
+  letter-spacing: 2.5px
+  line-height: 46px
+  margin: 0px
+  padding: 0px 2.5%
+  position: relative
+  text-align: center
+  text-transform: uppercase
+  width: 100%
 
 // Login
 
@@ -344,6 +397,9 @@ h1, h2, h3, h4
 .delivery-address-buttons a:first-child
   margin-right: 5px !important
 
+.delivery-info fieldset
+  padding-left: 0px
+  
 // Edit Profile
 
 .profile-edit-form
@@ -375,6 +431,40 @@ h1, h2, h3, h4
   text-decoration: none
   border-bottom: 2px solid #088ec2
 
+// My Order
+
+.my-order-tab-container
+  display: block
+  border: 2px solid #DFDFDF
+  border-radius: 5px
+
+.my-order-tab-container .nav > li
+  margin-bottom: -3px
+
+.my-order-tab-container .nav-tabs > li.active > a, 
+.my-order-tab-container.nav-tabs > li.active > a:hover, 
+.my-order-tab-container.nav-tabs > li.active > a:focus
+  border: none
+  border-radius: 0
+
+.my-order-tab-container .nav-tabs
+  background: #ffffff
+  background: -moz-linear-gradient(top, white 0%, #e5e5e5 100%)
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, white), color-stop(100%, #e5e5e5))
+  background: -webkit-linear-gradient(top, white 0%, #e5e5e5 100%)
+  background: -o-linear-gradient(top, white 0%, #e5e5e5 100%)
+  background: -ms-linear-gradient(top, white 0%, #e5e5e5 100%)
+  background: linear-gradient(to bottom, white 0%, #e5e5e5 100%)
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 )
+
+.my-order-tab-container .tab-content
+  padding: 10px 10px
+
+.my-order-tab-container .tab-content ul
+  padding: 0px
+  list-style: none
+
+
 // Product
 
 .product-details 
@@ -387,7 +477,7 @@ h1, h2, h3, h4
 
 .product-details a 
   display: block
-  width: 55%
+  width: 65%
   line-height: 1em
   text-decoration: none
   margin: auto
@@ -439,7 +529,7 @@ h1, h2, h3, h4
   background: none repeat scroll 0% 0%
 
 
-// Large Print
+// Large Format
 .product-item-materials
   font-weight: 500
 
@@ -482,13 +572,13 @@ h1, h2, h3, h4
   font-size: 1.4em
 
 .product-item-materials, .product-item-thickness-options, .product-item-size,
-.product-item-upload, .product-item-final
+.product-item-upload, .product-item-final, .product-item-title, .product-item-size-options
   padding: 0 20px
   margin-top: 1.5em
   margin-bottom: 1.5em
 
 .product-item-materials h3, .product-item-thickness-options h3, .product-item-size h3,
-.product-item-upload h3, .product-item-final h3
+.product-item-upload h3, .product-item-final h3, .product-item-size-options h3
   color: rgb(155, 31, 169)
   border-top: 2px solid #EBEBEB
   border-bottom: 2px solid #EBEBEB
@@ -734,6 +824,17 @@ h1, h2, h3, h4
   border-radius: 3px
   cursor: pointer
 
+.delivery-address-selected
+  display: inline-block
+  padding: 0px
+  vertical-align: middle
+  height: 31px
+  border: 1px solid #AAA
+  border-radius: 3px
+  text-align: center
+  overflow: hidden
+  width: 100%
+
 .delivery-button a, .delivery-button:hover a
   color: #111
   text-decoration: none !important
@@ -771,6 +872,7 @@ h1, h2, h3, h4
   background: -ms-linear-gradient(top, #f7dfa5, #f0c14b)
   background: linear-gradient(top, #f7dfa5, #f0c14b)
   box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.4) inset
+
 // Error Messages
 
 .bg-danger
@@ -778,8 +880,6 @@ h1, h2, h3, h4
   .close 
     margin-right: 0.5em
     margin-top: 0.3em
-  
-.bg-danger li
 
 .error_messages
   padding: 1.5em 2.5em

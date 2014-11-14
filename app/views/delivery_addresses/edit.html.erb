@@ -30,6 +30,7 @@
       </fieldset>
 
       <div style="padding-left: 20px;">
+        <%= f.hidden_field :order_form, value: "#{params[:order_form]}"%>
         <%= f.submit "Update", class: "btn btn-submit" %>
       </div>
     <% end %>

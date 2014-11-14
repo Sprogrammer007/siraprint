@@ -1,0 +1,87 @@
+.col-lg-7
+  #galleria{style: "height: 518px"}
+    - if SliderImage.large_format.any?
+      - SliderImage.large_format.each do |slide|
+        = image_tag(slide.slide_image.url())
+   
+.col-lg-5
+  = form_tag url_for(:controller => 'orders', :action => 'create'), class: "large-formats-form", multipart: true do
+    = hidden_field_tag '[order]product_type', 'large_format'
+    = hidden_field_tag '[order]product_id', @large_format.id
+    = hidden_field_tag '[order]product_rate', ''
+    = hidden_field_tag '[order]total_price', ''
+    = hidden_field_tag '[order]unit_price', ''
+
+    .product-item-title
+      %h2
+        ="Large Format"
+      .item-description
+        %strong
+          Material: 
+        = @large_format.name
+        %br
+        %strong
+          Sides:
+        = @large_format.sides
+        %p
+          = @large_format.description.html_safe()
+    .product-item-size
+      %h3 Step 1: Enter Desire Print Size
+      .row.mgl
+        .col-lg-2
+          = label_tag "[order][details]unit", "Unit"
+        .col-lg-10
+          = select_tag '[order][details]unit', options_for_select(["inch", 'feet']), class: "form-control"
+      .row
+        .col-lg-2
+          = label_tag "[order][details]width", "Width"
+        .col-lg-4
+          = number_field_tag "[order][details]width", nil, class: "product-width form-control", in: 1...100, :step => 0.1
+        .col-lg-2
+          = label_tag "[order][details]length", "Length"
+        .col-lg-4
+          = number_field_tag '[order][details]length', nil, class: "product-length form-control", in: 1...100, :step => 0.1
+
+    .product-item-thickness-options
+      %h3 Step 2: Select Your Thickness
+      = select("order", "[details]thickness_id", @large_format.large_format_thicknesses.collect {|t| [ "#{t.thickness}#{t.unit}", t.id ] }, {include_blank: 'Please select your thickness'}, class: "thickness-selection form-control")
+    .product-item-upload
+      %h3 Step 3: Upload Your Design
+      .input-group
+        = text_field_tag 'design_pdf_name', nil, class: "form-control", readonly: true 
+        %span.input-group-btn
+          %span.btn.btn-primary.btn-file
+            Browse 
+            = file_field_tag '[order]design_pdf', class: 'design_pdf'
+    .product-item-finishing-options
+      %h3 Step 4: Finishing(Optional)
+    .product-item-final
+      %h3 Step 5: Place Your Order
+      .quantity-box
+        .row.mgl
+          .col-lg-6
+            = label_tag '[order]quantity', "Number of Prints"
+          .col-lg-6
+            = number_field_tag '[order]quantity', 1, class: "quantity-field form-control", in: 1...10000
+      .divider
+      .per-price-box
+        Cost Per Print:
+        %span.per-placeholder
+      .total-price-box
+        Total Cost:
+        %span.total-placeholder
+      .divider
+      .submit-order
+        = button_tag "Place My Order", class: "btn btn-place-order"
+        
+:javascript
+  $(document).ready( function() {
+    Galleria.loadTheme('/assets/galleria.classic.js');
+    Galleria.configure({
+      autoplay: true,
+      transition: 'fade',
+      showInfo: false
+    });
+
+    Galleria.run('.galleria');
+  } );

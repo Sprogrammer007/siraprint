@@ -20,13 +20,17 @@
               %td
                 %strong
                   = p.product.name
-                %br
-                = "#{p.details.material.material_name} #{p.details.thickness.thickness}#{p.details.thickness.unit}"
+                - if p.product_type == "large_format"
+                  %br
+                  = "#{p.details.material.material_name} #{p.details.thickness.thickness}#{p.details.thickness.unit}"
                 %br
                 = link_to "remove", remove_item_order_path(p), class: "remove-ordered-product", :method => :post
               %td
-                = p.details.sqft()
-                sqft
+                - if p.product_type == "large_format"
+                  = p.details.sqft()
+                  sqft
+                - else
+                  = "#{p.details.size.width}\" x #{p.details.size.height}\""
               %td.quantity
                 = text_field_tag "quantity_#{p.id}", p.quantity, class: "update-quantity form-control"
                 %span.update-quantity

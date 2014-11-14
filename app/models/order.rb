@@ -20,8 +20,8 @@ class Order < ActiveRecord::Base
   end
 
   def update_price
-    total = ordered_products.pluck(:price).inject{|sum,x| sum + x }
-    self.update(:sub_total => total)
+    t = ordered_products.pluck(:price).inject{|sum,x| sum + x }
+    self.update(:sub_total => t)
   end
 
   def get_tax
@@ -30,5 +30,9 @@ class Order < ActiveRecord::Base
 
   def total
     (self.sub_total * 1.13).round(2)
+  end
+
+  def address
+    @address ||= DeliveryAddress.find(self.delivery_method)
   end
 end
