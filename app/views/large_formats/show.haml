@@ -1,5 +1,5 @@
 .col-lg-7
-  #galleria{style: "height: 518px"}
+  #galleria.galleria{style: "height: 518px"}
     - if SliderImage.large_format.any?
       - SliderImage.large_format.each do |slide|
         = image_tag(slide.slide_image.url())
@@ -8,6 +8,7 @@
   = form_tag url_for(:controller => 'orders', :action => 'create'), class: "large-formats-form", multipart: true do
     = hidden_field_tag '[order]product_type', 'large_format'
     = hidden_field_tag '[order]product_id', @large_format.id
+    = hidden_field_tag '[order]sides', @large_format.sides
     = hidden_field_tag '[order]product_rate', ''
     = hidden_field_tag '[order]total_price', ''
     = hidden_field_tag '[order]unit_price', ''
@@ -54,7 +55,14 @@
             Browse 
             = file_field_tag '[order]design_pdf', class: 'design_pdf'
     .product-item-finishing-options
-      %h3 Step 4: Finishing(Optional)
+      %h3 Step 4: Finishing (Optional)
+      = select("order", "[details]finishing", options_for_select(["Grommets", "Lamination "]), {include_blank: 'Please select your finishing option'}, class: "finish-selection form-control")
+      .grommets-box.mtl.hidden
+        .row
+          .col-lg-8
+            = label_tag '[details]grommets_quantity', "Number of Grommets"
+          .col-lg-4
+            = number_field_tag '[details]grommets_quantity', 0, class: "grommets-field form-control", in: 1...10000
     .product-item-final
       %h3 Step 5: Place Your Order
       .quantity-box
@@ -67,6 +75,10 @@
       .per-price-box
         Cost Per Print:
         %span.per-placeholder
+      .finishing-price-box
+        Finishing Options:
+        %span.finishing-placeholder
+          0
       .total-price-box
         Total Cost:
         %span.total-placeholder
@@ -76,6 +88,10 @@
         
 :javascript
   $(document).ready( function() {
+    $('#galleria').galleria({
+      width: 633,
+      height: 458
+    });
     Galleria.loadTheme('/assets/galleria.classic.js');
     Galleria.configure({
       autoplay: true,

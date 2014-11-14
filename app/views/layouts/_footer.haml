@@ -1,11 +1,16 @@
 %div{id: 'footer'}
   .container
+    .row
+      .col-lg-4
+        %ul
+          %li= link_to "About", "#"
+          %li= link_to "Contact", "#"
+          %li News
+      .col-lg-4
+      .col-lg-4
+      .col-lg-4
+    
+    .divider
     .copyright
       \&#169; 2014
       %a{href: "#"} Sira Print Inc.
-    %hr.divider
-    .row
-      %ul
-        %li= link_to "About", "#"
-        %li= link_to "Contact", "#"
-        %li News

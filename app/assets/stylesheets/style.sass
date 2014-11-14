@@ -214,14 +214,21 @@ h1, h2, h3, h4
   min-height: 100px
   background-color: #232323
   color: #fff
-  padding-bottom: 30px
   font-size: 18px
+  padding: 10px 0
 
 #footer a
   color: #fff
 
+#footer ul
+  padding: 5px
+
+#footer .divider
+  margin-bottom: 3px
+
 .copyright
-  margin: 35px 0
+  font-size: 12px
+  color: #FFFFFF
 
 #footer a
   color: #fff
@@ -568,17 +575,20 @@ h1, h2, h3, h4
 .product-item-materials input[type=radio]:checked + label
   border-color: #34F343
 
-.product-item-size label, .product-item-final label
+.product-item-size label, .product-item-final label,
+.product-item-finishing-options label
   font-size: 1.4em
 
-.product-item-materials, .product-item-thickness-options, .product-item-size,
-.product-item-upload, .product-item-final, .product-item-title, .product-item-size-options
+.product-item-materials, .product-item-thickness-options, 
+.product-item-size,.product-item-upload, .product-item-final, 
+.product-item-title, .product-item-size-options,.product-item-finishing-options
   padding: 0 20px
   margin-top: 1.5em
   margin-bottom: 1.5em
 
-.product-item-materials h3, .product-item-thickness-options h3, .product-item-size h3,
-.product-item-upload h3, .product-item-final h3, .product-item-size-options h3
+.product-item-materials h3, .product-item-thickness-options h3, 
+.product-item-size h3, .product-item-upload h3, 
+.product-item-final h3, .product-item-size-options h3, .product-item-finishing-options h3
   color: rgb(155, 31, 169)
   border-top: 2px solid #EBEBEB
   border-bottom: 2px solid #EBEBEB
@@ -586,15 +596,17 @@ h1, h2, h3, h4
   padding-left: 10px
   margin-bottom: 20px
 
-.per-price-box
+.per-price-box, .finishing-price-box
   font-size: 1.5em
 
 .total-price-box
   font-size: 2em
 
-.total-price-box, .per-price-box
+.total-price-box, .per-price-box, .finishing-price-box
   font-weight: 900
-  margin: 10px 0 10px 25px
+
+.per-placeholder, .finishing-placeholder, .total-placeholder
+  float: right
 
 .product-item-upload .input-group
   margin-top: 30px
@@ -856,7 +868,6 @@ h1, h2, h3, h4
 
 .delivery-button-primary:hover 
   border-color: #C59F43 #AA8326 #957321
-
 
 .delivery-button-primary .delivery-button-inner
   display: block

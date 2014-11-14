@@ -17,7 +17,10 @@ ready = ->
     quantity = $('.quantity-field').val()
 
     $.post(url, sqft: sqft, undefined, "json").done (data) ->
-      $('#_orderproduct_rate').val(data.price)
+      if data == null
+        $('#_orderproduct_rate').val(0)
+      else
+        $('#_orderproduct_rate').val(data.price)
       price = calc_price(sqft, data.price)
       $('.per-placeholder').html("$#{price}")
       $('#_orderunit_price').val(price)
@@ -113,7 +116,10 @@ ready = ->
         return
       else
         $.post(url, sqft: sqft, undefined, "json").done (data) ->
-          $('#_orderproduct_rate').val(data.price)
+          if data == null
+            $('#_orderproduct_rate').val(0)
+          else
+            $('#_orderproduct_rate').val(data.price)
           price = calc_price(sqft, data.price)
           $('.per-placeholder').html("$#{price}")
           $('.total-placeholder').html("$#{price}")
@@ -130,6 +136,18 @@ ready = ->
     ]
     return
 
+  $('.finish-selection').change ->
+    option = $(this).find(':selected').val()
+    w = $('.product-width').val()
+    l = $('.product-length').val()
+    sqft = calc_sqft(w, l)
+
+    if option == "Grommets"
+      $('.grommets-box').removeClass('hidden')
+    else
+      $('.grommets-box').addClass('hidden')
+
+  # File Upload
   $(".btn-file :file").on "fileselect", (event, numFiles, label) ->
     input = $(this).parents(".input-group").find(":text")
     log = (if numFiles > 1 then numFiles + " files selected" else label)
@@ -139,6 +157,7 @@ ready = ->
       alert log  if log
     return
 
+  # Quantity Change
   $('.quantity-field').change (e) ->
     quantity = $(this).val()
     price = $('.per-placeholder').html()
@@ -153,6 +172,7 @@ ready = ->
       $('#_ordertotal_price').val(new_price)
       $('.total-placeholder').html("$#{new_price}")
 
+  # Submit Large Format
   $('.large-formats-form').submit (e) ->
     thickness = $('.thickness-selection').find(':selected').val()
     total_price = $('.total-placeholder').html()
@@ -168,7 +188,7 @@ ready = ->
     else
       return
 
-  # Update Quantity
+  # Update Quantity for Order Page
   $('.qty-update-button').click (e) ->
     e.preventDefault()
     quantity = $(this).parents().prev("input").val()
