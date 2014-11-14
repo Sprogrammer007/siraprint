@@ -12,7 +12,7 @@ class LargeFormat < ActiveRecord::Base
   accepts_nested_attributes_for :large_format_thicknesses, :allow_destroy => true
 
   delegate :active?, :deactive?, to: :current_state?
-  
+
   def current_state?
     status.downcase.inquiry
   end
