@@ -93,7 +93,7 @@ ActiveAdmin.register Order do
               image_tag p.product.display_image.url()
             end
             column "Material Name" do |p|
-              link_to p.product.name, admin_large_print_path(p.product)
+              link_to p.product.name, admin_large_format_path(p.product)
             end
             column "Thickness" do |p|
               "#{p.details.thickness.thickness}#{p.details.thickness.unit}"
@@ -112,10 +112,10 @@ ActiveAdmin.register Order do
               link_to p.print_pdf_file_name, p.print_pdf.url()
             end
             column "User Design 2" do |p|
-              link_to p.print_pdf_2_file_name, p.print_pdf_2.url() if p.print_pdf_2
+              link_to p.print_pdf_2_file_name, p.print_pdf_2.url() if p.print_pdf_2_file_name
             end
             column "Finishing" do |p|
-              "#{p.details.finishing} #{p.details.grommets_quantity}"
+              "#{p.details.grommets_quantity} #{p.details.finishing}"
             end
             column :unit_price
             column :price
@@ -126,7 +126,7 @@ ActiveAdmin.register Order do
         end
         if order.ordered_products.metal_sign.any?
           h2 "Metal Signs"
-          table_for order.ordered_products.large_print do
+          table_for order.ordered_products.metal_sign do
             column "Product" do |p|
               image_tag p.product.display_image.url()
             end
