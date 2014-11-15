@@ -55,12 +55,12 @@
       width: 633,
       height: 458
     });
-    Galleria.loadTheme('/assets/galleria.classic.js');
+    Galleria.loadTheme('<%= javascript_include_tag "galleria.classic", "data-turbolinks-track" => true %>');
     Galleria.configure({
       autoplay: true,
       transition: 'fade',
       showInfo: false
     });
 
-    Galleria.run('.galleria');
+    Galleria.run('#galleria');
   } );
