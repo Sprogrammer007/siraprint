@@ -2,14 +2,8 @@
   %td
     = order.order_id
   %td
-    %strong 
-      = order.address.full_name()
-    %br
-    = order.address.address()
-    %br
-    = "#{order.address.city()}, #{order.address.province()}"
-    %span.uppercase
-      = "#{order.address.postal[0..2]} #{order.address.postal[3..5]}"
+    - if order.delivery_address
+      = order.delivery_address.html_safe()
   %td
     - order.ordered_products.each do |p|
       %ul

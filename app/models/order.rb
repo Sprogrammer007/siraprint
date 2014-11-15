@@ -9,6 +9,8 @@ class Order < ActiveRecord::Base
   scope :completed, -> { where(status: "completed") }
   scope :payed, -> { where(status: "payed") }
 
+  before_save :create_order_id
+  
   def create_order_id
     self.order_id = self.id + 100
   end
@@ -33,6 +35,6 @@ class Order < ActiveRecord::Base
   end
 
   def address
-    @address ||= DeliveryAddress.find(self.delivery_method)
+    @address ||= DeliveryAddress.find(self.delivery_id)
   end
 end
