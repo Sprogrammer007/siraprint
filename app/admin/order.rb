@@ -19,7 +19,9 @@ ActiveAdmin.register Order do
     column "User Email" do |o|
       o.user.email
     end
-    column :delivery_method
+    column "Delivery Address" do |o|
+      o.delivery_address.html_safe() if o.delivery_address
+    end
     column "Order Sub-Total" do |o|
       "$#{o.sub_total}"
     end
@@ -56,8 +58,10 @@ ActiveAdmin.register Order do
           row "User Email" do |o|
             o.user.email
           end
-          row :delivery_method
-          row :"Order Sub-Total" do |o|
+          row "Delivery Address" do |o|
+            o.delivery_address.html_safe() if o.delivery_address
+          end
+          row "Order Sub-Total" do |o|
             "$#{o.sub_total}"
           end
           row  "Order Tax" do |o|
@@ -88,7 +92,7 @@ ActiveAdmin.register Order do
             column "Product" do |p|
               image_tag p.product.display_image.url()
             end
-            column "Product Name" do |p|
+            column "Material Name" do |p|
               link_to p.product.name, admin_large_print_path(p.product)
             end
             column "Thickness" do |p|
@@ -107,6 +111,12 @@ ActiveAdmin.register Order do
             column "User Design" do |p|
               link_to p.print_pdf_file_name, p.print_pdf.url()
             end
+            column "User Design 2" do |p|
+              link_to p.print_pdf_2_file_name, p.print_pdf_2.url() if p.print_pdf_2
+            end
+            column "Finishing" do |p|
+              "#{p.details.finishing} #{p.details.grommets_quantity}"
+            end
             column :unit_price
             column :price
             column "" do |p|
@@ -121,7 +131,10 @@ ActiveAdmin.register Order do
               image_tag p.product.display_image.url()
             end
             column "Product Name" do |p|
-              link_to p.product.name, "#"
+              link_to p.product.name, admin_metal_sign_path(p)
+            end
+            column "Size" do |p|
+              "#{p.details.size.width}\" x #{p.details.size.height}\""
             end
             column :quantity
             column "User Design" do |p|
@@ -130,7 +143,7 @@ ActiveAdmin.register Order do
             column :unit_price
             column :price
             column "" do |p|
-              link_to("Remove", "#", method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
+              link_to("Remove", admin_ordered_product_path(p), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
             end
           end
         end
