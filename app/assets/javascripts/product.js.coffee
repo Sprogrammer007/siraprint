@@ -15,23 +15,27 @@ ready = ->
     sqft = calc_sqft(w, l)
     url = "http://localhost:3000/large_formats/#{t}/get_price/"
     quantity = $('.quantity-field').val()
-
+    f_price = Math.round(($('.finishing-placeholder').html().replace("$", '') * 100) / 100)
+    
     $.post(url, sqft: sqft, undefined, "json").done (data) ->
       if data == null
         $('#_orderproduct_rate').val(0)
       else
         $('#_orderproduct_rate').val(data.price)
       price = calc_price(sqft, data.price)
+      
       $('.per-placeholder').html("$#{price}")
       $('#_orderunit_price').val(price)
       if (quantity != '')
         price = price * quantity
+      if ( $('.finishing-placeholder').html() != '' )
+        price = price + parseFloat(f_price)
 
       $('.total-placeholder').html("$#{price}")
       $('#_ordertotal_price').val(price)
 
   convert_to_feet = (x) ->
-    return parseFloat(Math.ceil((x * 0.083333) * 10) / 10).toFixed(1)
+    return parseFloat(Math.ceil((x * 0.083333) * 100) / 100).toFixed(2)
 
   convert_to_inch = (x) ->
     return parseFloat(Math.floor(x * 12)).toFixed(0)
@@ -141,11 +145,41 @@ ready = ->
     w = $('.product-width').val()
     l = $('.product-length').val()
     sqft = calc_sqft(w, l)
+    u = $('#_orderunit_price').val()
+    f = $('.finishing-placeholder').html()
+    q = $('.quantity-field').val()
+
+    if (w == "" || l == "")
+      $(this).prop('selectedIndex', 0)
+      return alert("You must enter a length & width")
+    else if (u == "")
+      $(this).prop('selectedIndex', 0)
+      return alert("You must enter a select a thickness")
 
     if option == "Grommets"
       $('.grommets-box').removeClass('hidden')
+      if f != ''
+        $('.finishing-placeholder').html("0")
+
     else
       $('.grommets-box').addClass('hidden')
+      f_price = parseFloat(sqft).toFixed(2) 
+      $('.finishing-placeholder').html("$#{f_price}")
+      new_total = (parseFloat(f_price) + (parseFloat(u) * q)).toFixed(2)
+      $('#_ordertotal_price').val(new_total)
+      $('.total-placeholder').html("$#{new_total}")
+  
+  # Grommet Quantity Change
+  $('.grommets-field').change ->
+    gq = $(this).val()
+    u = $('#_orderunit_price').val()
+    q = $('.quantity-field').val()
+    f_price = gq * 1
+
+    $('.finishing-placeholder').html("$#{f_price}")
+    new_total = (parseFloat(f_price) + (parseFloat(u) * q)).toFixed(2)
+    $('#_ordertotal_price').val(new_total)
+    $('.total-placeholder').html("$#{new_total}")
 
   # File Upload
   $(".btn-file :file").on "fileselect", (event, numFiles, label) ->

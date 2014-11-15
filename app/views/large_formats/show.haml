@@ -48,12 +48,21 @@
       = select("order", "[details]thickness_id", @large_format.large_format_thicknesses.collect {|t| [ "#{t.thickness}#{t.unit}", t.id ] }, {include_blank: 'Please select your thickness'}, class: "thickness-selection form-control")
     .product-item-upload
       %h3 Step 3: Upload Your Design
+      %label Front:
       .input-group
-        = text_field_tag 'design_pdf_name', nil, class: "form-control", readonly: true 
+        = text_field_tag 'design_pdf_name', nil, class: "form-control", readonly: true
         %span.input-group-btn
           %span.btn.btn-primary.btn-file
             Browse 
             = file_field_tag '[order]design_pdf', class: 'design_pdf'
+      - if @large_format.sides == 2
+        %label.mtl Back:
+        .input-group
+          = text_field_tag 'design_pdf_2_name', nil, class: "form-control", readonly: true 
+          %span.input-group-btn
+            %span.btn.btn-primary.btn-file
+              Browse 
+              = file_field_tag '[order]design_pdf_2', class: 'design_pdf'
     .product-item-finishing-options
       %h3 Step 4: Finishing (Optional)
       = select("order", "[details]finishing", options_for_select(["Grommets", "Lamination "]), {include_blank: 'Please select your finishing option'}, class: "finish-selection form-control")
@@ -62,7 +71,7 @@
           .col-lg-8
             = label_tag '[details]grommets_quantity', "Number of Grommets"
           .col-lg-4
-            = number_field_tag '[details]grommets_quantity', 0, class: "grommets-field form-control", in: 1...10000
+            = number_field_tag '[order][details]grommets_quantity', 0, class: "grommets-field form-control", in: 1...10000
     .product-item-final
       %h3 Step 5: Place Your Order
       .quantity-box
@@ -75,13 +84,15 @@
       .per-price-box
         Cost Per Print:
         %span.per-placeholder
+          $0
       .finishing-price-box
         Finishing Options:
         %span.finishing-placeholder
-          0
+          $0
       .total-price-box
         Total Cost:
         %span.total-placeholder
+          $0
       .divider
       .submit-order
         = button_tag "Place My Order", class: "btn btn-place-order"

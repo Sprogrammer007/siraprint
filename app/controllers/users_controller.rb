@@ -10,6 +10,11 @@ class UsersController < Devise::RegistrationsController
     super
   end
 
+  def create
+    @no_sidebar = true
+    super
+  end
+
   def show
     @no_sidebar = true
     unless user_signed_in?
