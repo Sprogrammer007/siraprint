@@ -58,7 +58,7 @@ ActiveAdmin.register MetalSign do
       end
       div class: "metal-sign-right" do 
         panel "Slider Images", class: "group" do
-          render "admin/upload_slider", resource: LargeFormatSlider.new()
+          render "admin/upload_slider", type: metal_sign.name.downcase.split(" ").join("_")
         end
       end
     end
