@@ -38,7 +38,7 @@
                       = "#{a.postal[0..2]} #{a.postal[3..5]}"
                     %br
                       = a.user.company_phone()
-                  - if current_user.open_order.delivery_id == a.id
+                  - if @order.delivery_id == a.id
                     .delivery-to.delivery-address-selected
                       %p.delivery-button-text Selected
                   - else
@@ -47,7 +47,7 @@
                         = link_to "Delivery to this address", "#", class: "delivery-button-text"
                   .delivery-address-buttons.mtt-xs.group
                     = link_to "Edit", edit_delivery_address_path(a, order_form: "Yes"), class: "profile-button profile-button-small"
-                    - unless current_user.open_order.delivery_id == a.id
+                    - unless @order.delivery_id == a.id
                       = link_to "Remove", delivery_address_path(a, order_form: "Yes"), class: "profile-button profile-button-small", data: { confirm: "Are you sure?" }, method: :delete
      
             - else
@@ -79,14 +79,33 @@
       .panel.panel-default
         .panel-heading
           %h3.panel-title Cart Summry
-        .panel-body
-          %dl.items
-            %dt Product Design
-            %dd.design
-              %img{:alt => "", :src => "https://dov5cor25da49.cloudfront.net/products/6066/125x130design_01.jpg"}/
-            %dt Product Title
-            %dd.title{:title => "Whatever X Large Lagoon Threadless Mens Tee"}
-              Whatever
-              %span (1) X Large Lagoon Threadless Mens Tee
-            %dt Product Subtotal
-            %dd.sub $25.00
+        .panel-body.summary
+          - @order.ordered_products.each do |p|
+            %dl.items
+              %dt Product Image
+              %dd.design
+                = image_tag p.product.display_image.url()
+              %dt Product Name
+              %dd.title
+                %strong
+                  - if p.product_type == "large_format"
+                    = "#{p.product_type.camelize.split("_").join(" ")}(#{p.product.name})"
+                  - else
+                    = p.product.name
+                %span 
+                  - if p.product_type == "large_format"
+                    Thickness: 
+                    = "#{p.details.thickness.thickness}#{p.details.thickness.unit}, Finishing: #{p.details.finishing} #{p.details.grommets_quantity} "
+              %dt Product Subtotal
+              %dd.sub 
+                = "$#{p.price}"
+          %dl.totals
+            %dt Subtotal
+            %dd 
+              = "$#{@order.sub_total}"
+            %dt Tax (HST 13%)
+            %dd 
+              = "$#{@order.get_tax}"
+            %dt.summary_total Total
+            %dd#total_amount_due 
+              = "$#{@order.total}"
