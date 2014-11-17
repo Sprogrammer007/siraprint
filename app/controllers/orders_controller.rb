@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   
-  before_filter :authenticate_user!, :except => [:index] 
+  before_filter :authenticate_user!
 
   def create
     oparams = params[:order]
@@ -43,6 +43,16 @@ class OrdersController < ApplicationController
     new_price = (item.unit_price * params[:quantity].to_i) 
     item.update(:quantity => params[:quantity], price: new_price)
     render :js => "window.location = '#{cart_path()}'"
+  end
+
+  def cancel
+    order = Order.find(params[:id])
+    if order.open?
+      order.update(:status => "canceled")
+    else
+      flash[:notice] = "You cannot cancel this order."
+    end
+    redirect_to :back
   end
 
   def payment

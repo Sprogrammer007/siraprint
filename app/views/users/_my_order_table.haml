@@ -12,9 +12,10 @@
   %td
     = "$#{order.total}"
   %td
-    = order.status.camelize
+    %span{class: "order_status status_#{order.status}"}
+      = order.status.camelize
   %th 
     - if order.status == "open"
-      = link_to "Cancel Order", "#"
+      = link_to "Cancel Order", cancel_order_path(order)
       | 
       = link_to "Update Order", cart_path()

@@ -28,6 +28,7 @@ Rails.application.routes.draw do
 
   resources :orders, :except => ['show'] do
     member do
+      get 'cancel'
       post 'remove_item'
       post 'update_item'
     end

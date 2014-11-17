@@ -49,7 +49,7 @@
             %th Status
             %th 
         %tbody
-          - @orders.open.completed do |order|
+          - @orders.completed.each do |order|
             = render 'my_order_table', order: order
     #cancel-tab.tab-pane.fade{"aria-labelledby" => "cancel-tab", :role => "tabpanel"}
       %table.table.table-striped
@@ -62,7 +62,7 @@
             %th Status
             %th 
         %tbody
-          - @orders.canceled do |order|
+          - @orders.canceled.each do |order|
             = render 'my_order_table', order: order
 
 
