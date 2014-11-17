@@ -219,8 +219,7 @@ ready = ->
       alert("Please select a thickness")
       e.preventDefault();
       return false
-    else
-      return
+    
 
   # Update Quantity for Order Page
   $('.qty-update-button').click (e) ->
