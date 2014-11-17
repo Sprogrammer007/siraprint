@@ -45,6 +45,8 @@ en:
       signed_out: "Signed out successfully."
       already_signed_out: "Signed out successfully."
     users:
+      user:
+        signed_up: "Thank you for signing up please wait for your account to be approved!"
       not_signed_in: "Please Sign in or Register an Account."
     unlocks:
       send_instructions: "You will receive an email with instructions for how to unlock your account in a few minutes."
