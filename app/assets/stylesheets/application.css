@@ -12,15 +12,8 @@
  *
  *= require style
  *= require galleria.classic
+ *= require font
  *= require_self
  */
 
 
-@font-face {
-  font-family: 'ETmodules';
-  src: url('/assets/ETmodules.eot');
-  src: url('/assets/ETmodules.eot?#iefix')  format("embedded-opentype"), 
-       url('/assets/ETmodules.ttf') format("truetype"), 
-       url('/assets/ETmodules.woff') format("woff"), 
-       url('/assets/ETmodules.svg#ETmodules') format("svg");
-}
