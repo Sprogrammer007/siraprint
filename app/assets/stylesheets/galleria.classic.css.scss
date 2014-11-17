@@ -65,7 +65,7 @@
     right: 10px;
     z-index: 2;
     display: none;
-    background: url(classic-loader.gif) no-repeat 2px 2px;
+    background: image-url(classic-loader.gif) no-repeat 2px 2px;
 }
 .galleria-theme-classic .galleria-info {
     width: 50%;
@@ -218,7 +218,7 @@
 .galleria-theme-classic .galleria-info-close,
 .galleria-theme-classic .galleria-image-nav-left,
 .galleria-theme-classic .galleria-image-nav-right {
-    background-image: url(classic-map.png);
+    background-image: image-url(classic-map.png);
     background-repeat: no-repeat;
 }
 .galleria-theme-classic.galleria-container.videoplay .galleria-info,
