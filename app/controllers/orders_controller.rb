@@ -9,8 +9,17 @@ class OrdersController < ApplicationController
       op = @order.ordered_products.create(quantity: oparams[:quantity], product_type: oparams[:product_type],
         print_pdf: oparams[:design_pdf], print_pdf_2: oparams[:design_pdf_2], product_id: oparams[:product_id], unit_price: oparams[:unit_price],
         price: oparams[:total_price] )
-      if op.save!
-        op.create_details(oparams[:product_type], oparams[:details])
+      if op.save
+        detail =  op.create_details(oparams[:product_type], oparams[:details])
+        if detail.save
+          op.update(:product_detail_id => detail.id)
+        else
+          flash[:warn] = "Oh no! Your order did not go through. Please make sure you provided all required informations!"
+          redirect_to :back and return
+        end
+      else
+        flash[:warn] = "Oh no! Your order did not go through. Please make sure you provided all required informations!"
+        redirect_to :back and return
       end
       @order.update_price
     else

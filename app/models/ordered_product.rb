@@ -23,8 +23,7 @@ class OrderedProduct < ActiveRecord::Base
 
   def create_details(type, details)
     detail = "Ordered#{type.camelize.gsub("_", "")}Detail".constantize.new(details.permit!)
-    detail.save!
-    self.update(:product_detail_id => detail.id)   
+    return detail
   end
 
   def remove

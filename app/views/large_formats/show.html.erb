@@ -1,10 +1,11 @@
+<%- if @order %>
+<%- Rails.logger.warn "#{@order.errors.messages.inspect}" %>
+<% end -%>
 <div class="col-lg-7">
   <div class="galleria" id="galleria" style="height: 518px">
-    <% if SliderImage.large_format.any? %>
-      <% SliderImage.large_format.each do |slide| %>
-        <%= image_tag(slide.slide_image.url()) %>
-      <% end %>
-    <% end %>
+    <%= image_tag("1.jpg") %>
+    <%= image_tag("2.jpg") %>
+    <%= image_tag("2.jpg") %>
   </div>
 </div>
 <div class="col-lg-5">
@@ -16,6 +17,7 @@
     <%= hidden_field_tag '[order]product_rate', '' %>
     <%= hidden_field_tag '[order]total_price', '' %>
     <%= hidden_field_tag '[order]unit_price', '' %>
+
     <div class="product-item-title">
       <h2>
         <%= "Large Format" %>
@@ -98,7 +100,7 @@
             <%= label_tag '[details]grommets_quantity', "Number of Grommets" %>
           </div>
           <div class="col-lg-4">
-            <%= number_field_tag '[order][details]grommets_quantity', 0, class: "grommets-field form-control", in: 1...10000 %>
+            <%= number_field_tag '[order][details]grommets_quantity', nil, class: "grommets-field form-control", in: 1...10000 %>
           </div>
         </div>
       </div>
@@ -135,9 +137,10 @@
         </span>
       </div>
       <div class="divider"></div>
-      <div class="submit-order">
-        <%= button_tag "Place My Order", class: "btn btn-place-order" %>
-      </div>
+    
+    </div>
+    <div class="submit-order">
+      <%= button_tag "Place My Order", class: "btn btn-place-order" %>
     </div>
   <% end %>
 </div>

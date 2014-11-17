@@ -191,6 +191,8 @@ ready = ->
       alert log  if log
     return
 
+  # Submit Form
+
   # Quantity Change
   $('.quantity-field').change (e) ->
     quantity = $(this).val()
@@ -205,21 +207,6 @@ ready = ->
       new_price = parseFloat(Math.round((price.replace("$", '') * quantity) * 100) / 100).toFixed(2) 
       $('#_ordertotal_price').val(new_price)
       $('.total-placeholder').html("$#{new_price}")
-
-  # Submit Large Format
-  $('.large-formats-form').submit (e) ->
-    thickness = $('.thickness-selection').find(':selected').val()
-    total_price = $('.total-placeholder').html()
-
-    if (total_price == '')
-      alert("Please follow the steps and enter the require informations")
-      e.preventDefault();
-      return false
-    else if (thickness == undefined || thickness == '')
-      alert("Please select a thickness")
-      e.preventDefault();
-      return false
-    
 
   # Update Quantity for Order Page
   $('.qty-update-button').click (e) ->

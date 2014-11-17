@@ -15,7 +15,6 @@ class LargeFormatsController < ApplicationController
   def get_price
     thickness = LargeFormatThickness.find(params[:id])
     sqft = params[:sqft].to_f.round(2)
-    Rails.logger.warn "#{sqft}"
     @price = thickness.large_format_tiers.sqft_eq(sqft)
     respond_to do |format|
       format.html { redirect_to root_path }

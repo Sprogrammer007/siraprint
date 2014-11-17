@@ -14,6 +14,6 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap
-//= require galleria-1.4.2.min
 //= require product
+//= require galleria-1.4.2
 //= require galleria.classic

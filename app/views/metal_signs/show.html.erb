@@ -11,6 +11,7 @@
     <%= hidden_field_tag '[order]product_id', @metal_sign.id %>
     <%= hidden_field_tag '[order]total_price', '' %>
     <%= hidden_field_tag '[order]unit_price', '' %>
+
     <div class="product-item-title">
       <h2>
         <%= @metal_sign.name %>
@@ -59,9 +60,10 @@
         <span class="total-placeholder"></span>
       </div>
       <div class="divider"></div>
-      <div class="submit-order">
-        <%= button_tag "Place My Order", class: "btn btn-place-order" %>
-      </div>
+      
+    </div>
+    <div class="submit-order">
+      <%= button_tag "Place My Order", class: "btn btn-place-order" %>
     </div>
   <% end %>
 </div>
