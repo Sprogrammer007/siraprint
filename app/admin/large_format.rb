@@ -37,6 +37,7 @@ ActiveAdmin.register LargeFormat do
     actions defaults: false, dropdown: true, dropdown_name: "Options" do |l|
       item("Manage", admin_large_format_path(l))
       item("Edit", edit_admin_large_format_path(l))
+      item("Copy", copy_admin_large_format_path(l))
       item("Remove", admin_large_format_path(l), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
       item("Active/Deactive", status_update_admin_large_format_path(l))
     end
@@ -139,12 +140,18 @@ ActiveAdmin.register LargeFormat do
 
   #Actions
   member_action :status_update, method: :get do
-    lp = LargeFormat.find(params[:id])
-    if lp.active?
-      lp.update(status: "Deactive")
+    lf = LargeFormat.find(params[:id])
+    if lf.active?
+      lf.update(status: "Deactive")
     else
-      lp.update(status: "Active")
+      lf.update(status: "Active")
     end
+    redirect_to :back
+  end
+
+  member_action :copy, method: :get do
+    lf = LargeFormat.find(params[:id])
+    lf.clone_with_associations
     redirect_to :back
   end
 

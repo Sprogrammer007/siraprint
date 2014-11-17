@@ -16,4 +16,18 @@ class MetalSign < ActiveRecord::Base
   def current_state?
     status.downcase.inquiry
   end
+
+  def clone_with_associations
+    new_record = self.dup
+    new_record.save
+    #sizes
+    if self.metal_sign_sizes.any?
+      self.metal_sign_sizes.each do |size|
+        new_size = size.dup
+        new_size.save
+        new_size.update(:metal_sign_id => new_record.id)
+      end
+    end
+    new_record
+  end
 end

@@ -54,7 +54,7 @@ ActiveAdmin.register_page "Dashboard" do
               when "delivered", "completed"
                 status_tag o.status.camelize, :ok
               else "canceled"
-                status_tag o.status.camelizes, nil, class: "cancel"
+                status_tag o.status.camelize, nil, class: "cancel"
               end
             end
             column :created_at

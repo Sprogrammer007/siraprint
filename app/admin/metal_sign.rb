@@ -31,6 +31,7 @@ ActiveAdmin.register MetalSign do
     actions defaults: false, dropdown: true, dropdown_name: "Options" do |m|
       item("Manage", admin_metal_sign_path(m))
       item("Edit", edit_admin_metal_sign_path(m))
+      item("Copy", copy_admin_metal_sign_path(m))
       item("Remove", admin_metal_sign_path(m), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
       item("Active/Deactive", status_update_admin_metal_sign_path(m))
     end
@@ -105,6 +106,12 @@ ActiveAdmin.register MetalSign do
     else
       ms.update(status: "Active")
     end
+    redirect_to :back
+  end
+
+  member_action :copy, method: :get do
+    ms = MetalSign.find(params[:id])
+    ms.clone_with_associations
     redirect_to :back
   end
 
