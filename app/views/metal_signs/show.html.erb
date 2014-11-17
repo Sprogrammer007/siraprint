@@ -1,0 +1,84 @@
+<div class="col-lg-7">
+  <div class="galleria" id="galleria" style="height: 518px">
+    <% # = image_tag("1.jpg") %>
+    <% # = image_tag("2.jpg") %>
+    <% # = image_tag("2.jpg") %>
+  </div>
+</div>
+<div class="col-lg-5">
+  <%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "metal-sign-form", multipart: true do %>
+    <%= hidden_field_tag '[order]product_type', 'metal_sign' %>
+    <%= hidden_field_tag '[order]product_id', @metal_sign.id %>
+    <%= hidden_field_tag '[order]total_price', '' %>
+    <%= hidden_field_tag '[order]unit_price', '' %>
+    <div class="product-item-title">
+      <h2>
+        <%= @metal_sign.name %>
+      </h2>
+      <div class="item-description">
+        <p>
+          <%= @metal_sign.description.html_safe() %>
+        </p>
+      </div>
+    </div>
+    <div class="product-item-size-options">
+      <h3>Step 1: Select Your Size</h3>
+      <%= select("order", "[details]size_id", @metal_sign.metal_sign_sizes.collect {|s| [ "#{s.width}\" x #{s.height}\" - $#{s.price}", s.id ] }, {include_blank: 'Please select your size'}, class: "size-selection form-control") %>
+    </div>
+    <div class="product-item-upload">
+      <h3>Step 2: Upload Your Design</h3>
+      <div class="input-group">
+        <%= text_field_tag 'design_pdf_name', nil, class: "form-control", readonly: true  %>
+        <span class="input-group-btn">
+          <span class="btn btn-primary btn-file">
+            Browse 
+            <%= file_field_tag '[order]design_pdf', class: 'design_pdf' %>
+          </span>
+        </span>
+      </div>
+    </div>
+    <div class="product-item-final">
+      <h3>Step 3: Place Your Order</h3>
+      <div class="quantity-box">
+        <div class="row mgl">
+          <div class="col-lg-6">
+            <%= label_tag '[order]quantity', "Number of Prints" %>
+          </div>
+          <div class="col-lg-6">
+            <%= number_field_tag '[order]quantity', 1, class: "quantity-field form-control", in: 1...10000 %>
+          </div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="per-price-box">
+        Cost Per Print:
+        <span class="per-placeholder"></span>
+      </div>
+      <div class="total-price-box">
+        Total Cost:
+        <span class="total-placeholder"></span>
+      </div>
+      <div class="divider"></div>
+      <div class="submit-order">
+        <%= button_tag "Place My Order", class: "btn btn-place-order" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+        
+<script>
+  $(document).ready( function() {
+    $('#galleria').galleria({
+      width: 633,
+      height: 458
+    });
+    Galleria.loadTheme("<%= asset_path('galleria.classic.js') %>");
+    Galleria.configure({
+      autoplay: true,
+      transition: 'fade',
+      showInfo: false
+    });
+
+    Galleria.run('#galleria');
+  } );
+</script>
