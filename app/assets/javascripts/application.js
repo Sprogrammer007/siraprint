@@ -16,3 +16,4 @@
 //= require bootstrap
 //= require galleria-1.4.2.min
 //= require product
+//= require galleria.classic
