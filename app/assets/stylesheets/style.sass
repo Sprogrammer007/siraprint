@@ -3,8 +3,8 @@
 
 @font-face
   font-family: 'ETmodules'
-  src: url('ETmodules.eot')
-  src: url('ETmodules.eot?#iefix') format("embedded-opentype"), url('ETmodules.ttf') format("truetype"), url('ETmodules.woff') format("woff"), url('ETmodules.svg#ETmodules') format("svg")
+  src: url("<%= asset_path('ETmodules.eot') %>")
+  src: url("<%= asset_path('ETmodules.eot?#iefix') %>")  format("embedded-opentype"), url("<%= asset_path('ETmodules.ttf') %>") format("truetype"), url("<%= asset_path('ETmodules.woff') %>") format("woff"), url("<%= asset_path('ETmodules.svg#ETmodules') %>") format("svg")
   font-weight: normal
   font-style: normal
 
@@ -517,9 +517,8 @@ h1, h2, h3, h4
   display: inline-block
   width: 33%
   padding: 1.3125em
+  text-align: center
 
-.product-item img
-  width: 100%
 
 // Carousel
 
