@@ -8,7 +8,7 @@ class Order < ActiveRecord::Base
   scope :canceled, -> { where(status: "canceled") }
   scope :completed, -> { where(status: "completed") }
   scope :payed, -> { where(status: "payed") }
-
+  scope :recent, -> (n) { order('created_at DESC').limit(n) }
   before_save :create_order_id
   
   def create_order_id

@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   before_create :set_default_state
 
   scope :approved, -> { where(:status => "Approved") }
-
+  scope :recent, -> (n) { order('created_at DESC').limit(n) }
   def new_order
     order = self.orders.create!(status: 'open')
     order.create_order_id

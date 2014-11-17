@@ -1,7 +1,7 @@
 ActiveAdmin.register User do
 
   menu :parent => "Adminstration"
-
+  actions :all, :except => [:new]
   permit_params :email, :password, :status, :company_name, :company_address,
    :company_province, :company_city, :company_postal, :company_hst, :company_phone
    
@@ -18,9 +18,7 @@ ActiveAdmin.register User do
 
   #Index Table
   index do
-    column "ID" do |u|
-      u.id
-    end
+    column :id
     column :email
     column :company_name
     column :company_hst
