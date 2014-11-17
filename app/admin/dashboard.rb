@@ -15,11 +15,11 @@ ActiveAdmin.register_page "Dashboard" do
             column "Joined At" do |u|
               u.created_at.strftime("%m-%d-%Y")
             end
-            column :status do |u|
+            column "Status" do |u|
               if u.status == "Approved"
                 status_tag "Approved",:ok
-              elsif u.status = "Disapproved"
-                status_tag "Disapproved", :errror
+              elsif u.status == "Disapproved"
+                status_tag "Disapproved", :error
               else
                 status_tag "#{u.status}"
               end 

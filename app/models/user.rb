@@ -30,7 +30,6 @@ class User < ActiveRecord::Base
   end
 
   def set_default_state
-    Rails.logger.warn "#{test}"
     self.status = "Registered"
   end
 

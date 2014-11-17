@@ -1,7 +1,7 @@
 ActiveAdmin.register User do
 
   menu :parent => "Adminstration"
-  actions :all, :except => [:new]
+ 
   permit_params :email, :password, :status, :company_name, :company_address,
    :company_province, :company_city, :company_postal, :company_hst, :company_phone
    
@@ -26,11 +26,11 @@ ActiveAdmin.register User do
     column "Joined At" do |u|
       u.created_at.strftime("%m-%d-%Y")
     end
-    column :status do |u|
+    column "Status" do |u|
       if u.status == "Approved"
         status_tag "Approved",:ok
-      elsif u.status = "Disapproved"
-        status_tag "Disapproved", :errror
+      elsif u.status == "Disapproved"
+        status_tag "Disapproved", :error
       else
         status_tag "#{u.status}"
       end 
