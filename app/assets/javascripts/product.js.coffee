@@ -13,7 +13,7 @@ ready = ->
     
   change_price = (w, l, t) ->
     sqft = calc_sqft(w, l)
-    url = "http://localhost:3000/large_formats/#{t}/get_price/"
+    url = $('.price-url').data('price-url')
     quantity = $('.quantity-field').val()
     f_price = Math.round(($('.finishing-placeholder').html().replace("$", '') * 100) / 100)
     
@@ -102,7 +102,7 @@ ready = ->
     width = $('.product-width').val()
     length = $('.product-length').val()
     id = $(this).find(':selected').val()
-    url = "http://localhost:3000/large_formats/#{id}/get_price/"
+    url = $('.price-url').data('price-url')
     sqft = calc_sqft(width, length)
     rate = $('#_orderproduct_rate').val()
 
