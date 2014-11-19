@@ -184,8 +184,11 @@
 }
 
 // Item List
+.item-list .col-product {
+  width: 300px;
+}
 .item-list table td img {
-  width: 50%;
+  width: 100%;
 }
 
 // Slider Images
