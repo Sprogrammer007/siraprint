@@ -6,17 +6,14 @@ class UsersController < Devise::RegistrationsController
   before_filter :configure_permitted_parameters
   
   def new
-    @no_sidebar = true
     super
   end
 
   def create
-    @no_sidebar = true
     super
   end
 
   def show
-    @no_sidebar = true
     unless user_signed_in?
       set_flash_message :alert, :not_signed_in
       redirect_to root_path()
@@ -24,15 +21,12 @@ class UsersController < Devise::RegistrationsController
   end
 
   def edit
-    @no_sidebar = true
     @resource = resource
   end
 
-  def after_sign_up
-  end
+  
 
   def my_orders
-    @no_sidebar = true
     @orders = current_user.orders
   end
 
@@ -51,5 +45,10 @@ class UsersController < Devise::RegistrationsController
         :company_address, :company_city, :company_hst,
         :current_password, :company_phone)
     end
+  end
+
+  def after_inactive_sign_up_path_for(resource)
+    UserMailer.notify_new_user(user).deliver
+    redirect_to root_path
   end
 end

@@ -11,7 +11,7 @@ class Order < ActiveRecord::Base
   scope :recent, -> (n) { order('created_at DESC').limit(n) }
   
   def create_order_id
-    self.order_id = self.id + 100
+    self.update(order_id: (self.id + 100))
   end
 
   delegate :open?, :payed?, :completed?, :canceled?, to: :current_state?

@@ -128,7 +128,7 @@
   padding: 8px 10px 7px !important;
 }
 
-// Large Print
+// Large Format
 
 .display-image {
   max-width: 400px;
@@ -183,6 +183,10 @@
   float: right;
 }
 
+// Item List
+.item-list table td img {
+  width: 50%;
+}
 
 // Slider Images
 
@@ -217,6 +221,41 @@
   line-height: 1.2em;
   font-size: 21px;
   font-weight: 900;
+}
+
+.finishing_select {
+  display: block;
+  padding: 15px;
+  margin: 20px 0;
+}
+
+.finishing_select input[type=checkbox] {
+   position: absolute;
+   top: -9999px;
+   left: -9999px;
+   /* For mobile, it's typically better to position checkbox on top of clickable
+      area and turn opacity to 0 instead. */
+}
+
+.finishing_select label {
+  display: inline-block;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: bold;
+  border: 2px solid #AAA;
+}
+
+.finishing_select label:hover {
+  border: 2px solid #209EC8; 
+}
+
+.finishing_select input[type=checkbox]:checked + label {
+  border: 2px solid #209EC8; 
+  -webkit-box-shadow: 7px 10px 6px -6px #777777;
+  -moz-box-shadow: 7px 10px 6px -6px #777777;
+  box-shadow: 7px 10px 6px -6px #777777;
 }
 
 //  Firefox fix

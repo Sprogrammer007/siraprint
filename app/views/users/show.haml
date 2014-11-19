@@ -1,84 +1,86 @@
 
 - if current_user.approved?
-  .col-lg-6.mtl
-    .panel.panel-default.boxed-m
-      .panel-heading.profile-title.group
-        %h3.panel-title.pull-left
-          Account Details:
-        .pull-right
-          = link_to "Edit", edit_user_registration_path()
-      .panel-body.profile-body
-        
-        .account-details
-          .profile-label.mtxs
-            Email:
-          .profile-info.mbs
-            = current_user.email
-          .profile-label
-            Company Name:
-          .profile-info.mbs
-            = current_user.company_name
-          .profile-label.va-top
-            Company Address:
-          .profile-info.mbs
-            = current_user.company_address
-            %br
-            = "#{current_user.company_city}, #{current_user.company_province}"
-            %br
-            = current_user.company_postal.upcase!
-          .profile-label
-            Company Phone #:
-          .profile-info.mbs
-            = current_user.company_phone
-          .profile-label
-            Company HST #:
-          .profile-info.mbs
-            = current_user.company_hst
-  .col-lg-6.mtl
-    .panel.panel-default.boxed-m
-      .panel-heading.profile-title.group
-        %h3.panel-title.pull-left
-          Delivery Address:
-        - if current_user.has_delivery_addressess?
+  .container
+    .col-lg-6.mtl
+      .panel.panel-default.boxed-m
+        .panel-heading.profile-title.group
+          %h3.panel-title.pull-left
+            Account Details:
           .pull-right
-            = link_to "Add Another Address", new_delivery_address_path()
-      .panel-body.profile-body
-        .shipping-details
+            = link_to "Edit", edit_user_registration_path()
+        .panel-body.profile-body
           
-         
-            
+          .account-details
+            .profile-label.mtxs
+              Email:
+            .profile-info.mbs
+              = current_user.email
+            .profile-label
+              Company Name:
+            .profile-info.mbs
+              = current_user.company_name
+            .profile-label.va-top
+              Company Address:
+            .profile-info.mbs
+              = current_user.company_address
+              %br
+              = "#{current_user.company_city}, #{current_user.company_province}"
+              %br
+              = current_user.company_postal.upcase!
+            .profile-label
+              Company Phone #:
+            .profile-info.mbs
+              = current_user.company_phone
+            .profile-label
+              Company HST #:
+            .profile-info.mbs
+              = current_user.company_hst
+    .col-lg-6.mtl
+      .panel.panel-default.boxed-m
+        .panel-heading.profile-title.group
+          %h3.panel-title.pull-left
+            Delivery Address:
           - if current_user.has_delivery_addressess?
-            - current_user.delivery_addresses.each do |a|
-              .dlivery-address-wrapper
-                .row
-                  .col-lg-4
-                
-                    %span.mgl
-                      %strong 
-                        = a.full_name()
-                      %br
-                      = a.address()
-                      = "#{a.city()}, #{a.province()}"
-                      %span.uppercase
-                        = "#{a.postal[0..2]} #{a.postal[3..5]}"
-                    .delivery-address-buttons.mtt-xs.group
-                      = link_to "Edit", edit_delivery_address_path(a), class: "profile-button profile-button-small"
-                      = link_to "Remove", delivery_address_path(a), class: "profile-button profile-button-small", data: { confirm: "Are you sure?" }, method: :delete
-       
-          - else
-            .no-delivery
-              No Delivery Address Setup Please 
-              = link_to "Add New Delivery Address", new_delivery_address_path()
+            .pull-right
+              = link_to "Add Another Address", new_delivery_address_path()
+        .panel-body.profile-body
+          .shipping-details
+            
+           
+              
+            - if current_user.has_delivery_addressess?
+              - current_user.delivery_addresses.each do |a|
+                .dlivery-address-wrapper
+                  .row
+                    .col-lg-4
+                  
+                      %span.mgl
+                        %strong 
+                          = a.full_name()
+                        %br
+                        = a.address()
+                        = "#{a.city()}, #{a.province()}"
+                        %span.uppercase
+                          = "#{a.postal[0..2]} #{a.postal[3..5]}"
+                      .delivery-address-buttons.mtt-xs.group
+                        = link_to "Edit", edit_delivery_address_path(a), class: "profile-button profile-button-small"
+                        = link_to "Remove", delivery_address_path(a), class: "profile-button profile-button-small", data: { confirm: "Are you sure?" }, method: :delete
+         
+            - else
+              .no-delivery
+                No Delivery Address Setup Please 
+                = link_to "Add New Delivery Address", new_delivery_address_path()
 
-    .panel.panel-default.boxed-m
-      .panel-heading.profile-title
-        %h3.panel-title
-          Cancel My Account:
-      .panel-body.profile-body  
-        %p
-          = button_to "Cancel my account", registration_path(resource_name), class: "profile-button", data: { confirm: "Are you sure?" }, method: :delete
+      .panel.panel-default.boxed-m
+        .panel-heading.profile-title
+          %h3.panel-title
+            Cancel My Account:
+        .panel-body.profile-body  
+          %p
+            = button_to "Cancel my account", registration_path(resource_name), class: "profile-button", data: { confirm: "Are you sure?" }, method: :delete
 - else
-  .not-approved
-    Oops! It looks like you're account has not yet been approved by us. If you have question on your account status please contact us at accounts@siraprint.com
-    
+  .container
+    .not-approved
+      Oops! It looks like you're account has not yet been approved by us. If you have question on your account status please contact us at accounts@siraprint.com
+      
 

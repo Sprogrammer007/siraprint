@@ -1,32 +1,29 @@
-<div class="col-lg-7">
+<div class="col-lg-offset-2 col-lg-7">
+  <h2><%= @metal_sign.name %></h2>
   <div class="galleria" id="galleria" style="height: 518px">
     <%= image_tag("1.jpg") %>
     <%= image_tag("2.jpg") %>
     <%= image_tag("2.jpg") %>
   </div>
+  <div class="item-description">
+    <p>
+      <%= @metal_sign.description.html_safe() %>
+    </p>
+  </div>
 </div>
-<div class="col-lg-5">
-  <%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "metal-sign-form", multipart: true do %>
+<div class="col-lg-3 order_form">
+  <%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "metal-signs-form", multipart: true do %>
     <%= hidden_field_tag '[order]product_type', 'metal_sign' %>
     <%= hidden_field_tag '[order]product_id', @metal_sign.id %>
     <%= hidden_field_tag '[order]total_price', '' %>
     <%= hidden_field_tag '[order]unit_price', '' %>
 
-    <div class="product-item-title">
-      <h2>
-        <%= @metal_sign.name %>
-      </h2>
-      <div class="item-description">
-        <p>
-          <%= @metal_sign.description.html_safe() %>
-        </p>
-      </div>
-    </div>
-    <div class="product-item-size-options">
+
+    <div class="item-size-options product-box">
       <h3>Step 1: Select Your Size</h3>
       <%= select("order", "[details]size_id", @metal_sign.metal_sign_sizes.collect {|s| [ "#{s.width}\" x #{s.height}\" - $#{s.price}", s.id ] }, {include_blank: 'Please select your size'}, class: "size-selection form-control") %>
     </div>
-    <div class="product-item-upload">
+    <div class="item-upload product-box">
       <h3>Step 2: Upload Your Design</h3>
       <div class="input-group">
         <%= text_field_tag 'design_pdf_name', nil, class: "form-control", readonly: true  %>
@@ -38,7 +35,7 @@
         </span>
       </div>
     </div>
-    <div class="product-item-final">
+    <div class="item-final product-box">
       <h3>Step 3: Place Your Order</h3>
       <div class="quantity-box">
         <div class="row mgl">
@@ -71,10 +68,10 @@
 <script>
   $(document).ready( function() {
     $('#galleria').galleria({
-      width: 633,
+      width: 948,
       height: 458
     });
-    Galleria.loadTheme("<%= asset_path('application.js') %>");
+    Galleria.loadTheme("<%= asset_path('galleria.classic.js') %>");
     Galleria.configure({
       autoplay: true,
       transition: 'fade',

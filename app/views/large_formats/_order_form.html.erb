@@ -1,0 +1,114 @@
+<%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "large-formats-form", multipart: true do %>
+  <div class="price-url" data-price-url="<%=  get_price_large_format_path(@large_format) %>"></div>
+  <%= hidden_field_tag '[order]product_type', 'large_format' %>
+  <%= hidden_field_tag '[order]product_id', @large_format.id %>
+  <%= hidden_field_tag '[order]product_rate', '' %>
+  <%= hidden_field_tag '[order]total_price', '' %>
+  <%= hidden_field_tag '[order]unit_price', '' %>
+
+  <div class="item-size product-box">
+    <h3>Step 1: Enter Desire Print Size</h3>
+    <div class="row">
+      <div class="col-lg-4">
+        <%= label_tag "[order][details]width", "Width" %>
+        <%= number_field_tag "[order][details]width", nil, class: "product-width form-control", in: 1...100, :step => 0.1 %>
+      </div>
+      <div class="col-lg-4">
+        <%= label_tag "[order][details]length", "Length" %>
+        <%= number_field_tag '[order][details]length', nil, class: "product-length form-control", in: 1...100, :step => 0.1 %>
+      </div>
+      <div class="col-lg-4">
+        <%= label_tag "[order][details]unit", "Unit" %>
+        <%= select_tag '[order][details]unit', options_for_select(["inch", 'feet']), class: "product-unit form-control" %>
+      </div>
+    </div>
+  </div>
+  <div class="item-side product-box">
+    <h3>Step 2: Select Number of Sides</h3>
+    <%= select("order", "[details]side", options_for_select([["One Side Printing", 1], ["Two Side Printing", 2]], @large_format.sides), {}, class: "side-selection form-control", data: {name: "#{@large_format.name}", url: change_side_large_format_path(@large_format)}) %>
+  </div>
+  
+  <div class="item-thickness product-box">
+    <h3>Step 3: Select Your Thickness</h3>
+    <%= select("order", "[details]thickness_id", @large_format.large_format_thicknesses.collect {|t| [ "#{t.thickness}#{t.unit}", t.id ] }, {include_blank: 'Please select your thickness'}, class: "thickness-selection form-control") %>
+  </div>
+
+
+  <div class="item-finishing-options product-box">
+    <h3>Step 4: Finishing (Optional)</h3>
+    <%= select("order", "[details]finishing", @large_format.large_format_finishings.collect { |f| f.name }, {include_blank: 'None'}, class: "finish-selection form-control") %>
+    <div class="grommets-box mtl hidden">
+      <div class="row">
+        <div class="col-lg-8">
+          <%= label_tag '[details]grommets_quantity', "Number of Grommets" %>
+        </div>
+        <div class="col-lg-4">
+          <%= number_field_tag '[order][details]grommets_quantity', nil, class: "grommets-field form-control", in: 1...10000 %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="item-quantity product-box">
+    <h3>Step 4: Number of Prints</h3>
+    <div class="quantity-box">
+      <div class="row mgl">
+        <div class="col-lg-6">
+          <%= label_tag '[order]quantity', "Number of Prints" %>
+        </div>
+        <div class="col-lg-6">
+          <%= number_field_tag '[order]quantity', 1, class: "quantity-field form-control", in: 1...10000 %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="item-upload product-box">
+    <h3>Step 5: Upload Your Design</h3>
+    <div class="input-group">
+      <%= text_field_tag 'design_pdf_name', nil, class: "form-control", placeholder: "Font Design", readonly: true %>
+      <span class="input-group-btn">
+        <span class="btn btn-primary btn-file">
+          Browse 
+          <%= file_field_tag '[order]design_pdf', class: 'design_pdf' %>
+        </span>
+      </span>
+    </div>
+    <% if @large_format.sides == 2 %>
+      <div class="input-group">
+        <%= text_field_tag 'design_pdf_2_name', nil, class: "form-control", placeholder: "Back Design", readonly: true  %>
+        <span class="input-group-btn">
+          <span class="btn btn-primary btn-file">
+            Browse 
+            <%= file_field_tag '[order]design_pdf_2', class: 'design_pdf' %>
+          </span>
+        </span>
+      </div>
+    <% end %>
+  </div>
+  
+  <div class="item-checkout product-box">
+    <div class="divider"></div>
+    <div class="per-price-box">
+      Cost Per Print:
+      <span class="per-placeholder">
+        $0
+      </span>
+    </div>
+    <div class="finishing-price-box">
+      Finishing Options:
+      <span class="finishing-placeholder">
+        $0
+      </span>
+    </div>
+    <div class="total-price-box">
+      Total Cost:
+      <span class="total-placeholder">
+        $0
+      </span>
+    </div>
+    <div class="divider"></div>
+  
+  </div>
+  <div class="submit-order">
+    <%= button_tag "Place My Order", class: "btn btn-place-order" %>
+  </div>
+<% end %>

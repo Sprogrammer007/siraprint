@@ -1,5 +1,5 @@
 class OrderedLargeFormatDetail < ActiveRecord::Base
-  validates :length, :width, :thickness_id,:unit, presence: true
+  validates :length, :width, :thickness_id,:unit, :side, presence: true
   
   def sqft
     if self.unit == "inch"

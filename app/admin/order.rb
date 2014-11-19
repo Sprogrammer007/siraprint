@@ -95,6 +95,9 @@ ActiveAdmin.register Order do
             column "Material Name" do |p|
               link_to p.product.name, admin_large_format_path(p.product)
             end
+            column "Side" do |p|
+              "#{p.details.side}"
+            end
             column "Thickness" do |p|
               "#{p.details.thickness.thickness}#{p.details.thickness.unit}"
             end
@@ -112,10 +115,18 @@ ActiveAdmin.register Order do
               link_to p.print_pdf_file_name, p.print_pdf.url()
             end
             column "User Design 2" do |p|
-              link_to p.print_pdf_2_file_name, p.print_pdf_2.url() if p.print_pdf_2_file_name
+              if p.print_pdf_2_file_name
+                link_to p.print_pdf_2_file_name, p.print_pdf_2.url()
+              else
+                "None"
+              end
             end
             column "Finishing" do |p|
-              "#{p.details.grommets_quantity} #{p.details.finishing}"
+              if p.details.finishing == ''
+                "None"
+              else
+                "#{p.details.grommets_quantity} #{p.details.finishing}"
+              end
             end
             column :unit_price
             column :price

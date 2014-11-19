@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141114152523) do
+ActiveRecord::Schema.define(version: 20141119201333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,18 @@ ActiveRecord::Schema.define(version: 20141114152523) do
     t.string   "postal"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "finishing_options", id: false, force: true do |t|
+    t.integer "large_format_id"
+    t.integer "large_format_finishing_id"
+  end
+
+  add_index "finishing_options", ["large_format_finishing_id"], name: "index_finishing_options_on_large_format_finishing_id", using: :btree
+  add_index "finishing_options", ["large_format_id"], name: "index_finishing_options_on_large_format_id", using: :btree
+
+  create_table "large_format_finishings", force: true do |t|
+    t.string "name"
   end
 
   create_table "large_format_thicknesses", force: true do |t|
@@ -95,6 +107,7 @@ ActiveRecord::Schema.define(version: 20141114152523) do
   create_table "ordered_large_format_details", force: true do |t|
     t.integer "length"
     t.integer "width"
+    t.integer "side"
     t.integer "thickness_id"
     t.string  "finishing"
     t.integer "grommets_quantity"

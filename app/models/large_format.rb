@@ -1,10 +1,13 @@
 class LargeFormat < ActiveRecord::Base
 
   has_many :large_format_thicknesses, :dependent => :destroy
-  
+  has_many :finishing_options
+  has_many :large_format_finishings, :through => :finishing_options, :dependent => :destroy
+
   scope :active, -> { where(status: "Active") }
   scope :deactive, -> { where(status: "Deactive") }
-
+  scope :side, -> (n) { where(sides: n) }
+  
   has_attached_file :display_image, :default_url => "no-image.png"
   validates_attachment :display_image, :presence => true,
   :content_type => { :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"] } 

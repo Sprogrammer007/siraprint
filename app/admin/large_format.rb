@@ -6,7 +6,10 @@ ActiveAdmin.register LargeFormat do
     :large_format_thicknesses_attributes => [:id, :thickness, :unit, :_destroy, :_destroy => true,
     :large_format_tiers_attributes => [:id, :level, :min_sqft, :max_sqft, :price, :_destroy => true ] ] 
   
-  
+  action_item :only => :show do
+    link_to("Add Finishing Options", add_finishing_admin_large_format_path(large_format))
+  end
+
   #Filters
   filter :name
   filter :sides
@@ -37,9 +40,10 @@ ActiveAdmin.register LargeFormat do
     actions defaults: false, dropdown: true, dropdown_name: "Options" do |l|
       item("Manage", admin_large_format_path(l))
       item("Edit", edit_admin_large_format_path(l))
-      item("Copy", copy_admin_large_format_path(l))
+      item("Duplicate", copy_admin_large_format_path(l))
       item("Remove", admin_large_format_path(l), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
       item("Active/Deactive", status_update_admin_large_format_path(l))
+      item("Select Finishing Options", add_finishing_admin_large_format_path(l))
     end
   end
 
@@ -57,6 +61,11 @@ ActiveAdmin.register LargeFormat do
             l.description.html_safe() if l.description
           end
           row :sides
+          row "Finishing Options" do |l|
+            if l.large_format_finishings.any?
+              [l.large_format_finishings.map { |f| f.name } ].join(" | ")
+            end
+          end
           row "status" do |l|
             if l.active?
               status_tag "Active", :ok
@@ -155,6 +164,20 @@ ActiveAdmin.register LargeFormat do
     redirect_to :back
   end
 
+  member_action :add_finishing, method: :get do
+    @page_title = "Select Regions For #{params[:name]}"
+    lg = LargeFormat.find(params[:id])
+    @finishings = LargeFormatFinishing.all
+    @selected_finishings = lg.large_format_finishings.pluck(:id)
+    render template: "admin/add_finishing"
+  end
+
+  member_action :remove_finishing, method: :delete do
+    FinishingOption.where("large_format_id = ? AND large_format_finishing_id = ?", params[:id], params[:large_format_finishing_id]).delete_all
+
+    flash[:notice] = "Finishing option was successfully removed!"
+    redirect_to :back
+  end
   controller do
     
     def destroy

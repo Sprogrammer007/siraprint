@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :large_formats do
     member do
       post 'get_price'
+      post 'change_side'
     end
   end
 
@@ -36,7 +37,6 @@ Rails.application.routes.draw do
   
   devise_scope :user do  
     get 'profile/:id',        to: 'users#show',          as: :user_profile
-    get 'after_sign_up',      to: 'users#after_sign_up'
     get 'my_orders',          to: 'users#my_orders',     as: :user_my_orders
   end
 

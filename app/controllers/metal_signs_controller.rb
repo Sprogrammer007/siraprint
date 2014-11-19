@@ -8,7 +8,6 @@ class MetalSignsController < ApplicationController
 
   def show
     @metal_sign = MetalSign.find(params[:id])
-    @no_sidebar = true
   end
 
   

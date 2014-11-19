@@ -1,0 +1,24 @@
+<%= form_tag url_for(:controller => 'admin/finishing_options', :action => 'create') do -%>
+  <%= hidden_field_tag "large_format_id", params[:id] %>
+  <fieldset class="inputs">
+    <%= link_to "Select None", "#",  class: "select_none link_button"  %>
+      <%= link_to "Select All", "#",  class: "select_all link_button"  %>
+    <div class="finishing_select group">
+        <!-- Chrome Fix checkbox won't be checked if nested under table -->
+        <% @finishings.each_with_index do |f, i| %>
+
+          <%= check_box_tag "finishings_ids[]", f.id, @selected_finishings.include?(f.id), id: "finishing_#{f.id}" %>
+          <label for="<%= "finishing_#{f.id}" %>" class="finsihing-select
+          ">
+            <%= f.name %>
+          </label>
+        <% end %>
+
+    </div>
+    <div class="group" style="padding: 0 10px;">
+      <%= submit_tag "Add Selected Finishing Options", data: {confirm: I18n.t('active_admin.are_you_sure')} %>
+      <%= link_to "Add New Finishing Option", new_admin_large_format_finishing_path(large_format_id: params[:id]),  class: "link_button"  %>
+    </div>
+  </fieldset>
+
+<% end %>
