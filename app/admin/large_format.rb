@@ -6,7 +6,7 @@ ActiveAdmin.register LargeFormat do
     :large_format_thicknesses_attributes => [:id, :thickness, :unit, :_destroy, :_destroy => true,
     :large_format_tiers_attributes => [:id, :level, :min_sqft, :max_sqft, :price, :_destroy => true ] ] 
   
-  action_item :only => :show do
+  action_item :add_finishing, :only => :show do
     link_to("Add Finishing Options", add_finishing_admin_large_format_path(large_format))
   end
 

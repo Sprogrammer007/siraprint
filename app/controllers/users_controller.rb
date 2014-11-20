@@ -9,9 +9,6 @@ class UsersController < Devise::RegistrationsController
     super
   end
 
-  def create
-    super
-  end
 
   def show
     unless user_signed_in?
@@ -47,8 +44,10 @@ class UsersController < Devise::RegistrationsController
     end
   end
 
-  def after_inactive_sign_up_path_for(resource)
-    UserMailer.notify_new_user(user).deliver
-    redirect_to root_path
+  def after_sign_up_path_for(resource)
+    Rails.logger.warn "Mail"
+    UserMailer.notify_new_user(resource).deliver
+    UserMailer.signup_welcome(resource).deliver
+    return root_path
   end
 end

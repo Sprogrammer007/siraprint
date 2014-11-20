@@ -11,4 +11,16 @@ class UserMailer < ActionMailer::Base
 
     mail to: "info@siraprint.ca", subject: "New User Waiting for Approvel"
   end
+
+  def signup_welcome(user)
+    @user = user
+
+    mail to: user.email, subject: "Thank You and Welcome"
+  end
+
+  def user_approved(user)
+    @user = user
+
+    mail to: user.email, subject: "Your account has been approved!"
+  end
 end
