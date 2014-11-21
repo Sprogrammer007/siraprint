@@ -1,0 +1,7 @@
+.container
+  - @posts.each do |p|
+    .post-wrapper.group
+      .post-thumb
+        = image_tag p.featured_image.url()
+      .post-excerpt
+        = p.excerpt().html_safe()

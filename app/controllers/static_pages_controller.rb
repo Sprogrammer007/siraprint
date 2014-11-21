@@ -4,15 +4,15 @@ class StaticPagesController < ApplicationController
   end
 
   def about
-    @no_sidebar = true
+
   end
 
   def help
-    @no_sidebar = true
+    @posts = Post.all()
   end
 
   def contact
-    @no_sidebar = true
+
   end
 
 end

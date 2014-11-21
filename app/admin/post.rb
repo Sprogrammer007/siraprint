@@ -2,7 +2,8 @@ ActiveAdmin.register Post do
 
   menu :parent => "Content"
 
-  permit_params 
+  permit_params :title, :excerpt, :content, :featured_image,
+  :author, :category
 
   #Filters
   filter :title
@@ -30,11 +31,7 @@ ActiveAdmin.register Post do
     end
   end
 
-  show do 
-    
-  end
-
-  form do |f|
+  form :html => {:multipart => true} do |f|
     f.inputs do 
       f.input :title
       f.input :excerpt, input_html: { class: "tinymce" }
