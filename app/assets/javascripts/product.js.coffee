@@ -43,7 +43,8 @@ ready = ->
       if (quantity != '')
         price = price * quantity
       if ( $('.finishing-placeholder').html() != '' )
-        price = price + parseFloat(f_price)
+        price = price + parseFloat(f_price))
+        price = Math.round(price * 100) / 100).toFixed(2)
 
       $('.total-placeholder').html("$#{price}")
       $('#_ordertotal_price').val(price)
