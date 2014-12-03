@@ -1,16 +1,16 @@
 ready = ->
   
-  $(".dropdown.keep-open").on
-    "shown.bs.dropdown": ->
-      @closable = false
-      return false
+  # $(".dropdown.keep-open").on
+  #   "shown.bs.dropdown": ->
+  #     @closable = false
+  #     return false
 
-    click: ->
-      @closable = false
-      return
+  #   click: ->
+  #     @closable = false
+  #     return
 
-    "hide.bs.dropdown": ->
-      @closable
+  #   "hide.bs.dropdown": ->
+  #     @closable
 
   # $('.dropdown').on 'hide.bs.dropdown', ->
   #   return false;

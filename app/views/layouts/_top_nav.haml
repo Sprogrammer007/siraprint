@@ -1,16 +1,11 @@
 %nav.navbar.navbar-inverse
-  .btn-group.navbar-left.shop-by-box.dropdown.keep-open.open
-    %button.btn.btn-shop.btn-lg{"aria-expanded" => "false", "data-toggle" => "dropdown", :type => "button"}
+  .btn-group.navbar-left
+    %button.btn.btn-shop.btn-lg
       Shop By
       %strong
         Products
         %span.caret
-    %ul.dropdown-menu.bottom{:role => "menu"}
-      .arrow
-      %li
-        = link_to "Large Formats", large_formats_path()
-      %li
-        = link_to "Metal Signs", metal_signs_path()
+    
   .navbar-header
     = button_tag "#", class: "navbar-toggle", data: {toggle: "collapse", target: "#32a"} do
       %span.sr-only
