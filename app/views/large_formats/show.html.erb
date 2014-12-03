@@ -26,10 +26,13 @@
 
 <script>
   gallery_setup = function() {
-    $('#galleria').galleria
-    width: 948,
-    height: 458
+    $('#galleria').galleria({
+      width: 948,
+      height: 458
+    });
+
     Galleria.loadTheme("<%=  asset_path('galleria.classic.js') %>");
+    
     Galleria.configure({
       autoplay: true,
       transition: 'fade',
@@ -37,7 +40,7 @@
     });
 
     Galleria.run('#galleria');
-  } 
-  $(document).ready(gallery_setup)
-  $(document).on('page:load', gallery_setup)
+  };
+  $(document).ready(gallery_setup);
+  $(document).on('page:load', gallery_setup);
 </script>
