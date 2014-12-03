@@ -26,6 +26,10 @@ class OrderedProduct < ActiveRecord::Base
     return detail
   end
 
+  def pro_type
+    self.product_type.camelize.split("_").join(" ")
+  end
+
   def remove
     self.details.destroy
     self.destroy

@@ -50,6 +50,7 @@ class Order < ActiveRecord::Base
     )
     return op
   end
+
   def purchase
     response = process_purchase
     transactions.create!(:action => "purchase", :amount => price_in_cents, :response => response)
@@ -70,9 +71,14 @@ class Order < ActiveRecord::Base
     (total*100).round()
   end
 
-  def get_description
-    list_of_products = ordered_products.map { |p| ["#{p.product_type.camelize.split("_").join(" ")} x#{p.quantity}"] }
-    list_of_products.join("<br/>").html_safe()
+  def prepare_paypal_items
+    items = []
+    ordered_products.each do |p|
+      o = {
+            name: p.pro_type,
+            description: "test"
+          }
+    end    
   end
   
   private

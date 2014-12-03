@@ -27,11 +27,7 @@
             %br
             = link_to "remove", remove_item_order_path(p), class: "remove-ordered-product", :method => :post
         %td
-          - if p.product_type == "large_format"
-            = p.details.sqft()
-            sqft
-          - else
-            = "#{p.details.size.width}\" x #{p.details.size.height}\""
+          = p.details.size()
         %td.quantity
           - if step == "pay"
             = "#{p.quantity}"

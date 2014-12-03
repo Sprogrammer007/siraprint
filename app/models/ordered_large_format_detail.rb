@@ -1,12 +1,13 @@
 class OrderedLargeFormatDetail < ActiveRecord::Base
   validates :length, :width, :thickness_id,:unit, :side, presence: true
   
-  def sqft
+  def size
     if self.unit == "inch"
-      ((self.width * self.length) / 144.0).round(2)
+      size = ((self.width * self.length) / 144.0).round(2)
     else
-      (self.width * self.length)
+      size = (self.width * self.length)
     end
+    "#{size}sqft"
   end
 
   def thickness
