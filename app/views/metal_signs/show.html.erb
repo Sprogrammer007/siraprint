@@ -66,12 +66,11 @@
 </div>
         
 <script>
-  $(document).ready( function() {
-    $('#galleria').galleria({
-      width: 948,
-      height: 458
-    });
-    Galleria.loadTheme("<%= asset_path('galleria.classic.js') %>");
+  gallery_setup = function() {
+    $('#galleria').galleria
+    width: 948,
+    height: 458
+    Galleria.loadTheme("<%=  asset_path('galleria.classic.js') %>");
     Galleria.configure({
       autoplay: true,
       transition: 'fade',
@@ -79,5 +78,7 @@
     });
 
     Galleria.run('#galleria');
-  } );
+  } 
+  $(document).ready(gallery_setup)
+  $(document).on('page:load', gallery_setup)
 </script>

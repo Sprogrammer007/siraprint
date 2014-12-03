@@ -1,8 +1,5 @@
 ready = ->
-  $('#galleria').galleria
-    width: 948,
-    height: 458
- 
+  
   $(".dropdown.keep-open").on
     "shown.bs.dropdown": ->
       @closable = false
@@ -48,7 +45,7 @@ ready = ->
         price = price * quantity
       if ( $('.finishing-placeholder').html() != '' )
         price = price + parseFloat(f_price)
-        price = Math.round((price * 100) / 100).toFixed(2)
+        price = Math.round((price * 100) / 100)
 
       $('.total-placeholder').html("$#{price}")
       $('#_ordertotal_price').val(price)
@@ -261,7 +258,6 @@ ready = ->
       $('.total-placeholder').html("$0")
       $('#_orderunit_price').val(0)
       $('#_ordertotal_price').val(0)
-
 
 $(document).ready(ready)
 $(document).on('page:load', ready)
