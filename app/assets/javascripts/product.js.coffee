@@ -35,20 +35,23 @@ ready = ->
     $.post(url, sqft: sqft, undefined, "json").done (data) ->
       if data == null
         $('#_orderproduct_rate').val(0)
+        $('.product-width').val(0)
+        $('.product-length').val(0)
+        return alert("There are no matching sizes for your print, pelase re-enter width and length")
       else
         $('#_orderproduct_rate').val(data.price)
-      price = calc_price(sqft, data.price)
-      
-      $('.per-placeholder').html("$#{price}")
-      $('#_orderunit_price').val(price)
-      if (quantity != '')
-        price = price * quantity
-      if ( $('.finishing-placeholder').html() != '' )
-        price = price + parseFloat(f_price)
-        price = Math.round((price * 100) / 100)
+        price = calc_price(sqft, data.price)
+        
+        $('.per-placeholder').html("$#{price}")
+        $('#_orderunit_price').val(price)
+        if (quantity != '')
+          price = price * quantity
+        if ( $('.finishing-placeholder').html() != '' )
+          price = price + parseFloat(f_price)
+          price = Math.round((price * 100) / 100)
 
-      $('.total-placeholder').html("$#{price}")
-      $('#_ordertotal_price').val(price)
+        $('.total-placeholder').html("$#{price}")
+        $('#_ordertotal_price').val(price)
 
   convert_to_feet = (x) ->
     return parseFloat(Math.ceil((x * 0.083333) * 100) / 100).toFixed(2)
@@ -149,13 +152,16 @@ ready = ->
         $.post(url, sqft: sqft, undefined, "json").done (data) ->
           if data == null
             $('#_orderproduct_rate').val(0)
+            $('.product-width').val(0)
+            $('.product-length').val(0)
+            return alert("There are no matching sizes for your print, pelase re-enter width and length")
           else
             $('#_orderproduct_rate').val(data.price)
-          price = calc_price(sqft, data.price)
-          $('.per-placeholder').html("$#{price}")
-          $('.total-placeholder').html("$#{price}")
-          $('#_orderunit_price').val(price)
-          $('#_ordertotal_price').val(price)
+            price = calc_price(sqft, data.price)
+            $('.per-placeholder').html("$#{price}")
+            $('.total-placeholder').html("$#{price}")
+            $('#_orderunit_price').val(price)
+            $('#_ordertotal_price').val(price)
 
   $('.order_form').on 'change', '.btn-file :file', ->
     input = $(this)  

@@ -30,6 +30,10 @@ class OrderedProduct < ActiveRecord::Base
     self.product_type.camelize.split("_").join(" ")
   end
 
+  def price_in_cents
+    (self.unit_price*100).round()
+  end
+
   def remove
     self.details.destroy
     self.destroy

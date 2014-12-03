@@ -33,7 +33,7 @@
               = link_to "My Orders", user_my_orders_path()
             %li.divider
             %li
-              = link_to "Logout", destroy_user_session_path, method: "delete"
+              = link_to "Logout", destroy_user_session_path(), method: "delete"
           %li.shopping-cart
             = link_to raw("<span class='glyphicon glyphicon-shopping-cart'></span><span class='badge'>#{badge_number}</span>"), cart_path(), class: "btn-cart"
       - else

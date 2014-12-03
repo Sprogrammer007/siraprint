@@ -21,10 +21,24 @@ class UsersController < Devise::RegistrationsController
     @resource = resource
   end
 
-  
+  def cancel
+    if current_user.status == "Approved"
+      current_user.update!(status: "Canceled")
+      sign_out(current_user)
+      redirect_to root_path
+    else
+      flash[:alert] = "You cannot cancel this account!"
+      redirect_to :back
+    end
+  end
 
   def my_orders
-    @orders = current_user.orders
+    if current_user.approved?
+      @orders = current_user.orders
+    else
+      flash[:alert] = "You cannot access this page!"
+      redirect_to root_path()
+    end
   end
 
   protected
@@ -45,7 +59,6 @@ class UsersController < Devise::RegistrationsController
   end
 
   def after_sign_up_path_for(resource)
-    Rails.logger.warn "Mail"
     UserMailer.notify_new_user(resource).deliver
     UserMailer.signup_welcome(resource).deliver
     return root_path

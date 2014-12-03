@@ -1,36 +1,35 @@
-<div class="container">
-  <div class="boxed-auto boxed-xs mgtb-l">
 
-    <div class="align-center">
-      <h2>Sign In</h2>
-    </div>
+<div class="offset-23 col-lg-4 mgtb-l">
 
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-
-      <fieldset class="form-field mbs">
-        <%= f.label :email, class: "form-label" %>
-        <%= f.email_field :email, autofocus: true, class: "form-input" %>
-      </fieldset>
-
-      <fieldset class="form-field mbs-m">
-        <%= f.label :password %>
-        <%= f.password_field :password, autocomplete: "off", class: "form-input login" %>
-      </fieldset>
-
-      <fieldset class="form-field mbs-m">
-        <% if devise_mapping.rememberable? -%>
-          <%= f.check_box :remember_me %> <%= f.label :remember_me %>
-        <% end -%>
-      </fieldset>
-
-      <div class="mts mbs align-center">
-        <%= f.submit "Log in", class: "btn btn-submit" %>
-        <p class="mtt tcg ts-m">
-          Don't have an account?
-          <%= link_to "Create Free Account", new_user_registration_path  %> 
-           
-        </p>
-      </div>
-    <% end %>
+  <div class="align-center">
+    <h2>Sign In</h2>
   </div>
+
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+
+    <fieldset class="form-field mbs">
+      <%= f.label :email, class: "form-label" %>
+      <%= f.email_field :email, autofocus: true, class: "form-input" %>
+    </fieldset>
+
+    <fieldset class="form-field mbs-m">
+      <%= f.label :password %>
+      <%= f.password_field :password, autocomplete: "off", class: "form-input login" %>
+    </fieldset>
+
+    <fieldset class="form-field mbs-m">
+      <% if devise_mapping.rememberable? -%>
+        <%= f.check_box :remember_me %> <%= f.label :remember_me %>
+      <% end -%>
+    </fieldset>
+
+    <div class="mts mbs align-center">
+      <%= f.submit "Log in", class: "btn btn-submit" %>
+      <p class="mtt tcg ts-m">
+        Don't have an account?
+        <%= link_to "Create Free Account", new_user_registration_path  %> 
+         
+      </p>
+    </div>
+  <% end %>
 </div>

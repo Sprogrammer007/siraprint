@@ -9,7 +9,7 @@ Rails.application.routes.draw do
               :path => ""
             )
 
-  resources :users
+  resources :users 
   resources :delivery_addresses
   resources :slider_images
   resources :posts
@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   devise_scope :user do  
     get 'profile/:id',        to: 'users#show',          as: :user_profile
     get 'my_orders',          to: 'users#my_orders',     as: :user_my_orders
+    post 'cancel',            to: 'users#cancel',        as: :cancel_user
   end
 
   match  'orders/cart',       to: 'orders#show',                via: 'get', :as => 'cart'

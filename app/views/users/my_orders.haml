@@ -1,69 +1,83 @@
-.container
-  .my-order-tab-container{:role => "tabpanel"}
-    %ul#myTab.nav.nav-tabs{:role => "tablist"}
-      %li.active{:role => "presentation"}
-        %a#all{"aria-controls" => "all", "aria-expanded" => "true", "data-toggle" => "tab", :href => "#all-tab", :role => "tab"} All
-      %li{:role => "presentation"}
-        %a#open{"aria-controls" => "open", "aria-expanded" => "false", "data-toggle" => "tab", :href => "#open-tab", :role => "tab"} Opened
-      %li{:role => "presentation"}
-        %a#completed{"aria-controls" => "completed", "aria-expanded" => "false", "data-toggle" => "tab", :href => "#completed-tab", :role => "tab"} Completed
-      %li{:role => "presentation"}
-        %a#cancel{"aria-controls" => "cancel", "aria-expanded" => "false", "data-toggle" => "tab", :href => "#cancel-tab", :role => "tab"} Cancelled
-      %li{:role => "presentation"}
+.my-order-tab-container{:role => "tabpanel"}
+  %ul#myTab.nav.nav-tabs{:role => "tablist"}
+    %li.active{:role => "presentation"}
+      %a#all{"aria-controls" => "all", "aria-expanded" => "true", "data-toggle" => "tab", :href => "#all-tab", :role => "tab"} All
+    %li{:role => "presentation"}
+      %a#open{"aria-controls" => "open", "aria-expanded" => "false", "data-toggle" => "tab", :href => "#open-tab", :role => "tab"} Opened
+    %li{:role => "presentation"}
+      %a#payed{"aria-controls" => "payed", "aria-expanded" => "false", "data-toggle" => "tab", :href => "#payed-tab", :role => "tab"} Payed
+    %li{:role => "presentation"}
+      %a#completed{"aria-controls" => "completed", "aria-expanded" => "false", "data-toggle" => "tab", :href => "#completed-tab", :role => "tab"} Completed
+    %li{:role => "presentation"}
+      %a#cancel{"aria-controls" => "cancel", "aria-expanded" => "false", "data-toggle" => "tab", :href => "#cancel-tab", :role => "tab"} Cancelled
+    %li{:role => "presentation"}
 
-    #myTabContent.tab-content
-      #all-tab.tab-pane.fade.active.in{"aria-labelledby" => "all-tab", :role => "tabpanel"}
-        %table.table.table-striped
-          %thead
-            %tr
-              %th Order ID
-              %th Delivery Method
-              %th Order Details
-              %th Total
-              %th Status
-              %th 
-          %tbody
-            - @orders.each do |order|
-              = render 'my_order_table', order: order
-      #open-tab.tab-pane.fade.in{"aria-labelledby" => "open-tab", :role => "tabpanel"}
-        %table.table.table-striped
-          %thead
-            %tr
-              %th Order ID
-              %th Delivery Method
-              %th Order Details
-              %th Total
-              %th Status
-              %th 
-          %tbody
-            - @orders.open.each do |order|
-              = render 'my_order_table', order: order
-      #completed-tab.tab-pane.fade.in{"aria-labelledby" => "completed-tab", :role => "tabpanel"}
-        %table.table.table-striped
-          %thead
-            %tr
-              %th Order ID
-              %th Delivery Method
-              %th Order Details
-              %th Total
-              %th Status
-              %th 
-          %tbody
-            - @orders.completed.each do |order|
-              = render 'my_order_table', order: order
-      #cancel-tab.tab-pane.fade{"aria-labelledby" => "cancel-tab", :role => "tabpanel"}
-        %table.table.table-striped
-          %thead
-            %tr
-              %th Order ID
-              %th Delivery Method
-              %th Order Details
-              %th Total
-              %th Status
-              %th 
-          %tbody
-            - @orders.canceled.each do |order|
-              = render 'my_order_table', order: order
+  #myTabContent.tab-content
+    #all-tab.tab-pane.fade.active.in{"aria-labelledby" => "all-tab", :role => "tabpanel"}
+      %table.table.table-striped
+        %thead
+          %tr
+            %th Order ID
+            %th Delivery Method
+            %th Order Details
+            %th Total
+            %th Status
+            %th 
+        %tbody
+          - @orders.each do |order|
+            = render 'my_order_table', order: order
+    #open-tab.tab-pane.fade.in{"aria-labelledby" => "open-tab", :role => "tabpanel"}
+      %table.table.table-striped
+        %thead
+          %tr
+            %th Order ID
+            %th Delivery Method
+            %th Order Details
+            %th Total
+            %th Status
+            %th 
+        %tbody
+          - @orders.open.each do |order|
+            = render 'my_order_table', order: order
+    #payed-tab.tab-pane.fade.in{"aria-labelledby" => "payed-tab", :role => "tabpanel"}
+      %table.table.table-striped
+        %thead
+          %tr
+            %th Order ID
+            %th Delivery Method
+            %th Order Details
+            %th Total
+            %th Status
+            %th 
+        %tbody
+          - @orders.payed.each do |order|
+            = render 'my_order_table', order: order
+    #completed-tab.tab-pane.fade.in{"aria-labelledby" => "completed-tab", :role => "tabpanel"}
+      %table.table.table-striped
+        %thead
+          %tr
+            %th Order ID
+            %th Delivery Method
+            %th Order Details
+            %th Total
+            %th Status
+            %th 
+        %tbody
+          - @orders.completed.each do |order|
+            = render 'my_order_table', order: order
+    #cancel-tab.tab-pane.fade{"aria-labelledby" => "cancel-tab", :role => "tabpanel"}
+      %table.table.table-striped
+        %thead
+          %tr
+            %th Order ID
+            %th Delivery Method
+            %th Order Details
+            %th Total
+            %th Status
+            %th 
+        %tbody
+          - @orders.canceled.each do |order|
+            = render 'my_order_table', order: order
 
 
-      
+    

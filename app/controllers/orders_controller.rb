@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   
-  before_filter :authenticate_user!
+  before_filter :authenticate_approved_user!
 
   def create
     oparams = params[:order]
@@ -20,7 +20,6 @@ class OrdersController < ApplicationController
         redirect_to :back and return
       end
       @order.update_price
-    else
     end
     redirect_to cart_path()
   end
@@ -69,13 +68,17 @@ class OrdersController < ApplicationController
 
   def express
     @order = Order.find(params[:id])
-    response = EXPRESS_GATEWAY.setup_purchase(@order.price_in_cents,
-      :items => [{:name => "Sira Print Order ##{@order.order_id}", :description => @order.get_description, :amount => @order.price_in_cents}],
+    response = EXPRESS_GATEWAY.setup_purchase(@order.total_in_cents,
+      :items             => @order.prepare_paypal_items,
+      :subtotal          => @order.sub_total_in_cents,
+      :tax               => @order.tax_in_cents,
+      :shipping          => 0,
+      :handling          => 0,
       :ip                => @order.ip_address,
       :return_url        => confirm_order_url(id: @order.id),
       :cancel_return_url => root_url
     )
-
+    Rails.logger.warn "#{response.inspect}"
     redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
   end
 
@@ -96,5 +99,12 @@ class OrdersController < ApplicationController
     redirect_to cart_path()
   end
 
-
+  private
+    def authenticate_approved_user!
+      authenticate_user!
+      unless current_user.approved?
+        flash[:alert] = "You account is not yet approved"
+        redirect_to root_path()
+      end
+    end
 end

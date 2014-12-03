@@ -67,8 +67,16 @@ class Order < ActiveRecord::Base
   end
 
 
-  def price_in_cents
+  def total_in_cents
     (total*100).round()
+  end
+
+  def sub_total_in_cents
+    (self.sub_total*100).round()
+  end 
+
+  def tax_in_cents
+    (get_tax*100).round()
   end
 
   def prepare_paypal_items
@@ -76,9 +84,24 @@ class Order < ActiveRecord::Base
     ordered_products.each do |p|
       o = {
             name: p.pro_type,
-            description: "test"
+            description: get_description(p),
+            quantity: p.quantity,
+            amount: p.price_in_cents
           }
-    end    
+      items << o
+    end
+       
+    return items
+  end
+
+  def get_description(p)
+    if p.product_type == "large_format"
+      "Material: #{p.product.name}<br/>
+      Thickness: #{p.details.thickness.thickness}#{p.details.thickness.unit}<br/>
+      Size: #{p.details.size}".html_safe()
+    else
+      "Size: #{p.details.size}".html_safe()
+    end
   end
   
   private
