@@ -162,6 +162,15 @@ h1, h2, h3, h4
 .navbar .navbar-right
   margin-top: 4px
 
+.navbar .shopping-cart .badge
+  background-color: #FF0652
+  padding: 3px 5px
+  font-size: 10px
+  border-radius: 0
+  position: absolute
+  top: -2px
+  left: 3px
+  
 .glyphicon-shopping-cart 
   margin-top: -15px
 
@@ -543,11 +552,21 @@ h1, h2, h3, h4
 span.status_canceled
   background-color: #FA220A
 
-span.status_open
+span.status_open, span.status_payed
   background-color: #5E9AD7
 
 span.status_completed
   background-color: #47ED60
+
+.failure-text 
+  font-size: 2em
+  font-weight: 600
+  color: #F00B10
+
+.success-text 
+  font-size: 2em
+  font-weight: 600
+  color: #0EED1A
 
 // Product 
 
@@ -681,9 +700,10 @@ span.status_completed
 .item-description
   padding: 20px
   background-color: #F8F8F8
+
 // Cart
 
-.checkout h1
+.order-cart h1
   color: #282828
   float: left
   font-family: "futura-pt-1","futura-pt-2",sans-serif
@@ -691,7 +711,7 @@ span.status_completed
   font-weight: 800
   text-transform: uppercase
 
-.checkout img
+.order-cart img
   width: 100px
 
 .cart thead th
@@ -710,10 +730,27 @@ span.status_completed
   background: none repeat scroll 0% 0% #E5E5E5
   position: relative
 
+.cart-totals .delivery-details
+  display: block
+  height: 100px !important
+  border-bottom: 1px solid #cccccc
+  
+.cart-totals .delivery-details dt
+  clear: left
+  float: left
+  font-weight: bold
+
+.cart-totals .delivery-details dd 
+  float: right
+  color: #666
+  font-weight: normal
+  margin-bottom: 15px
+
 .cart-totals .totals-section
   background: none repeat scroll 0% 0% #FFF
   border: 5px solid #E5E5E5
   padding: 20px
+
 
 .cart-totals .totals 
   background: none repeat scroll 0% 0% #FFF
@@ -801,23 +838,7 @@ span.status_completed
 
 .checkout_buttons a
   float: right
-  width: 320px
   margin-left: 20px
-  text-transform: uppercase
-  outline: medium none
-  border: medium none
-  background-color: #AC06C4
-  color: #FFF
-  cursor: pointer
-  font-family: "futura-pt-1","futura-pt-2",sans-serif
-  font-size: 18px
-  font-weight: 800
-  padding: 10px 20px
-  text-align: center
-  text-transform: uppercase
-  transition: all 0.2s ease-in 0s
-  text-decoration: none
-  border-radius: 4px
 
 // Delivery Page
 
@@ -996,7 +1017,6 @@ span.status_completed
   margin-right: 10px
   border: 1px solid #D7D7D7
   border-radius: 4px
-
 
 .post-wrapper .post-thumb img
   display: block

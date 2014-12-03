@@ -39,8 +39,8 @@
             %li.divider
             %li
               = link_to "Logout", destroy_user_session_path, method: "delete"
-          %li
-            = link_to raw('<span class="glyphicon glyphicon-shopping-cart"></span>'), cart_path(), class: "btn-cart"
+          %li.shopping-cart
+            = link_to raw("<span class='glyphicon glyphicon-shopping-cart'></span><span class='badge'>#{badge_number}</span>"), cart_path(), class: "btn-cart"
       - else
         %li
           = link_to "Create Free Account", new_user_registration_path, class: "btn btn-top-nav btn-signup"

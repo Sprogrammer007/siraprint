@@ -11,7 +11,7 @@ class DeliveryAddressesController < ApplicationController
 	def create
     address = current_user.delivery_addresses.create!(safe_params)
     if params[:order_form]
-      redirect_to payment_path(address: address.id)
+      redirect_to select_delivery_order_path(delivery_adress_id: address.id, method: "Deliver")
     else
   		redirect_to user_profile_path(current_user)
     end

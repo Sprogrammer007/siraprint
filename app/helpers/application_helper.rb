@@ -10,6 +10,10 @@ module ApplicationHelper
     end
   end
 
+  def badge_number
+    current_user.open_order ? current_user.open_order.ordered_products.count() : 0
+  end
+
   # Convert Devise Alert keys to Booststrap
   def bs_alert_helper(key)
   	case key

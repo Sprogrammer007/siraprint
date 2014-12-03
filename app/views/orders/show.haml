@@ -1,73 +1,10 @@
-.container.checkout
+.container.order-cart
   - if @order
     .group
       %h1 Stuff in Your Cart
     = form_tag url_for(:controller => 'orders', :action => 'create'), class: "large-prints-form" do
-      %table.table.table-striped.cart
-        %thead
-          %tr
-            %th 
-            %th Product Detail
-            %th Print Size(Sqft)
-            %th Quantity
-            %th Design
-            %th Sub-Total
-        %tbody
-          - @order.ordered_products.each do |p|
-            %tr
-              %td
-                = image_tag p.product.display_image.url()
-              %td
-                %strong
-                  = p.product.name
-                - if p.product_type == "large_format"
-                  %br
-                  Thickness: 
-                  = "#{p.details.thickness.thickness}#{p.details.thickness.unit}"
-                  %br
-                  Finishing: 
-                  = p.details.finishing 
-                  = p.details.grommets_quantity
-                %br
-                = link_to "remove", remove_item_order_path(p), class: "remove-ordered-product", :method => :post
-              %td
-                - if p.product_type == "large_format"
-                  = p.details.sqft()
-                  sqft
-                - else
-                  = "#{p.details.size.width}\" x #{p.details.size.height}\""
-              %td.quantity
-                = text_field_tag "quantity_#{p.id}", p.quantity, class: "update-quantity form-control"
-                %span.update-quantity
-                  = link_to "update", "#", class: "qty-update-button edit", data: { url: update_item_order_path(p.id)}
-              %td
-                = link_to p.print_pdf_file_name, p.print_pdf.url()
-              %td
-                = "$#{p.price}"
+      = render 'order_table', order: @order, step: ""
 
-
-      %table.cart-totals{:border => "0", :cellpadding => "0", :cellspacing => "0", :width => "100%"}
-        %tbody
-          %tr
-            %td{:width => "750"} 
-            %td.totals-section
-              %dl.totals
-                %dt Subtotal:
-                %dd
-                  %span#subtotal
-                    = @order.sub_total
-                %dt Tax (HST 13%):
-                %dd
-                  %span#subtotal
-                    = @order.get_tax
-                %dt.est Estimated Total
-                %dd.estimate
-                  %dl
-                    %dt Estimated Total:
-                    %dd
-                      $
-                      %span#est_total
-                        = @order.total
       .checkout_buttons.group.mgl
         = link_to "Select Delivery Method", delivery_info_path(), class: ""
         

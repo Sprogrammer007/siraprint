@@ -87,4 +87,14 @@ Rails.application.configure do
     }
   }
 
+  config.after_initialize do 
+    ActiveMerchant::Billing::Base.mode = :test
+
+    ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(
+      :login => ENV['Paypal_Login'],
+      :password => ENV['Paypal_Pass'],
+      :signature => ENV['Paypal_Signature'] 
+    )
+  end
+
 end

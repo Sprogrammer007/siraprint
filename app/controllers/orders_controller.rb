@@ -4,11 +4,9 @@ class OrdersController < ApplicationController
 
   def create
     oparams = params[:order]
-    @order = current_user.open_order || current_user.new_order
+    @order = current_user.open_order || current_user.new_order(request.remote_ip)
     if @order
-      op = @order.ordered_products.create(quantity: oparams[:quantity], product_type: oparams[:product_type],
-        print_pdf: oparams[:design_pdf], print_pdf_2: oparams[:design_pdf_2], product_id: oparams[:product_id], unit_price: oparams[:unit_price],
-        price: oparams[:total_price] )
+      op = @order.create_new_ordered_product(oparams)
       if op.save
         detail =  op.create_details(oparams[:product_type], oparams[:details])
         if detail.save
@@ -28,13 +26,11 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @no_sidebar = true
     @order = current_user.open_order
     @order.update_price
   end
 
   def delivery_info
-    @no_sidebar = true
     @order = current_user.open_order
   end
 
@@ -55,7 +51,44 @@ class OrdersController < ApplicationController
     redirect_to :back
   end
 
-  def payment
+  def select_delivery
+    @order = Order.find(params[:id])
+    if params[:method] == "Pickup"
+      @order.update!(delivery_address: DeliveryAddress.html_pickup_address, delivery_method: params[:method])
+    else
+      da = DeliveryAddress.find(params[:delivery_adress_id])
+      @order.update!(delivery_address: da.html_address, delivery_method: params[:method])
+    end
+    redirect_to check_out_order_path(@order)
+  end
+
+  def check_out
+    @order = current_user.open_order
+    @order.update_price
+  end
+
+  def express
+    @order = Order.find(params[:id])
+    response = EXPRESS_GATEWAY.setup_purchase(@order.price_in_cents,
+      :items => [{:name => "Sira Print Order ##{@order.order_id}", :description => @order.get_description, :amount => @order.price_in_cents}],
+      :ip                => @order.ip_address,
+      :return_url        => confirm_order_url(id: @order.id),
+      :cancel_return_url => root_url
+    )
+
+    redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
+  end
+
+  def confirm
+    @order = Order.find(params[:id])
+    @order.update(:express_token => params[:token])
+    if @order.purchase
+      OrderMailer.notify_order_placed(current_user, @order).deliver
+      OrderMailer.thank_you_for_order(current_user, @order).deliver
+      render 'success'
+    else
+      render 'failure'
+    end
   end
   
   def remove_item

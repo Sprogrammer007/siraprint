@@ -23,6 +23,7 @@ gem 'haml'
 gem 'tinymce-rails'
 gem 'aws-sdk'
 gem 'jquery-fileupload-rails'
+gem 'activemerchant'
 
 group :development do
   gem 'faker', '1.2.0'

@@ -24,11 +24,12 @@ class User < ActiveRecord::Base
   scope :approved, -> { where(:status => "Approved") }
   scope :recent, -> (n) { order('created_at DESC').limit(n) }
   
-  def new_order
-    order = self.orders.create!(status: 'open')
+  def new_order(ip)
+    order = self.orders.create!(status: 'open', ip_address: ip)
     order.create_order_id
     return order
   end
+
 
   def set_default_state
     self.status = "Registered"

@@ -19,3 +19,6 @@
       = link_to "Cancel Order", cancel_order_path(order)
       | 
       = link_to "Update Order", cart_path()
+      - if order.delivery_method
+        |
+        = link_to "Pay for Order", check_out_order_path(order)

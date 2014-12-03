@@ -20,7 +20,7 @@
                 (416) 953-8669
               .delivery-to.delivery-button-primary.delivery-button
                 %span.delivery-button-inner
-                  = link_to "Delivery to this address", "#", class: "delivery-button-text"
+                  = link_to "Delivery to this address", select_delivery_order_path(@order, :method => "Pickup"), class: "delivery-button-text"
                     
                  
             -if current_user.delivery_addresses.any?
@@ -44,7 +44,7 @@
                   - else
                     .delivery-to.delivery-button-primary.delivery-button
                       %span.delivery-button-inner
-                        = link_to "Delivery to this address", "#", class: "delivery-button-text"
+                        = link_to "Delivery to this address", select_delivery_order_path(@order, :method => "Deliver"), class: "delivery-button-text"
                   .delivery-address-buttons.mtt-xs.group
                     = link_to "Edit", edit_delivery_address_path(a, order_form: "Yes"), class: "profile-button profile-button-small"
                     - unless @order.delivery_id == a.id

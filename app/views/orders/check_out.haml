@@ -1,0 +1,8 @@
+.container.check-out
+  .group
+    %h1 Finialize Your Order
+  = render 'order_table', order: @order, step: "pay"
+
+  .checkout_buttons.group.mgl
+    = link_to image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), express_order_path(@order)
+        

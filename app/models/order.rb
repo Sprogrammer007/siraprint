@@ -3,6 +3,7 @@ class Order < ActiveRecord::Base
   STATE = %w{open payed completed canceled}
   belongs_to :user
   has_many :ordered_products, :foreign_key => :order_id
+  has_many :transactions, :class_name => "OrderTransaction"
 
   scope :open, -> { where(status: "open") }
   scope :canceled, -> { where(status: "canceled") }
@@ -36,4 +37,72 @@ class Order < ActiveRecord::Base
   def address
     @address ||= DeliveryAddress.find(self.delivery_id)
   end
+
+  def create_new_ordered_product(params)
+    op = self.ordered_products.create(
+      quantity: params[:quantity], 
+      product_type: params[:product_type],
+      print_pdf: params[:design_pdf], 
+      print_pdf_2: params[:design_pdf_2], 
+      product_id: params[:product_id], 
+      unit_price: params[:unit_price],
+      price: params[:total_price]
+    )
+    return op
+  end
+  def purchase
+    response = process_purchase
+    transactions.create!(:action => "purchase", :amount => price_in_cents, :response => response)
+    self.update(status: "payed") if response.success?
+    response.success?
+  end
+  
+  def express_token=(token)
+    write_attribute(:express_token, token)
+    if !token.blank?
+      details = EXPRESS_GATEWAY.details_for(token)
+      self.express_payer_id = details.payer_id
+    end
+  end
+
+
+  def price_in_cents
+    (total*100).round()
+  end
+
+  def get_description
+    list_of_products = ordered_products.map { |p| ["#{p.product_type.camelize.split("_").join(" ")} x#{p.quantity}"] }
+    list_of_products.join("<br/>").html_safe()
+  end
+  
+  private
+    def process_purchase
+      if express_token.blank?
+        STANDARD_GATEWAY.purchase(price_in_cents, credit_card, standard_purchase_options)
+      else
+        EXPRESS_GATEWAY.purchase(price_in_cents, express_purchase_options)
+      end
+    end
+
+    def standard_purchase_options
+      {
+        :ip => ip_address,
+        :billing_address => {
+          :name     => "",
+          :address1 => "",
+          :city     => "",
+          :state    => "",
+          :country  => "",
+          :zip      => ""
+        }
+      }
+    end
+
+    def express_purchase_options
+      {
+        :ip => ip_address,
+        :token => express_token,
+        :payer_id => express_payer_id
+      }
+    end
 end
