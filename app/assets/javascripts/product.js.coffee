@@ -189,7 +189,7 @@ ready = ->
         $('.finishing-placeholder').html("0")
     else
       $('.grommets-box').addClass('hidden')
-      $('grommets-field').val(0)
+      $('.grommets-field').val(0)
       f_price = parseFloat(sqft).toFixed(2) 
       $('.finishing-placeholder').html("$#{f_price}")
       new_total = (parseFloat(f_price) + (parseFloat(u) * q)).toFixed(2)
