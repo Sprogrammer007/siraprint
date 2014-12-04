@@ -73,6 +73,7 @@ class OrdersController < ApplicationController
       :items             => @order.prepare_paypal_items,
       :subtotal          => @order.sub_total_in_cents,
       :tax               => @order.tax_in_cents,
+      :currency          => 'CAD',
       :shipping          => 0,
       :handling          => 0,
       :ip                => @order.ip_address,
