@@ -18,6 +18,7 @@
 
 # Ignore other unneeded files.
 database.yml
+secret.yml
 Gemfile.rb
 doc/
 *.swp
