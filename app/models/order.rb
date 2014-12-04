@@ -96,8 +96,8 @@ class Order < ActiveRecord::Base
 
   def get_description(p)
     if p.product_type == "large_format"
-      "Material: #{p.product.name}<br/>
-      Thickness: #{p.details.thickness.thickness}#{p.details.thickness.unit}<br/>
+      "Material: #{p.product.name} <br/>
+      Thickness: #{p.details.thickness.thickness}#{p.details.thickness.unit} <br/>
       Size: #{p.details.size}".html_safe()
     else
       "Size: #{p.details.size}".html_safe()
