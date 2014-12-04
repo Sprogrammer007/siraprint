@@ -56,7 +56,7 @@ class OrdersController < ApplicationController
     if params[:method] == "Pickup"
       @order.update!(delivery_address: DeliveryAddress.html_pickup_address, delivery_method: params[:method])
     else
-      da = DeliveryAddress.find(params[:delivery_adress_id])
+      da = DeliveryAddress.find(params[:delivery_address_id])
       @order.update!(delivery_address: da.html_address, delivery_method: params[:method])
     end
     redirect_to check_out_order_path(@order)
