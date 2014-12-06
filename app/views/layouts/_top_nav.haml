@@ -1,16 +1,17 @@
-%nav.navbar.navbar-inverse
-  .btn-group.navbar-left
-    %button.btn.btn-shop.btn-lg
-      Shop By
-      %strong
-        Products
-        %span.caret
-    
+%nav.navbar.navbar-default
+  -# .btn-group.navbar-left
+  -#   %button.btn.btn-shop.btn-lg
+  -#     Shop By
+  -#     %strong
+  -#       Products
+  -#       %span.caret
+   
   .navbar-header
     = button_tag "#", class: "navbar-toggle", data: {toggle: "collapse", target: "#32a"} do
       %span.sr-only
       %span.icon-bar
-    = link_to image_tag('sira_print_logo.png'), root_path, class: "logo"
+      %span.icon-bar
+      %span.icon-bar
 
   .collapse.navbar-collapse
     %ul.nav.navbar-nav.navbar-right   

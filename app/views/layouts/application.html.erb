@@ -25,31 +25,23 @@
   </head>
 
   <body>
-
-  <div class="row">
-    <%= render 'layouts/top_nav' %>
-
+    <head>
+      <%= render 'layouts/top_nav' %>
+    </head>
+    <div class="clearfix"></div>
     <%= render 'shared/flash_notice'%>
-  </div>
-  
-  <div class=" main-body">
-    <div class="row mgtb-l">
-    <div class="col-lg-2">
-      <%= render 'layouts/side_nav' %>
-    </div>
-    <div class="col-lg-10">
-      <div class="row">
-        <%= yield %>
+    <%= render 'layouts/side_nav' %>
+
+
+    <div class="row main-content" >
+      <div class="col-lg-12">
+        <div class="row">
+          <%= yield %>
+        </div>
       </div>
-    </div>
-
       
-      
-    
     </div>
-  </div>
-
-  <%= render 'layouts/footer' %>
+    <%= render 'layouts/footer' %>   
  
   </body>
 </html>

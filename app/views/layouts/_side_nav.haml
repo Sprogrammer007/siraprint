@@ -1,7 +1,16 @@
-.shop-by-box
-  %ul.dropdown-menu.bottom{:role => "menu"}
-    .arrow
-    %li
-      = link_to "Large Formats", large_formats_path()
-    %li
-      = link_to "Metal Signs", metal_signs_path()
+#side-nav
+  .logo
+    = link_to image_tag('sira_print_logo.png'), root_path
+  .sidenavbar
+
+    %ul
+      %li
+        = link_to large_formats_path() do
+          Large Formats
+          %span.glyphicon.glyphicon-chevron-right{"aria-hidden" => "true"}
+      .divider 
+      %li
+        = link_to  metal_signs_path() do
+          Metal Signs
+          %span.glyphicon.glyphicon-chevron-right{"aria-hidden" => "true"}
+      .divider 
