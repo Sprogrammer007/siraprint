@@ -14,7 +14,10 @@
       %span.icon-bar
 
   .collapse.navbar-collapse
-    %ul.nav.navbar-nav.navbar-right   
+    %ul.nav.navbar-nav.navbar-right
+      %li
+        = link_to root_path() do
+          %span.glyphicon.glyphicon-home{"aria-hidden" => "true"}   
       %li
         = link_to "About", root_path
       %li
