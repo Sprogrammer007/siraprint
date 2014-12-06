@@ -67,14 +67,13 @@
         
 <script>
   gallery_setup = function() {
-    $('#galleria').galleria({
-      width: 948,
-      height: 458
-    });
-    
     Galleria.loadTheme("<%=  asset_path('galleria.classic.js') %>");
-
+    
     Galleria.configure({
+      height: 458, 
+      width: 1022, 
+      responsive: true, 
+      lightbox: false, 
       autoplay: true,
       transition: 'fade',
       showInfo: false
