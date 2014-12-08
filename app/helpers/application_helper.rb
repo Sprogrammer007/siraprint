@@ -10,6 +10,10 @@ module ApplicationHelper
     end
   end
 
+  def cp(path)
+    "active" if current_page?(path)
+  end
+
   def badge_number
     current_user.open_order ? current_user.open_order.ordered_products.count() : 0
   end

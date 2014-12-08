@@ -1,5 +1,5 @@
 
-<div class="col-lg-9">
+<div class="col-main">
   <h2><%= "Large Format - #{@large_format.name}" %></h2>
   <div class="galleria" id="galleria" style="height: 518px">
     <%= image_tag("1.jpg") %>
@@ -21,7 +21,7 @@
   </div>
 </div>
 
-<div class="col-lg-3 order_form">
+<div class="order_form col-side">
   <%= render 'order_form' %>
 </div>
 
@@ -32,7 +32,7 @@
     
     Galleria.configure({
       height: 458, 
-      width: 1022, 
+      width: 660, 
       responsive: true, 
       lightbox: false, 
       autoplay: true,

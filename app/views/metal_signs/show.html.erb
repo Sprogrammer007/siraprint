@@ -1,4 +1,4 @@
-<div class="col-lg-9">
+<div class="col-main">
   <h2><%= @metal_sign.name %></h2>
   <div class="galleria" id="galleria" style="height: 518px">
     <%= image_tag("1.jpg") %>
@@ -12,7 +12,7 @@
     </p>
   </div>
 </div>
-<div class="col-lg-3 order_form">
+<div class="col-side order_form">
   <%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "metal-signs-form", multipart: true do %>
     <%= hidden_field_tag '[order]product_type', 'metal_sign' %>
     <%= hidden_field_tag '[order]product_id', @metal_sign.id %>
@@ -72,7 +72,7 @@
     
     Galleria.configure({
       height: 458, 
-      width: 1022, 
+      width: 660, 
       responsive: true, 
       lightbox: false, 
       autoplay: true,
