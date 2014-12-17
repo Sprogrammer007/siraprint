@@ -12,11 +12,13 @@ class OrdersController < ApplicationController
         if detail.save
           op.update(:product_detail_id => detail.id)
         else
-          flash[:warn] = "Oh no! Your order did not go through. Please make sure you provided all required informations!"
+          Rails.logger.warn "Detail Error + #{detail.errors.full_messages.inspect}"
+          flash[:warn] = "<ul>#{prepare_flash_errors(detail.errors.full_messages) }</ul>"
           redirect_to :back and return
         end
       else
-        flash[:warn] = "Oh no! Your order did not go through. Please make sure you provided all required informations!"
+        Rails.logger.warn "OP Error + #{op.errors.full_messages.inspect}"
+        flash[:warn] = "<ul>#{prepare_flash_errors(op.errors.full_messages) }</ul>"
         redirect_to :back and return
       end
       @order.update_price
@@ -108,5 +110,9 @@ class OrdersController < ApplicationController
         flash[:alert] = "You account is not yet approved"
         redirect_to root_path()
       end
+    end
+
+    def prepare_flash_errors(msgs)
+      msgs.map { |m| "<li>#{m}</li>" }.join(" ")  
     end
 end

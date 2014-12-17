@@ -34,9 +34,10 @@ ready = ->
     
     $.post(url, sqft: sqft, undefined, "json").done (data) ->
       if data == null
-        $('#_orderproduct_rate').val(0)
+        $('#_orderproduct_rate').val('')
         $('.product-width').val(0)
         $('.product-length').val(0)
+        $('.thickness-selection').val($(".thickness-selection option:first").val())
         return alert("There are no matching sizes for your print, pelase re-enter width and length")
       else
         $('#_orderproduct_rate').val(data.price)
@@ -151,9 +152,10 @@ ready = ->
       else
         $.post(url, sqft: sqft, undefined, "json").done (data) ->
           if data == null
-            $('#_orderproduct_rate').val(0)
+            $('#_orderproduct_rate').val('')
             $('.product-width').val(0)
             $('.product-length').val(0)
+            $('.thickness-selection').val($(".thickness-selection option:first").val())
             return alert("There are no matching sizes for your print, pelase re-enter width and length")
           else
             $('#_orderproduct_rate').val(data.price)
