@@ -13,12 +13,12 @@ class OrdersController < ApplicationController
           op.update(:product_detail_id => detail.id)
         else
           Rails.logger.warn "Detail Error + #{detail.errors.full_messages.inspect}"
-          flash[:warn] = "<ul>#{prepare_flash_errors(detail.errors.full_messages) }</ul>"
+          flash[:danger] = "<ul>#{prepare_flash_errors(detail.errors.full_messages) }</ul>"
           redirect_to :back and return
         end
       else
         Rails.logger.warn "OP Error + #{op.errors.full_messages.inspect}"
-        flash[:warn] = "<ul>#{prepare_flash_errors(op.errors.full_messages) }</ul>"
+        flash[:danger] = "<ul>#{prepare_flash_errors(op.errors.full_messages) }</ul>"
         redirect_to :back and return
       end
       @order.update_price
