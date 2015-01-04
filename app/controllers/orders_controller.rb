@@ -12,12 +12,10 @@ class OrdersController < ApplicationController
         if detail.save
           op.update(:product_detail_id => detail.id)
         else
-          Rails.logger.warn "Detail Error + #{detail.errors.full_messages.inspect}"
           flash[:danger] = "<ul>#{prepare_flash_errors(detail.errors.full_messages) }</ul>"
           redirect_to :back and return
         end
       else
-        Rails.logger.warn "OP Error + #{op.errors.full_messages.inspect}"
         flash[:danger] = "<ul>#{prepare_flash_errors(op.errors.full_messages) }</ul>"
         redirect_to :back and return
       end
@@ -90,8 +88,8 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @order.update(:express_token => params[:token])
     if @order.purchase
-      OrderMailer.notify_order_placed(current_user, @order).deliver
-      OrderMailer.thank_you_for_order(current_user, @order).deliver
+      OrderMailer.notify_order_placed(current_user, @order).deliver_now
+      OrderMailer.thank_you_for_order(current_user, @order).deliver_now
       render 'success'
     else
       render 'failure'

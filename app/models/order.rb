@@ -53,7 +53,7 @@ class Order < ActiveRecord::Base
 
   def purchase
     response = process_purchase
-    transactions.create!(:action => "purchase", :amount => price_in_cents, :response => response)
+    transactions.create!(:action => "purchase", :amount => total_in_cents, :response => response)
     self.update(status: "payed") if response.success?
     response.success?
   end
@@ -107,9 +107,9 @@ class Order < ActiveRecord::Base
   private
     def process_purchase
       if express_token.blank?
-        STANDARD_GATEWAY.purchase(price_in_cents, credit_card, standard_purchase_options)
+        STANDARD_GATEWAY.purchase(total_in_cents, credit_card, standard_purchase_options)
       else
-        EXPRESS_GATEWAY.purchase(price_in_cents, express_purchase_options)
+        EXPRESS_GATEWAY.purchase(total_in_cents, express_purchase_options)
       end
     end
 
@@ -129,9 +129,10 @@ class Order < ActiveRecord::Base
 
     def express_purchase_options
       {
-        :ip => ip_address,
-        :token => express_token,
-        :payer_id => express_payer_id
+        :ip         => ip_address,
+        :token      => express_token,
+        :payer_id   => express_payer_id,
+        :currency   => 'CAD'
       }
     end
 end
