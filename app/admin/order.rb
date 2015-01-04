@@ -107,8 +107,8 @@ ActiveAdmin.register Order do
             column "Length" do |p|
               "#{p.details.length}#{p.details.unit}"
             end
-            column "Length" do |p|
-              "#{p.details.sqft}sqft"
+            column "Sqft" do |p|
+              "#{p.details.size}"
             end
             column :quantity
             column "User Design" do |p|
