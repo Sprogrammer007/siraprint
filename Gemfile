@@ -24,7 +24,7 @@ gem 'tinymce-rails'
 gem 'aws-sdk'
 gem 'jquery-fileupload-rails'
 gem 'activemerchant'
-
+gem 'inherited_resources', github: 'josevalim/inherited_resources', branch: 'rails-4-2'
 group :development do
   gem 'faker', '1.2.0'
   # gem 'rspec-rails', '2.14.0'
