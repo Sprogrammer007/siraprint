@@ -12,7 +12,10 @@ class StaticPagesController < ApplicationController
   end
 
   def contact
+  end
 
+  def ud
+    render :layout => false
   end
 
 end

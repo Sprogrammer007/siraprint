@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  root  'static_pages#home'
+  root  'static_pages#ud'
   
   devise_for( :users, 
               :controllers  => { :registrations => "users", :sessions => "sessions" }, 
@@ -49,6 +49,7 @@ Rails.application.routes.draw do
   match  'orders/delivery_info', to: 'orders#delivery_info',    via: 'get', :as => 'delivery_info'
   match  'orders/payment',    to: 'orders#payment',             via: 'get', :as => 'payment'
 
+  match '/home',              to: 'static_pages#home',          via: 'get'
   match '/help',              to: 'static_pages#help',          via: 'get'
   match '/about',             to: 'static_pages#about',         via: 'get'
   match '/contact',           to: 'static_pages#contact',       via: 'get'
