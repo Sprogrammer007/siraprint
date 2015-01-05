@@ -267,5 +267,17 @@ ready = ->
       $('#_orderunit_price').val(0)
       $('#_ordertotal_price').val(0)
 
+  # Validation Before Submit
+  $('.order_form').on 'submit', "form", (e)->
+    if $('#_orderdesign_pdf').val() == ""
+      $('#_orderdesign_pdf').parents('.input-group').next('.error').removeClass("hidden")
+      e.preventDefault()
+
+    if $('#_orderdesign_pdf_2').val() == ""
+      $('#_orderdesign_pdf_2').parents('.input-group').next('.error').removeClass("hidden")
+      e.preventDefault()
+
+   
+
 $(document).ready(ready)
 $(document).on('page:load', ready)
