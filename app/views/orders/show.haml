@@ -10,8 +10,11 @@
           = link_to image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), express_order_path(@order)
         
       .checkout-buttons.group.mgl
-        = link_to "Select Delivery Method", delivery_info_path(), class: ""
-        
+        - if @order.delivery_method()
+          = link_to "Update Delivery Method", delivery_info_path(), class: ""
+        - else
+          = link_to "Select Delivery Method", delivery_info_path(), class: ""
+          
   - else
     #empty_cart.empty_cart
       %span.group

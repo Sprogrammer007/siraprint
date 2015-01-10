@@ -46,7 +46,7 @@
       %td{:width => "550"} 
 
       %td.totals-section
-        - if step == "pay"
+        - if step == "pay" || order.delivery_method()
           %dl.delivery-details
             %dt Delivery Details:
             %dd
