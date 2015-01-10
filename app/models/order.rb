@@ -27,11 +27,19 @@ class Order < ActiveRecord::Base
   end
 
   def get_tax
-    ((self.sub_total * 1.13) - self.sub_total).round(2)
+    if self.sub_total
+      ((self.sub_total * 1.13) - self.sub_total).round(2)
+    else
+      0
+    end
   end
 
   def total
-    (self.sub_total * 1.13).round(2)
+    if self.sub_tota
+      (self.sub_total * 1.13).round(2)
+    else
+      0
+    end
   end
 
   def address

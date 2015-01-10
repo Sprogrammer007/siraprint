@@ -38,13 +38,17 @@ ActiveAdmin.register_page "Dashboard" do
               o.delivery_address.html_safe() if o.delivery_address
             end
             column "Order Sub-Total" do |o|
-              "$#{o.sub_total}" if o.sub_total
+              if o.sub_total
+                "$#{o.sub_total}"
+              else
+                "$0"
+              end
             end
             column "Order Tax" do |o|
-              "$#{o.get_tax}" if o.sub_total
+              "$#{o.get_tax}" 
             end
             column "Order Total" do |o|
-              "$#{o.total}" if o.sub_total
+              "$#{o.total}" 
             end
 
             column "Status" do |o|
