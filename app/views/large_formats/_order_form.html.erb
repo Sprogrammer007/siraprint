@@ -10,11 +10,11 @@
     <h3>Step 1: Enter Desire Print Size</h3>
     <div style="display: block; float: left; width: 60px; margin-right: 30px;">
       <%= label_tag "[order][details]width", "Width" %>
-      <%= text_field_tag "[order][details]width", nil, class: "product-width form-control", :step => 0.1 %>
+      <%= number_field_tag "[order][details]width", nil, class: "product-width form-control", in: 1...100, :step => 0.1 %>
     </div>
     <div style="display: block;  float: left; width: 60px; margin-right: 30px;">
       <%= label_tag "[order][details]length", "Length" %>
-      <%= text_field_tag '[order][details]length', nil, class: "product-length form-control", :step => 0.1 %>
+      <%= number_field_tag '[order][details]length', nil, class: "product-length form-control", in: 1...100, :step => 0.1 %>
     </div>
     <div style="display: block;  float: left; width: 60px;">
       <%= label_tag "[order][details]unit", "Unit" %>
