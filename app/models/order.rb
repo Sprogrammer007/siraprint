@@ -35,7 +35,7 @@ class Order < ActiveRecord::Base
   end
 
   def total
-    if self.sub_tota
+    if self.sub_total
       (self.sub_total * 1.13).round(2)
     else
       0
