@@ -36,7 +36,7 @@ class UsersController < Devise::RegistrationsController
     if user_signed_in? && current_user.approved?
       @orders = current_user.orders
     else
-      flash[:alert] = "You cannot access this page!"
+      flash[:alert] = "You cannot access this page, please sign in first!"
       redirect_to root_path()
     end
   end
