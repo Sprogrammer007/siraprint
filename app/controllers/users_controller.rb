@@ -33,7 +33,7 @@ class UsersController < Devise::RegistrationsController
   end
 
   def my_orders
-    if current_user.approved?
+    if user_signed_in? && current_user.approved?
       @orders = current_user.orders
     else
       flash[:alert] = "You cannot access this page!"
