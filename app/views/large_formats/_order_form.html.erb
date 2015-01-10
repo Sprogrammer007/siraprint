@@ -6,21 +6,19 @@
   <%= hidden_field_tag '[order]total_price', '' %>
   <%= hidden_field_tag '[order]unit_price', '' %>
 
-  <div class="item-size product-box">
+  <div class="item-size product-box group">
     <h3>Step 1: Enter Desire Print Size</h3>
-    <div class="row">
-      <div class="col-lg-4">
-        <%= label_tag "[order][details]width", "Width" %>
-        <%= number_field_tag "[order][details]width", nil, class: "product-width form-control", in: 1...100, :step => 0.1 %>
-      </div>
-      <div class="col-lg-4">
-        <%= label_tag "[order][details]length", "Length" %>
-        <%= number_field_tag '[order][details]length', nil, class: "product-length form-control", in: 1...100, :step => 0.1 %>
-      </div>
-      <div class="col-lg-4">
-        <%= label_tag "[order][details]unit", "Unit" %>
-        <%= select_tag '[order][details]unit', options_for_select(["inch", 'feet']), class: "product-unit form-control" %>
-      </div>
+    <div style="display: block; float: left; width: 60px; margin-right: 30px;">
+      <%= label_tag "[order][details]width", "Width" %>
+      <%= text_field_tag "[order][details]width", nil, class: "product-width form-control", :step => 0.1 %>
+    </div>
+    <div style="display: block;  float: left; width: 60px; margin-right: 30px;">
+      <%= label_tag "[order][details]length", "Length" %>
+      <%= text_field_tag '[order][details]length', nil, class: "product-length form-control", :step => 0.1 %>
+    </div>
+    <div style="display: block;  float: left; width: 60px;">
+      <%= label_tag "[order][details]unit", "Unit" %>
+      <%= select_tag '[order][details]unit', options_for_select(["inch", 'feet']), class: "product-unit form-control" %>
     </div>
   </div>
   <div class="item-side product-box">

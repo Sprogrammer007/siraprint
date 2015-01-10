@@ -86,15 +86,23 @@ Rails.application.configure do
       :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
     }
   }
-
   config.after_initialize do 
     ActiveMerchant::Billing::Base.mode = :production
 
     ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(
-      :login => ENV['PAYPAL_LOGIN'],
-      :password => ENV['PAYPAL_PASS'],
-      :signature => ENV['PAYPAL_SI'] 
+      :login => "Steve00006-facilitator_api1.gmail.com",
+      :password => "J5XM9SECLJQUQ9L4",
+      :signature => "AFcWxV21C7fd0v3bYYYRCpSSRl31AtyS01HpkH8lotQ-jwoMdrqVlah7"
     )
   end
+  # config.after_initialize do 
+  #   ActiveMerchant::Billing::Base.mode = :production
+
+  #   ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(
+  #     :login => ENV['PAYPAL_LOGIN'],
+  #     :password => ENV['PAYPAL_PASS'],
+  #     :signature => ENV['PAYPAL_SI'] 
+  #   )
+  # end
 
 end
