@@ -9,15 +9,13 @@
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
-      <div class="item active">
-        <%= image_tag("5.jpg")  %>
-        
-      </div>
-      <div class="item">
-        <%= image_tag("6.jpg")  %>
-      
-      </div>
-  
+      <%- if SliderImage.home.any? %>
+        <%- SliderImage.home.each_with_index do |image, i| %>
+          <div class='item <%= (i == 0) ? "active" : "" %>'>
+            <%= image_tag(image.slide_image.url()) if image.slide_image? %>
+          </div>
+        <%- end %>
+      <%- end %>
     </div>
 
     <!-- Controls -->
