@@ -3,9 +3,12 @@
 
   <h2><%= "Large Format - #{@large_format.name}" %></h2>
   <div class="galleria" id="galleria" style="height: 518px">
-    <%= image_tag("1.jpg") %>
-    <%= image_tag("2.jpg") %>
-    <%= image_tag("2.jpg") %>
+      <%- if SliderImage.large_format.any? %>
+        <%- SliderImage.large_format.each do |image| %>
+          <%= image_tag(image.slide_image.url()) if image.slide_image? %>
+        <%- end %>
+      <%- end %>
+    </div>
   </div>
   <div class="item-description">
     <h3>Item Description</h3>

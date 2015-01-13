@@ -1,9 +1,11 @@
 <div class="col-main">
   <h2><%= @metal_sign.name %></h2>
   <div class="galleria" id="galleria" style="height: 518px">
-    <%= image_tag("1.jpg") %>
-    <%= image_tag("2.jpg") %>
-    <%= image_tag("2.jpg") %>
+      <%- if SliderImage.metal_sign.any? %>
+        <%- SliderImage.metal_sign.each do |image| %>
+          <%= image_tag(image.slide_image.url()) if image.slide_image? %>
+        <%- end %>
+      <%- end %>
   </div>
   <div class="item-description">
     <h3>Item Description</h3>
