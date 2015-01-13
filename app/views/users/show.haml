@@ -1,4 +1,3 @@
-
 - if current_user.approved?
   .col-lg-7.mtl
     .panel.panel-default.boxed-m
@@ -39,34 +38,35 @@
       .panel-heading.profile-title.group
         %h3.panel-title.pull-left
           Delivery Address:
-        - if current_user.has_delivery_addressess?
-          .pull-right
-            = link_to "Add Another Address", new_delivery_address_path()
+        -# - if current_user.has_delivery_addressess?
+        -#   .pull-right
+        -#     = link_to "Add Another Address", new_delivery_address_path()
       .panel-body.profile-body
         .shipping-details
-          - if current_user.has_delivery_addressess?
-            - current_user.delivery_addresses.each do |a|
-              .dlivery-address-wrapper
-                .row
-                  .col-lg-6
+          -# - if current_user.has_delivery_addressess?
+          -#   - current_user.delivery_addresses.each do |a|
+          -#     .dlivery-address-wrapper
+          -#       .row
+          -#         .col-lg-6
                 
-                    %span.mgl
-                      %strong 
-                        = a.full_name()
-                      %br
-                      = a.address()
-                      = "#{a.city()}, #{a.province()}"
-                      %span.uppercase
-                        = "#{a.postal[0..2]} #{a.postal[3..5]}"
-                    .delivery-address-buttons.mtt-xs.group
-                      = link_to "Edit", edit_delivery_address_path(a), class: "profile-button profile-button-small"
-                      = link_to "Remove", delivery_address_path(a), class: "profile-button profile-button-small", data: { confirm: "Are you sure?" }, method: :delete
+          -#           %span.mgl
+          -#             %strong 
+          -#               = a.full_name()
+          -#             %br
+          -#             = a.address()
+          -#             = "#{a.city()}, #{a.province()}"
+          -#             %span.uppercase
+          -#               = "#{a.postal[0..2]} #{a.postal[3..5]}"
+          -#           .delivery-address-buttons.mtt-xs.group
+          -#             = link_to "Edit", edit_delivery_address_path(a), class: "profile-button profile-button-small"
+          -#             = link_to "Remove", delivery_address_path(a), class: "profile-button profile-button-small", data: { confirm: "Are you sure?" }, method: :delete
        
-          - else
-            .no-delivery
-              No Delivery Address Setup Please 
-              = link_to "Add New Delivery Address", new_delivery_address_path()
-
+          -# - else
+          -#   .no-delivery
+          -#     No Delivery Address Setup Please 
+          -#     = link_to "Add New Delivery Address", new_delivery_address_path()
+          .no-delivery
+            Feature currently unavailable 
     .panel.panel-default.boxed-m
       .panel-heading.profile-title
         %h3.panel-title

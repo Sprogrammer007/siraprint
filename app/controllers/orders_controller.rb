@@ -25,8 +25,10 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @order = current_user.open_order
-    @order.update_price
+    if current_user.open_order && current_user.open_order.ordered_products.any?
+      @order = current_user.open_order
+      @order.update_price
+    end
   end
 
   def delivery_info
@@ -76,6 +78,7 @@ class OrdersController < ApplicationController
       :currency          => 'CAD',
       :shipping          => 0,
       :handling          => 0,
+      :no_shipping       => true,
       :ip                => @order.ip_address,
       :return_url        => confirm_order_url(id: @order.id),
       :cancel_return_url => root_url
