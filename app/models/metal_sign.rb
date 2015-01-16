@@ -13,6 +13,12 @@ class MetalSign < ActiveRecord::Base
   
   delegate :active?, :deactive?, to: :current_state?
 
+  def name_for_db
+    if self.name
+      self.name.downcase.split(" ").join("_")
+    end
+  end
+
   def current_state?
     status.downcase.inquiry
   end

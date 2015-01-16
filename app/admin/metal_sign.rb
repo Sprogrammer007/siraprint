@@ -59,6 +59,13 @@ ActiveAdmin.register MetalSign do
       end
       div class: "metal-sign-right" do 
         panel "Slider Images", class: "group" do
+          div class: "slides" do
+            if SliderImage.where(product_type: metal_sign.name_for_db).any?
+              SliderImage.where(product_type: metal_sign.name_for_db).each do |image|
+                render "slider_images/slider_image", slider_image: image
+              end
+            end
+          end
           render "admin/upload_slider", type: metal_sign.name.downcase.split(" ").join("_")
         end
       end

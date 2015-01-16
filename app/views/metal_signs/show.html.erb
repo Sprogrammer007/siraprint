@@ -1,8 +1,8 @@
 <div class="col-main">
   <h2><%= @metal_sign.name %></h2>
   <div class="galleria" id="galleria" style="height: 518px">
-      <%- if SliderImage.metal_sign.any? %>
-        <%- SliderImage.metal_sign.each do |image| %>
+      <%- if SliderImage.where(product_type: metal_sign.name_for_db).any? %>
+        <%- SliderImage.where(product_type: metal_sign.name_for_db).each do |image| %>
           <%= image_tag(image.slide_image.url()) if image.slide_image? %>
         <%- end %>
       <%- end %>
