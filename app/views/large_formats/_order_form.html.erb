@@ -23,7 +23,7 @@
   </div>
   <div class="item-side product-box">
     <h3>Step 2: Select Number of Sides</h3>
-    <%= select("order", "[details]side", options_for_select([["One Side Printing", 1], ["Two Side Printing", 2]], @large_format.sides), {}, class: "side-selection form-control", data: {name: "#{@large_format.name}", url: change_side_large_format_path(@large_format)}) %>
+    <%= select("order", "[details]side", options_for_select(@large_format.side_options, @large_format.sides), {}, class: "side-selection form-control", data: {name: "#{@large_format.name}", url: change_side_large_format_path(@large_format)}) %>
   </div>
   
   <div class="item-thickness product-box">

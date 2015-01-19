@@ -111,7 +111,8 @@ class Order < ActiveRecord::Base
       "Size: #{p.details.size}".html_safe()
     end
   end
-  
+
+
   private
     def process_purchase
       if express_token.blank?

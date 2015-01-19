@@ -28,6 +28,13 @@ ActiveAdmin.register LargeFormat do
       l.description.html_safe() if l.description
     end
     column :sides
+    column "Has Two Sided?" do |l|
+      if l.has_two_side
+        status_tag "Yes", :ok
+      else
+        status_tag "No", :ok
+      end
+    end
     column "status" do |l|
       if l.active?
         status_tag "Active", :ok
@@ -59,6 +66,13 @@ ActiveAdmin.register LargeFormat do
           end
           row :description do |l|
             l.description.html_safe() if l.description
+          end
+          row "Has Two Sided?" do |l|
+            if l.has_two_side
+              status_tag "Yes", :ok
+            else
+              status_tag "No", :ok
+            end
           end
           row :sides
           row "Finishing Options" do |l|
@@ -127,6 +141,7 @@ ActiveAdmin.register LargeFormat do
       f.input :name, label: "Material Name"
       f.input :description, input_html: { class: "tinymce" }
       f.input :display_image, :as => :file
+      f.input :has_two_side, :as => :select, :collection => options_for_select([["Yes", true], ["No", false]], (f.object.has_two_side || false))
       f.input :sides, :as => :select, :collection => options_for_select(["1", "2"], f.object.sides)
       f.input :status, :as => :select, :collection => options_for_select(['Active', 'Deactive'], f.object.status)
     end

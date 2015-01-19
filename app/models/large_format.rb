@@ -20,6 +20,15 @@ class LargeFormat < ActiveRecord::Base
     status.downcase.inquiry
   end
 
+  def side_options
+    if self.has_two_side
+      [["One Side Printing", 1], ["Two Side Printing", 2]]
+    else
+      [["One Side Printing", 1]]
+    end
+  end
+  
+
   def clone_with_associations
     new_record = self.dup
     new_record.save
