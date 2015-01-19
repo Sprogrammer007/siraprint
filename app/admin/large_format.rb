@@ -2,7 +2,7 @@ ActiveAdmin.register LargeFormat do
   
   menu :parent => "Products"
 
-  permit_params :name, :description, :display_image, :sides, :status, 
+  permit_params :name, :description, :display_image, :has_two_side, :sides, :status, 
     :large_format_thicknesses_attributes => [:id, :thickness, :unit, :_destroy, :_destroy => true,
     :large_format_tiers_attributes => [:id, :level, :min_sqft, :max_sqft, :price, :_destroy => true ] ] 
   
