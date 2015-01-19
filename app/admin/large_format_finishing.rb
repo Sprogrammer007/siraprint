@@ -28,14 +28,14 @@ ActiveAdmin.register LargeFormatFinishing do
     def create
 
       super do |format|
-        redirect_to admin_large_formats_path()
+        redirect_to admin_large_format_finishings_path()
         return
       end
     end
 
     def update 
       super do |format|
-        redirect_to admin_large_formats_path()
+        redirect_to admin_large_format_finishings_path()
         return
       end
     end
