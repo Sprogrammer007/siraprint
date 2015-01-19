@@ -15,6 +15,15 @@ ready = ->
   # $('.dropdown').on 'hide.bs.dropdown', ->
   #   return false;
 
+  # Overlay for product items
+  $('.product-item').hover (->
+    $(this).addClass "open"
+    return
+  ), ->
+    $(this).removeClass "open"
+    return
+
+
   calc_sqft = (w, l) ->
     unit = $('.product-unit').find(':selected').val()
 

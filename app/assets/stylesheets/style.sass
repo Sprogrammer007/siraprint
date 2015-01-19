@@ -677,7 +677,12 @@ span.status_completed
   border: 2px solid transparent
   padding: 10px 34px 10px 14px !important
 
+.item-list a
+  color: #000
+  text-decoration: none
+
 .product-item
+  position: relative
   display: inline-block
   width: 30%
   padding: 1.3125em
@@ -687,6 +692,25 @@ span.status_completed
   max-width: 100%
   max-height: 100px 
 
+.product-item .overlay
+  position: absolute
+  display: none
+  right: 0
+  width: 100%
+  height: 100%
+  background-color: rgba(0, 0, 0, 0.1)
+  z-index: 10
+
+.product-item .overlay span
+  position: relative
+  top: 45%
+  color: #000
+  font-weight: bold
+  font-size: 14px
+
+.product-item.open .overlay
+  display: inherit
+  
 // Large Format
 
 .large-formats-form .form-control, 
