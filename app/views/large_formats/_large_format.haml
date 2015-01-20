@@ -1,7 +1,9 @@
 = link_to(large_format_path(large_format), class: "product-item ") do
-  .overlay
-    %span View Details
-  = image_tag large_format.display_image.url()
-  .product-details
-    = large_format.name
+  .product-image
+    .overlay
+      %span View Details
+    = image_tag large_format.display_image.url()
+
+.product-details
+  = large_format.name
   

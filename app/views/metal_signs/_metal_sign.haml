@@ -1,6 +1,8 @@
 = link_to(metal_sign_path(metal_sign), class: "product-item ") do
-  .overlay
-    %span View Details
-  = image_tag metal_sign.display_image.url()
-  .product-details
-    = metal_sign.name
+  .product-image
+    .overlay
+      %span View Details
+    = image_tag metal_sign.display_image.url()
+
+.product-details
+  = metal_sign.name
