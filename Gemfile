@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.1.1'
 #ruby-gemset=sira
 
-gem 'inherited_resources', github: 'josevalim/inherited_resources', branch: 'rails-4-2'
+gem 'inherited_resources', github: 'codecraft63/inherited_resources', branch: 'master'
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem "active_admin_import" , '2.1.1'
 gem 'polyamorous', github: 'activerecord-hackery/polyamorous'
