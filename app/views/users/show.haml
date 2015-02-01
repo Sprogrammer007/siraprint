@@ -10,15 +10,15 @@
         
         .account-details
           .profile-label.mtxs
-            Email:
+            Email
           .profile-info.mbs
             = current_user.email
           .profile-label
-            Company Name:
+            Company Name
           .profile-info.mbs
             = current_user.company_name
           .profile-label.va-top
-            Company Address:
+            Company Address
           .profile-info.mbs
             = current_user.company_address
             %br
@@ -26,11 +26,11 @@
             %br
             = current_user.company_postal.upcase!
           .profile-label
-            Company Phone #:
+            Company Phone #
           .profile-info.mbs
             = current_user.company_phone
           .profile-label
-            Company HST #:
+            Company HST #
           .profile-info.mbs
             = current_user.company_hst
   .col-lg-5.mtl
