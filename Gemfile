@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
-# ruby '2.1.1'
+ruby '2.1.1'
 #ruby-gemset=sira
 
+gem 'inherited_resources', github: 'josevalim/inherited_resources', branch: 'rails-4-2'
 gem 'activeadmin', github: 'gregbell/active_admin'
 gem "active_admin_import" , '2.1.1'
 gem 'polyamorous', github: 'activerecord-hackery/polyamorous'
@@ -24,7 +25,7 @@ gem 'tinymce-rails'
 gem 'aws-sdk'
 gem 'jquery-fileupload-rails'
 gem 'activemerchant'
-gem 'inherited_resources', github: 'josevalim/inherited_resources', branch: 'rails-4-2'
+
 
 group :development do
   gem 'faker', '1.2.0'
