@@ -1,67 +1,23 @@
 ready = ->
-  
-  # $(".dropdown.keep-open").on
-  #   "shown.bs.dropdown": ->
-  #     @closable = false
-  #     return false
 
-  #   click: ->
-  #     @closable = false
-  #     return
-
-  #   "hide.bs.dropdown": ->
-  #     @closable
-
-  # $('.dropdown').on 'hide.bs.dropdown', ->
-  #   return false;
+  $form = $('.order_form')
+  $widthOption =  $('.product-width')
+  $lengthOption = $('.product-length')
+  $unitOption = $('.product-unit')
+  $quantityOption = $('.quantity-field')
+  $thicknessOption = $('.thickness-selection')
+  $rateOption = $('#_orderproduct_rate')
+  $finishingOption = $('.finishing-placeholder')
+  $productOptions = $('#product-options')
+  $url = $productOptions.data('price-url')
 
   # Overlay for product items
   $('.product-item').hover (->
-    $(this).addClass "open"
+    $(this).addClass "show"
     return
   ), ->
-    $(this).removeClass "open"
+    $(this).removeClass "show"
     return
-
-
-  calc_sqft = (w, l) ->
-    unit = $('.product-unit').find(':selected').val()
-
-    if (unit == "inch")
-      return ((w * l)/144)
-    else
-      return (w * l)
-
-  calc_price = (s, r) ->
-    return parseFloat(Math.round((s * r) * 100) / 100).toFixed(2) 
-    
-  change_price = (w, l, t) ->
-    sqft = calc_sqft(w, l)
-    url = $('.price-url').data('price-url')
-    quantity = $('.quantity-field').val()
-    f_price = Math.round(($('.finishing-placeholder').html().replace("$", '') * 100) / 100)
-    
-    $.post(url, sqft: sqft, undefined, "json").done (data) ->
-      if data == null
-        $('#_orderproduct_rate').val('')
-        $('.product-width').val(0)
-        $('.product-length').val(0)
-        $('.thickness-selection').val($(".thickness-selection option:first").val())
-        return alert("There are no matching sizes for your print, pelase re-enter width and length")
-      else
-        $('#_orderproduct_rate').val(data.price)
-        price = calc_price(sqft, data.price)
-        
-        $('.per-placeholder').html("$#{price}")
-        $('#_orderunit_price').val(price)
-        if (quantity != '')
-          price = price * quantity
-        if ( $('.finishing-placeholder').html() != '' )
-          price = price + parseFloat(f_price)
-          price = Math.round((price * 100) / 100)
-
-        $('.total-placeholder').html("$#{price}")
-        $('#_ordertotal_price').val(price)
 
   convert_to_feet = (x) ->
     return parseFloat(Math.ceil((x * 0.083333) * 100) / 100).toFixed(2)
@@ -69,30 +25,98 @@ ready = ->
   convert_to_inch = (x) ->
     return parseFloat(Math.floor(x * 12)).toFixed(0)
 
-  $('.order_form').on 'change', '.product-unit', (e) ->
-    unit = $(this).find(':selected').val()
-    width = $('.product-width').val()
-    length = $('.product-length').val()
+  calc_sqft = (w, l) ->
+    unit = $unitOption.find(':selected').val()
 
     if (unit == "inch")
-      new_width = convert_to_inch(width)
-      new_length = convert_to_inch(length)
-      $('.product-width').val(new_width)
-      $('.product-length').val(new_length)
-      e.preventDefault()
+      return ((w * l)/144)
     else
-      new_width = convert_to_feet(width)
-      new_length = convert_to_feet(length)
-      $('.product-width').val(new_width)
-      $('.product-length').val(new_length)
-      e.preventDefault()
+      return (w * l)
 
-  $('.order_form').on 'change', '.product-width, .product-length', (e) ->
-    unit = $('.product-unit').find(':selected').val()
-    width = $('.product-width').val()
-    length = $('.product-length').val()
-    rate = $('#_orderproduct_rate').val()
-    thickness = $('.thickness-selection').find(':selected').val()
+  # Calc Price
+  calc_price = (s, r) ->
+    return parseFloat(Math.round((s * r) * 100) / 100).toFixed(2) 
+
+  # Update Unit
+  update_unit = (u, w, l)->
+    new_w = if u == "inch" then convert_to_feet(w) else convert_to_inch(w)
+    new_l = if u == "inch" then convert_to_feet(l) else convert_to_inch(l)
+    $widthOption.val(new_w)
+    $lengthOption.val(new_l)
+
+  reset_values = ->
+    $rateOption.val('')
+    $widthOption.val(0)
+    $lengthOption.val(0)
+    $thicknessOption.prop('selectedIndex', 0)
+
+  set_per_unit_price = (price) ->
+    $('#_orderunit_price').val(price)
+    $('.per-placeholder').html("$#{price}")
+  
+  set_finish_price = (price) ->
+    $productOptions.attr('data-fin-price', price)
+    $('.finishing-placeholder').html("$#{price}")
+
+  set_total_price = (price) ->
+    $('#_ordertotal_price').val(price)
+    $('.total-placeholder').html("$#{price}")
+
+  set_price = (sqft) ->
+    $.post($url, sqft: sqft, undefined, "json").done (data) ->
+      if data == null
+        reset_values()
+        alert("There are no matching sizes for your print, pelase re-enter width and length")
+      else
+        $rateOption.val(data.price)
+        price = calc_price(sqft, data.price)
+        set_per_unit_price(price)
+        set_total_price(price)
+        
+  # Change Price
+  change_price = (w, l, t_id) ->
+    quantity = $quantityOption.val()
+    l_price = parseFloat($productOptions.attr('data-l-price'))
+    g_price = parseFloat($productOptions.attr('data-g-price'))
+    price = $('#_orderunit_price').val()
+    if t_id != undefined
+      sqft = calc_sqft(w, l)
+      $.post($url, sqft: sqft, undefined, "json").done (data) ->
+
+        if data == null
+          reset_values()
+          alert("There are no matching sizes for your print, pelase re-enter width and length")
+        else
+          $rateOption.val(data.price)
+          price = calc_price(sqft, data.price)
+    
+    set_per_unit_price(price)
+    if (quantity != '')
+      price = price * quantity
+
+    if ( l_price != '' || g_price != '')
+      f_price = Math.round((l_price + g_price) * 100) / 100 
+      price = price + parseFloat(f_price)
+      price = Math.round(price * 100) / 100
+
+    set_finish_price(f_price)
+    set_total_price(price)
+
+  # Change Unit
+  $form.on 'change', '.product-unit', (e) ->
+    unit = $(this).find(':selected').val()
+    width = $widthOption.val()
+    length = $lengthOption.val()
+    update_unit(unit, width, length)
+    e.preventDefault()
+
+  # Change Width
+  $form.on 'change', '.product-width, .product-length', (e) ->
+    unit = $unitOption.find(':selected').val()
+    width = $widthOption.val()
+    length = $lengthOption.val()
+    rate = $rateOption.val()
+    t_id = $thicknessOption.find(':selected').val()
     
     if ($(this).val() <= 0)
       $(this).val('')
@@ -118,126 +142,113 @@ ready = ->
           $(this).val('')
 
     if (rate != '' && thickness != undefined && thickness != '')
-      change_price(width, length, thickness)  
+      change_price(width, length, t_id)  
 
-  $('.order_form').on 'focus', '.product-width, .product-length', (e)->
-    rate = $('#_orderproduct_rate').val()
-    thickness = $('.thickness-selection').find(':selected').val()
+  $form.on 'focus', '.product-width, .product-length', (e)->
+    rate = $rateOption.val()
+    thickness = $thicknessOption.find(':selected').val()
     if (rate != '' && thickness != undefined && thickness == '')
       alert("Please select a thickness")
       $(this).blur()
       return false
 
-  $('.order_form').on 'change', '.side-selection ', (e)->
+  # Change Sides
+  $form.on 'change', '.side-selection ', (e)->
     side = $(this).find(':selected').val()
-    w = $('.product-width').val()
-    l = $('.product-length').val()
-    u = $('.product-unit').find(':selected').val()
+    w = $widthOption.val()
+    l = $lengthOption.val()
+    u = $unitOption.find(':selected').val()
     name = $(this).data('name')
     url = $(this).data('url')
 
     $.post(url, {name: name, side: side, width: w, length: l, unit: u } , undefined, "script")
 
-  $('.order_form').on 'change', '.thickness-selection', (e)->
-    width = $('.product-width').val()
-    length = $('.product-length').val()
+  $form.on 'change', '.thickness-selection', (e)->
     id = $(this).find(':selected').val()
-    url = $('.price-url').data('price-url')
+    
+    if (id == '')
+      return
+
+    width = $widthOption.val()
+    length = $lengthOption.val()
     sqft = calc_sqft(width, length)
-    rate = $('#_orderproduct_rate').val()
+    rate = $rateOption.val()
 
     if (width == "" || length == "")
       $(this).prop('selectedIndex', 0)
       return alert("You must enter a length & width")
 
-    if (rate != '')
-      if (id == '')
-        return
-      else
-        change_price(width, length, id)
-    else
-      if (id == '')
-        return
-      else
-        $.post(url, sqft: sqft, undefined, "json").done (data) ->
-          if data == null
-            $('#_orderproduct_rate').val('')
-            $('.product-width').val(0)
-            $('.product-length').val(0)
-            $('.thickness-selection').val($(".thickness-selection option:first").val())
-            return alert("There are no matching sizes for your print, pelase re-enter width and length")
-          else
-            $('#_orderproduct_rate').val(data.price)
-            price = calc_price(sqft, data.price)
-            $('.per-placeholder').html("$#{price}")
-            $('.total-placeholder').html("$#{price}")
-            $('#_orderunit_price').val(price)
-            $('#_ordertotal_price').val(price)
+    if (rate != '') then change_price(width, length, t_id) else set_price(sqft)
+    
+  #  Finish Options
 
-  $('.order_form').on 'change', '.btn-file :file', ->
-    input = $(this)  
-    numFiles = (if input.get(0).files then input.get(0).files.length else 1)
-    label = input.val().replace(/\\/g, "/").replace(/.*\//, "")
-    input.trigger "fileselect", [
-      numFiles
-      label
-    ]
-    return
-
-  $('.order_form').on 'change', '.finish-selection', ->
-    option = $(this).find(':selected').val()
-    w = $('.product-width').val()
-    l = $('.product-length').val()
-    sqft = calc_sqft(w, l)
-    u = $('#_orderunit_price').val()
-    f = $('.finishing-placeholder').html()
-    q = $('.quantity-field').val()
-
-    if (w == "" || l == "")
-      $(this).prop('selectedIndex', 0)
-      return alert("You must enter a length & width")
-    else if (u == "")
-      $(this).prop('selectedIndex', 0)
-      return alert("You must enter a select a thickness")
-
-    if option == "Grommets"
+  grommets_change = (checked)->
+    if checked
       $('.grommets-box').removeClass('hidden')
-      if f != ''
-        $('.finishing-placeholder').html("0")
+      $('#finishing_none').attr('checked', false)
     else
       $('.grommets-box').addClass('hidden')
+      $productOptions.attr('data-g-price', 0)
       $('.grommets-field').val(0)
-      f_price = parseFloat(sqft).toFixed(2) 
-      $('.finishing-placeholder').html("$#{f_price}")
-      new_total = (parseFloat(f_price) + (parseFloat(u) * q)).toFixed(2)
-      $('#_ordertotal_price').val(new_total)
-      $('.total-placeholder').html("$#{new_total}")
+  
+  lamination_change = (checked, w, l) ->
+    sqft = calc_sqft(w, l)
+    if checked
+      l_price = parseFloat(sqft).toFixed(2) 
+      $productOptions.attr('data-l-price', l_price)
+      $('#finishing_none').attr('checked', false)
+    else
+      $productOptions.attr('data-l-price', 0)
+
+  reset_finish_options = (checked) ->
+    if checked
+      $('#finishing_none').attr('checked', true)
+      $('.finish-select').each (i)->
+        if i != 0
+          $(this).attr('checked', false)
+      $productOptions.attr('data-l-price', 0)
+      $productOptions.attr('data-g-price', 0)
+      $productOptions.attr('data-fin-price', 0)
+      $('.grommets-box').addClass('hidden')
+      $('.grommets-field').val(0)
+
+  $form.on 'change', '.finish-select', ->
+    
+    w = $widthOption.val()
+    l = $lengthOption.val()
+    u = $rateOption.val()
+
+    if (w == "" || l == "")
+      $(this).prop('checked', false)
+      return alert("You must enter a length & width")
+    else if (u == "")
+      $(this).prop('checked', false)
+      return alert("You must enter a select a thickness")
+
+    option = $(this).val()
+    if option == "Grommets"
+      grommets_change(this.checked)
+    else if option == "Lamination"
+      lamination_change(this.checked, w, l)
+    else if option == "None"
+      reset_finish_options(this.checked)
+
+    change_price()
   
   # Grommet Quantity Change
-  $('.order_form').on 'change', '.grommets-field', ->
+  $form.on 'change', '.grommets-field', ->
     gq = $(this).val()
-    u = $('#_orderunit_price').val()
-    q = $('.quantity-field').val()
-    f_price = gq * 1
 
-    $('.finishing-placeholder').html("$#{f_price}")
-    new_total = (parseFloat(f_price) + (parseFloat(u) * q)).toFixed(2)
-    $('#_ordertotal_price').val(new_total)
-    $('.total-placeholder').html("$#{new_total}")
+    if (gq < 1)
+      $(this).val(1)
+      gq = 1
+      alert("Number of prints must be atleast 1")
+    $productOptions.attr('data-g-price', gq)
 
-  # File Upload
-  $('.order_form').on "fileselect", ".btn-file :file", (event, numFiles, label) ->
-    input = $(this).parents(".input-group").find(":text")
-    log = (if numFiles > 1 then numFiles + " files selected" else label)
-    if input.length
-      input.val log
-    else
-      alert log  if log
-    return
-
+    change_price()
 
   # Quantity Change
-  $('.order_form').on 'change', '.quantity-field', (e) ->
+  $form.on 'change', '.quantity-field', (e) ->
     quantity = $(this).val()
     price = $('.per-placeholder').html()
 
@@ -259,23 +270,17 @@ ready = ->
     $.post(url, {quantity: quantity} , undefined, "script")
 
   # Metal Signs
-
   $('.sign-item-size').on 'change', 'select', (e) ->
     price = parseFloat($(this).find(':selected').text().split('$')[1])
   
     if !isNaN(price)
-      price = price * $('.quantity-field').val()
-      $('.per-placeholder').html("$#{price}")
-      $('.total-placeholder').html("$#{price}")
-      $('#_orderunit_price').val(price)
-      $('#_ordertotal_price').val(price)
-      
+      price = price * $quantityOption.val()
+      set_per_unit_price(price)
+      set_total_price(price)
     else
-      $('.per-placeholder').html("$0")
-      $('.total-placeholder').html("$0")
-      $('#_orderunit_price').val(0)
-      $('#_ordertotal_price').val(0)
-
+      set_per_unit_price(0)
+      set_total_price(0)
+      
   # Validation Before Submit
   $('.order_form').on 'submit', "form", (e)->
     if $('#_orderdesign_pdf').val() == ""
@@ -286,7 +291,28 @@ ready = ->
       $('#_orderdesign_pdf_2').parents('.input-group').next('.error').removeClass("hidden")
       e.preventDefault()
 
+  # File Upload
+  $form.on 'change', '.btn-file :file', ->
+    input = $(this)  
+    numFiles = (if input.get(0).files then input.get(0).files.length else 1)
+    label = input.val().replace(/\\/g, "/").replace(/.*\//, "")
+    input.trigger "fileselect", [
+      numFiles
+      label
+    ]
+    return
+  
+  $form.on "fileselect", ".btn-file :file", (event, numFiles, label) ->
+    input = $(this).parents(".input-group").find(":text")
+    log = (if numFiles > 1 then numFiles + " files selected" else label)
+    if input.length
+      input.val log
+    else
+      alert log  if log
+    return
    
 
 $(document).ready(ready)
 $(document).on('page:load', ready)
+
+

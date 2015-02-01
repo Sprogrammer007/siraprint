@@ -5,7 +5,7 @@ class OrderedLargeFormatDetails < ActiveRecord::Migration
       t.integer :width
       t.integer :side
       t.integer :thickness_id
-      t.string :finishing
+      t.string  :finishing
       t.integer :grommets_quantity
       t.string  :unit
     end

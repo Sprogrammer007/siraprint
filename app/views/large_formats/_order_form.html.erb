@@ -1,5 +1,5 @@
 <%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "large-formats-form", multipart: true do %>
-  <div class="price-url" data-price-url="<%=  get_price_large_format_path(@large_format) %>"></div>
+  <div id="product-options" data-price-url="<%=  get_price_large_format_path(@large_format) %>" data-l-price="0" data-g-price="0" data-fin-price="0"></div>
   <%= hidden_field_tag '[order]product_type', 'large_format' %>
   <%= hidden_field_tag '[order]product_id', @large_format.id %>
   <%= hidden_field_tag '[order]product_rate', '' %>
@@ -7,34 +7,52 @@
   <%= hidden_field_tag '[order]unit_price', '' %>
 
   <div class="item-size product-box group">
-    <h3>Step 1: Enter Desire Print Size</h3>
-    <div style="display: block; float: left; width: 60px; margin-right: 30px;">
+    <h3>Step <%= "#{@x}" %>: Enter Desire Print Size</h3>
+    <div class="wlu-box">
       <%= label_tag "[order][details]width", "Width" %>
       <%= number_field_tag "[order][details]width", nil, class: "product-width form-control", in: 1...100, :step => 0.1 %>
     </div>
-    <div style="display: block;  float: left; width: 60px; margin-right: 30px;">
+    <div class="wlu-box">
       <%= label_tag "[order][details]length", "Length" %>
       <%= number_field_tag '[order][details]length', nil, class: "product-length form-control", in: 1...100, :step => 0.1 %>
     </div>
-    <div style="display: block;  float: left; width: 60px;">
+    <div class="wlu-box">
       <%= label_tag "[order][details]unit", "Unit" %>
       <%= select_tag '[order][details]unit', options_for_select(["inch", 'feet']), class: "product-unit form-control" %>
     </div>
   </div>
-  <div class="item-side product-box">
-    <h3>Step 2: Select Number of Sides</h3>
+
+  <% if @large_format.has_two_side %>
+    <div class="item-side product-box">
+    <h3>Step <%= "#{@x += 1}" %>: Select Number of Sides</h3>
     <%= select("order", "[details]side", options_for_select(@large_format.side_options, @large_format.sides), {}, class: "side-selection form-control", data: {name: "#{@large_format.name}", url: change_side_large_format_path(@large_format)}) %>
-  </div>
-  
+    </div>
+  <% else %>
+    <%= hidden_field_tag '[order][details]side', 1 %>  
+  <% end %>
+
   <div class="item-thickness product-box">
-    <h3>Step 3: Select Your Thickness</h3>
+    <h3>Step <%= "#{@x += 1}" %>: Select Your Thickness</h3>
     <%= select("order", "[details]thickness_id", @large_format.large_format_thicknesses.collect {|t| [ "#{t.thickness}#{t.unit}", t.id ] }, {include_blank: 'Please select your thickness'}, class: "thickness-selection form-control") %>
   </div>
 
-
   <div class="item-finishing-options product-box">
-    <h3>Step 4: Finishing (Optional)</h3>
-    <%= select("order", "[details]finishing", @large_format.large_format_finishings.collect { |f| f.name }, {include_blank: 'None'}, class: "finish-selection form-control") %>
+    <h3>Step <%= "#{@x += 1}" %>: Finishing (Optional)</h3>
+
+    <div class="finishing-select group">
+      <!-- None Check Box -->
+      <%= check_box_tag "[order][details]finishing[]", "None", true, id: "finishing_none", class: "finish-select" %>
+      <label for="finishing_none" class="finsihing-select">None</label>
+
+      <% @large_format.large_format_finishings.each_with_index do |f, i| %>
+        <%= check_box_tag "[order][details]finishing[]", f.name, false, id: "finishing_#{f.id}", class: "finish-select" %>
+        <label for="<%= "finishing_#{f.id}" %>" class="finsihing-select">
+          <%= f.name %>
+        </label>
+      <% end %>
+
+    </div>
+ 
     <div class="grommets-box mtl hidden">
       <div class="row">
         <div class="col-lg-8">
@@ -46,8 +64,9 @@
       </div>
     </div>
   </div>
+
   <div class="item-quantity product-box">
-    <h3>Step 4: Number of Prints</h3>
+    <h3>Step <%= "#{@x += 1}" %>: Number of Prints</h3>
     <div class="quantity-box">
       <div class="row mgl">
         <div class="col-lg-6">
@@ -59,8 +78,9 @@
       </div>
     </div>
   </div>
+
   <div class="item-upload product-box">
-    <h3>Step 5: Upload Your Design</h3>
+    <h3>Step <%= "#{@x += 1}" %>: Upload Your Design</h3>
     <div class="input-group">
       <%= text_field_tag 'design_pdf_name', nil, class: "form-control", placeholder: "Font Design", readonly: true %>
 

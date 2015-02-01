@@ -3,12 +3,13 @@ class OrdersController < ApplicationController
   before_filter :authenticate_approved_user!
 
   def create
+
     oparams = params[:order]
     @order = current_user.open_order || current_user.new_order(request.remote_ip)
     if @order
       op = @order.create_new_ordered_product(oparams)
       if op.save
-        detail =  op.create_details(oparams[:product_type], oparams[:details])
+        detail = op.create_details(oparams[:product_type], oparams[:details])
         if detail.save
           op.update(:product_detail_id => detail.id)
         else

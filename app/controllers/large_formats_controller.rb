@@ -8,6 +8,7 @@ class LargeFormatsController < ApplicationController
 
   def show
     @large_format = LargeFormat.find(params[:id])
+    @x = 1
   end
 
   def change_side

@@ -133,8 +133,11 @@ ActiveAdmin.register Order do
               if p.details.finishing == ''
                 "None"
               else
-                "#{p.details.grommets_quantity} #{p.details.finishing}"
+                p.details.finishing.join(' | ')
               end
+            end
+            column "Gromments #" do |p|
+              "#{p.details.grommets_quantity || 0}" 
             end
             column :unit_price
             column :price
@@ -153,7 +156,7 @@ ActiveAdmin.register Order do
               link_to p.product.name, admin_metal_sign_path(p)
             end
             column "Size" do |p|
-              "#{p.details.size.width}\" x #{p.details.size.height}\""
+              "#{p.details.size}"
             end
             column :quantity
             column "User Design" do |p|

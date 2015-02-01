@@ -21,11 +21,7 @@ class LargeFormat < ActiveRecord::Base
   end
 
   def side_options
-    if self.has_two_side
-      [["One Side Printing", 1], ["Two Side Printing", 2]]
-    else
-      [["One Side Printing", 1]]
-    end
+    [["One Side Printing", 1], ["Two Side Printing", 2]]
   end
   
 

@@ -343,13 +343,11 @@ h1, h2, h3, h4
 #footer 
   min-height: 100px
   font-size: 18px
-  padding: 10px 40px
-
-#footer .divider
-  margin-bottom: 3px
-  margin-top: 3px
+  padding: 5px 20px
+  border-top: 1px solid #EFEFEF
 
 .copyright
+  float: left
   font-size: 12px
 
 #footer .footer-nav ul
@@ -368,10 +366,8 @@ h1, h2, h3, h4
 #footer .footer-nav
   display: block
   text-align: center
-  width: 734px
-  margin: auto
-
-
+  float: right
+  font-size: 12px
 
 // Home
 
@@ -388,6 +384,9 @@ h1, h2, h3, h4
   position: relative
   text-align: center
   text-transform: uppercase
+  width: 100%
+
+#featured-box img 
   width: 100%
 
 // Login
@@ -707,7 +706,7 @@ span.status_completed
   left: 0
   width: 100%
   height: 100px
-  border: 5px solid #1891D1
+  border: 1px solid #aaa
   background-color: rgba(0, 0, 0, 0.5)
   z-index: 10
 
@@ -719,7 +718,7 @@ span.status_completed
   font-weight: bold
   font-size: 14px
 
-.product-item.open  .product-image .overlay
+.product-item.show  .product-image .overlay
   display: inherit
 
 
@@ -748,15 +747,23 @@ span.status_completed
   padding: 4px 0
 
 .product-box
-  padding: 0 20px
+  padding: 0 10px
   margin-top: 1.5em
   margin-bottom: 1.5em
 
 .product-box h3
   color: #000000
   line-height: 1.2em
-  margin-bottom: 10px
   font-size: 100%
+
+.product-box .wlu-box 
+  display: block
+  float: left
+  width: 85px
+  margin-right: 5px
+
+.product-box .wlu-box:last-child
+  margin-right: 0
 
 .per-price-box, .finishing-price-box
   font-size: 1.2em
@@ -808,6 +815,31 @@ span.status_completed
 .item-description
   padding: 20px
   background-color: #FFFFFF
+
+.finishing-select 
+  display: block
+  margin: 20px 0
+
+.finishing-select input[type=checkbox] 
+  position: absolute
+  top: -9999px
+  left: -9999px
+
+.finishing-select label 
+  display: inline-block
+  padding: 3px 5px
+  border-radius: 2px
+  font-size: 12px
+  color: #000
+  border: 2px solid #AAA
+
+.finishing-select label:hover 
+  border: 2px solid #209EC8 
+
+.finishing-select input[type=checkbox]:checked + label 
+  border: 2px solid #209EC8
+  background-color: #209EC8
+  color: #fff
 
 // Cart
 

@@ -21,8 +21,7 @@
             = "#{p.details.thickness.thickness}#{p.details.thickness.unit}"
             %br
             Finishing: 
-            = p.details.finishing 
-            = p.details.grommets_quantity
+            = p.details.finishing.join(", ")
           - unless step == "pay"
             %br
             = link_to "remove", remove_item_order_path(p), class: "remove-ordered-product", :method => :post

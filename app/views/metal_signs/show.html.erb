@@ -25,7 +25,7 @@
 
     <div class="sign-item-size product-box">
       <h3>Step 1: Select Your Size</h3>
-      <%= select("order", "[details]size_id", @metal_sign.metal_sign_sizes.collect {|s| [ "#{s.width}\" x #{s.height}\" - $#{s.price}", s.id ] }, {include_blank: 'Please select your size'}, class: "size-selection form-control") %>
+      <%= select("order", "[details]size_id", @metal_sign.metal_sign_sizes.collect {|s| [ "#{s.width}\" x #{s.height}\"", s.id ] }, {include_blank: 'Please select your size'}, class: "size-selection form-control") %>
     </div>
     <div class="item-upload product-box">
       <h3>Step 2: Upload Your Design</h3>
