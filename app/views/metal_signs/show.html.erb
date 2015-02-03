@@ -16,7 +16,8 @@
 </div>
 
 <div class="col-side order_form">
-  <%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "metal-signs-form", multipart: true do %>
+  <% if user_signed_in? %>
+    <%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "metal-signs-form", multipart: true do %>
     <div id="product-options" data-price-url="<%=  get_price_metal_sign_path(@metal_sign) %>"></div>
     <%= hidden_field_tag '[order]product_type', 'metal_sign' %>
     <%= hidden_field_tag '[order]product_id', @metal_sign.id %>
@@ -68,7 +69,11 @@
     <div class="submit-order">
       <%= button_tag "Place My Order", class: "btn btn-place-order" %>
     </div>
-  <% end %>
+  <% else %>
+    <%= link_to new_user_session_path() do %>
+      <%= image_tag('lg_not_signed_in.png') %>
+    <% end %>   
+  <% end %> 
 </div>
         
 <script>

@@ -148,7 +148,7 @@ ActiveAdmin.register LargeFormat do
 
     f.has_many :large_format_thicknesses, :allow_destroy => true, :heading => false, :new_record => true do |t|
       t.input :thickness
-      t.input :unit, :as => :select, :collection => options_for_select(['cm', 'mm'], t.object.unit)
+      t.input :unit, :as => :select, :collection => options_for_select(['cm', 'mm', 'pt', 'mil', 'inch'], t.object.unit)
     
       t.has_many :large_format_tiers, :allow_destroy => true, :heading => false, :new_record => true, class: "tier-sets group" do |tier|
         tier.input :level
