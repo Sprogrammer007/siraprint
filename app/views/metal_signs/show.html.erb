@@ -17,6 +17,7 @@
 
 <div class="col-side order_form">
   <%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "metal-signs-form", multipart: true do %>
+    <div id="product-options" data-price-url="<%=  get_price_metal_sign_path(@metal_sign) %>"></div>
     <%= hidden_field_tag '[order]product_type', 'metal_sign' %>
     <%= hidden_field_tag '[order]product_id', @metal_sign.id %>
     <%= hidden_field_tag '[order]total_price', '' %>

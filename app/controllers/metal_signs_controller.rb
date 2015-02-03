@@ -12,8 +12,11 @@ class MetalSignsController < ApplicationController
 
   
   def get_price
-
-
+    @metal_sign_size = MetalSignSize.find(params[:s_id])
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.json { render :json => @metal_sign_size }
+    end
   end
 
 end

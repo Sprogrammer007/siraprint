@@ -1,5 +1,5 @@
 <%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "large-formats-form", multipart: true do %>
-  <div id="product-options" data-price-url="<%=  get_price_large_format_path(@large_format) %>" data-l-price="0" data-g-price="0" data-fin-price="0"></div>
+  <div id="product-options" data-price-url="<%=  get_price_large_format_path(@large_format) %>" data-l-price="0" data-g-price="0" data-fin-price="0" data-rate=""></div>
   <%= hidden_field_tag '[order]product_type', 'large_format' %>
   <%= hidden_field_tag '[order]product_id', @large_format.id %>
   <%= hidden_field_tag '[order]product_rate', '' %>
@@ -40,11 +40,14 @@
     <h3>Step <%= "#{@x += 1}" %>: Finishing (Optional)</h3>
 
     <div class="finishing-select group">
-      <!-- None Check Box -->
-      <%= check_box_tag "[order][details]finishing[]", "None", true, id: "finishing_none", class: "finish-select" %>
-      <label for="finishing_none" class="finsihing-select">None</label>
+      <% if @large_format.large_format_finishings.has_none.any?%>
+        <!-- None Check Box -->
+        <%= check_box_tag "[order][details]finishing[]", "None", true, id: "finishing_none", class: "finish-select" %>
+        <label for="finishing_none" class="finsihing-select">None</label>
+      <% end %>
 
       <% @large_format.large_format_finishings.each_with_index do |f, i| %>
+        <% next if f.name == "None" %>
         <%= check_box_tag "[order][details]finishing[]", f.name, false, id: "finishing_#{f.id}", class: "finish-select" %>
         <label for="<%= "finishing_#{f.id}" %>" class="finsihing-select">
           <%= f.name %>
@@ -115,7 +118,7 @@
       </span>
     </div>
     <div class="finishing-price-box">
-      Finishing Options:
+      Finishing(Per Print):
       <span class="finishing-placeholder">
         $0
       </span>

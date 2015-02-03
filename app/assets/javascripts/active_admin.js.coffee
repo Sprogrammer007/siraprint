@@ -37,4 +37,17 @@ $(document).ready ->
   $('.col-thicknesses').on 'click', '.view_thickness_details', (event) ->
     $('.material-detail-wrapper').html($(this).data('detail'))
 
+  #Select all select none
+  $('.select_all').click (e) ->
+    $('input[type="checkbox"]').each (index, ele) ->
+      if !$(ele).prop("checked")
+        $(ele).prop("checked", true)
+      return
+
+  $('.select_none').click (e) ->
+    $('input[type="checkbox"]').each (index, ele) ->
+      if $(ele).prop("checked")
+        $(ele).prop("checked", false)
+      return
+
   return

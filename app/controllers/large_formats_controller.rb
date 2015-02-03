@@ -11,12 +11,12 @@ class LargeFormatsController < ApplicationController
     @x = 1
   end
 
-  def change_side
-    @large_format = LargeFormat.where(name: params[:name], sides: params[:side])[0]
-  end
+  # def change_side
+  #   @large_format = LargeFormat.where(name: params[:name], sides: params[:side])[0]
+  # end
   
   def get_price
-    thickness = LargeFormatThickness.find(params[:id])
+    thickness = LargeFormatThickness.find(params[:t_id])
     sqft = params[:sqft].to_f.round(2)
     @price = thickness.large_format_tiers.sqft_eq(sqft)
     respond_to do |format|

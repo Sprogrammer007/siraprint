@@ -36,10 +36,10 @@ GIT
 
 GIT
   remote: git://github.com/josevalim/inherited_resources.git
-  revision: 9f1c0edd6b4ceb5a1f643da5ce844ccd52364d53
-  branch: rails-4-2
+  revision: 9b1386f0effe9510e132915fa329f353f35db41c
+  branch: master
   specs:
-    inherited_resources (1.5.1)
+    inherited_resources (1.6.0)
       actionpack (>= 3.2, < 5)
       has_scope (~> 0.6.0.rc)
       railties (>= 3.2, < 5)
@@ -109,6 +109,7 @@ GEM
     aws-sdk-v1 (1.60.2)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
+    bcrypt (3.1.9)
     bcrypt (3.1.9-x86-mingw32)
     better_errors (2.1.0)
       coderay (>= 1.0.0)
@@ -195,6 +196,7 @@ GEM
       activesupport (>= 3.2, < 5)
     hike (1.2.3)
     hitimes (1.2.2)
+    hitimes (1.2.2-x86-mingw32)
     i18n (0.7.0)
     jbuilder (1.5.3)
       activesupport (>= 3.0.0)
@@ -237,6 +239,8 @@ GEM
       i18n (>= 0.6.4, <= 0.7.0)
     multi_json (1.10.1)
     nenv (0.1.1)
+    nokogiri (1.6.5)
+      mini_portile (~> 0.6.0)
     nokogiri (1.6.5-x86-mingw32)
       mini_portile (~> 0.6.0)
     offsite_payments (2.0.1)
@@ -253,7 +257,12 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
+    pg (0.17.1)
     pg (0.17.1-x86-mingw32)
+    pry (0.10.1)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
     pry (0.10.1-x86-mingw32)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -377,7 +386,7 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-sass (~> 3.1.1)
   capybara (= 2.2.0)
-  coffee-rails (~> 4.0.0)
+  coffee-rails
   debugger
   devise
   factory_girl_rails (= 4.3.0)
