@@ -66,7 +66,7 @@ ActiveAdmin.register MetalSign do
               end
             end
           end
-          render "admin/upload_slider", type: metal_sign.name.downcase.split(" ").join("_")
+          render "admin/upload_slider", type: metal_sign.name_for_db
         end
       end
     end

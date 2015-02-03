@@ -20,6 +20,12 @@ class LargeFormat < ActiveRecord::Base
     status.downcase.inquiry
   end
 
+  def name_for_db
+    if self.name
+      self.name.downcase.split(" ").delete_if { |n| n == "+" }.join("_")
+    end
+  end
+
   def side_options
     [["One Side Printing", 1], ["Two Side Printing", 2]]
   end

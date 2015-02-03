@@ -92,13 +92,13 @@ ActiveAdmin.register LargeFormat do
       div class: "large-format-right" do 
         panel "Slider Images", class: "group" do
           div class: "slides" do
-            if SliderImage.large_format.any?
-              SliderImage.large_format.each do |image|
+            if SliderImage.where(product_type: large_format.name_for_db).any?
+              SliderImage.where(product_type: large_format.name_for_db).each do |image|
                 render "slider_images/slider_image", slider_image: image
               end
             end
           end
-          render "admin/upload_slider", type: "large_format"
+          render "admin/upload_slider", type: large_format.name_for_db
 
         end
       end

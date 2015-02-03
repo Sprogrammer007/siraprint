@@ -3,8 +3,8 @@
 
   <h2><%= "Large Format - #{@large_format.name}" %></h2>
   <div class="galleria" id="galleria" style="height: 518px">
-    <%- if SliderImage.large_format.any? %>
-      <%- SliderImage.large_format.each do |image| %>
+    <%- if SliderImage.where(product_type: @large_format.name_for_db).any? %>
+      <%- SliderImage.where(product_type: @large_format.name_for_db).each do |image| %>
         <%= image_tag(image.slide_image.url()) if image.slide_image? %>
       <%- end %>
     <%- end %>
