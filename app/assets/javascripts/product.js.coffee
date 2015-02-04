@@ -88,10 +88,10 @@ ready = ->
     sqft = calc_sqft(w, l)
     rate = $productOptions.attr('data-rate')
     price = parseFloat(calc_price(sqft, rate))
-    console.log(sqft)
+
     if quantity > 1 && t_id != undefined
       sqft = parseFloat(calc_sqft(w, l)) * parseFloat(quantity)
-      console.log(sqft)
+  
     if t_id != undefined
       $.post($url, sqft: sqft, t_id: t_id,undefined, "json").done (data) ->
 
@@ -100,17 +100,17 @@ ready = ->
           alert("There are no matching sizes for your print, pelase re-enter width and length")
         else
           $productOptions.attr('data-rate', data.price)
-          price = calc_price(sqft, data.price)
+          price = calc_price(calc_sqft(w, l), data.price)
 
     if ( l_price != '' || g_price != '')
       f_price = Math.round((l_price + g_price) * 100) / 100 
       price = price + parseFloat(f_price)
       price = Math.round(price * 100) / 100      
-    
+      set_finish_price(f_price)
+
     if side == 2
       price = price * 2
-      
-    set_finish_price(f_price)
+
     set_per_unit_price(price)
 
     if (quantity != '')
