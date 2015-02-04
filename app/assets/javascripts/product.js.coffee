@@ -102,6 +102,8 @@ ready = ->
         else
           $productOptions.attr('data-rate', data.price)
           price = calc_price(calc_sqft(w, l), data.price)
+          console.log(calc_sqft(w, l))
+          console.log(data.price)
 
     if ( l_price != '' || g_price != '')
       f_price = Math.round((l_price + g_price) * 100) / 100 
@@ -114,8 +116,8 @@ ready = ->
 
     set_per_unit_price(price)
 
-    if (quantity != '')
-      price = price * quantity
+    if (quantity != 0)
+      price = price * parseFloat(quantity)
 
     set_total_price(price)
 
