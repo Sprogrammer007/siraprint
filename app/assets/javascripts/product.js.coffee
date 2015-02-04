@@ -53,7 +53,7 @@ ready = ->
     $thicknessOption.prop('selectedIndex', 0)
     set_per_unit_price(0)
     set_total_price(0)
-    $quantityOption.val(0)
+    $quantityOption.val(1)
 
   set_per_unit_price = (price) ->
     $unitPrice.val(price)
@@ -79,13 +79,34 @@ ready = ->
         set_total_price(price)
         
   # Change Price
+
+  change_price_calc = (price, quantity)->
+    l_price = parseFloat($productOptions.attr('data-l-price'))
+    g_price = parseFloat($productOptions.attr('data-g-price'))
+    side = parseInt($('.side-selection').find(':selected').val())
+
+    if ( l_price != '' || g_price != '')
+      f_price = Math.round((l_price + g_price) * 100) / 100 
+      price = price + parseFloat(f_price)
+      price = Math.round(price * 100) / 100      
+      set_finish_price(f_price)
+
+    if side == 2
+      price = price * 2
+    console.log(price)
+    set_per_unit_price(price)
+
+    if (quantity != 0)
+      price = price * parseFloat(quantity)
+
+    set_total_price(price)
+
   change_price = (t_id) ->
     w = $widthOption.val()
     l = $lengthOption.val()
-    side = parseInt($('.side-selection').find(':selected').val())
+    
     quantity = $quantityOption.val()
-    l_price = parseFloat($productOptions.attr('data-l-price'))
-    g_price = parseFloat($productOptions.attr('data-g-price'))
+  
     sqft = calc_sqft(w, l)
     rate = $productOptions.attr('data-rate')
     price = parseFloat(calc_price(sqft, rate))
@@ -104,22 +125,10 @@ ready = ->
           price = calc_price(calc_sqft(w, l), data.price)
           console.log(calc_sqft(w, l))
           console.log(data.price)
+          change_price_calc(price, quantity)
+    else
+      change_price_calc(price, quantity)
 
-    if ( l_price != '' || g_price != '')
-      f_price = Math.round((l_price + g_price) * 100) / 100 
-      price = price + parseFloat(f_price)
-      price = Math.round(price * 100) / 100      
-      set_finish_price(f_price)
-
-    if side == 2
-      price = price * 2
-    console.log(price)
-    set_per_unit_price(price)
-
-    if (quantity != 0)
-      price = price * parseFloat(quantity)
-
-    set_total_price(price)
 
   # Change Unit
   $form.on 'change', '.product-unit', (e) ->
