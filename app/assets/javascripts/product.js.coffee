@@ -93,7 +93,7 @@ ready = ->
 
     if side == 2
       price = price * 2
-    console.log(price)
+    console.log(parseFloat(price))
     set_per_unit_price(price)
 
     if (quantity != 0)
@@ -123,8 +123,6 @@ ready = ->
         else
           $productOptions.attr('data-rate', data.price)
           price = calc_price(calc_sqft(w, l), data.price)
-          console.log(calc_sqft(w, l))
-          console.log(data.price)
           change_price_calc(price, quantity)
     else
       change_price_calc(price, quantity)
