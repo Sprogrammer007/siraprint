@@ -29,6 +29,7 @@
       <h3>Step 1: Select Your Size</h3>
       <%= select("order", "[details]size_id", @metal_sign.metal_sign_sizes.collect {|s| [ "#{s.width}\" x #{s.height}\"", s.id ] }, {include_blank: 'Please select your size'}, class: "size-selection form-control") %>
     </div>
+
     <div class="item-upload product-box">
       <h3>Step 2: Upload Your Design</h3>
       <div class="input-group">
@@ -42,6 +43,7 @@
       </div>
       <span class='error hidden' style="display: block; width: 100%; color: red;">Please upload your design!</span>
     </div>
+    
     <div class="item-final product-box">
       <h3>Step 3: Place Your Order</h3>
       <div class="quantity-box">
@@ -69,6 +71,7 @@
     <div class="submit-order">
       <%= button_tag "Place My Order", class: "btn btn-place-order" %>
     </div>
+    <% end %> 
   <% else %>
     <%= link_to new_user_session_path() do %>
       <%= image_tag('lg_not_signed_in.png') %>

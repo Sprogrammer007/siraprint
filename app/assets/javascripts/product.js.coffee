@@ -10,6 +10,8 @@ ready = ->
   $productOptions = $('#product-options')
   $url = $productOptions.data('price-url')
   $unitPrice = $('#_orderunit_price')
+  $max_w = parseInt($productOptions.attr('data-max-w'))
+  $max_l = parseInt($productOptions.attr('data-max-l'))
 
   # Overlay for product items
   $('.product-item').hover (->
@@ -121,6 +123,54 @@ ready = ->
     update_unit(unit, width, length)
     e.preventDefault()
 
+  check_max_size = (w, l, u, that) ->
+    max_l_f = convert_to_feet($max_l)
+    max_w_f = convert_to_feet($max_w)
+    if ($(that).hasClass('product-width'))
+      if (u == "inch")
+        if (l != "" && l > $max_l && w > $max_w)   
+          alert("There is a maximum of 52 inch for either length or width")
+          return false
+      else
+        if (l != "" && l >  max_l_f && w > max_w_f) 
+          alert("There is a maximum of 4.34 feet for either length or width")
+          return false
+    else
+      if (u == "inch")
+        if (w != "" && w > $max_w && l > $max_l)
+          alert("There is a maximum of 52 inch for either length or width")
+          return false
+      else
+        if (w != "" && w > max_w_f && l > max_l_f) 
+          alert("There is a maximum of 4.34 feet for either length or width")
+          return false
+    return true
+
+  check_max_size_cb = (w, l, u) ->
+    max_l_f = parseFloat(convert_to_feet($max_l))
+    max_w_f = parseFloat(convert_to_feet($max_w))
+
+    if (u == "inch")
+      w = parseInt(w)
+      l = parseInt(l)
+      if (w !="" && w == $max_w && l > $max_l) || (w !="" && w == $max_l && l > $max_w)
+        alert("There is a maximum of #{$max_w} x #{$max_l} inch")
+        return false
+      else if (l !="" && l == $max_w && w > $max_l) || (l !="" && l == $max_l && w > $max_w)
+        alert("There is a maximum of #{$max_w} x #{$max_l} inch")
+        return false
+    else
+      w = parseFloat(w)
+      l = parseFloat(l)
+      if (w !="" && w == max_w_f && l > max_l_f) || (w !="" && w == max_l_f && l > max_w_f)
+        alert("There is a maximum of #{max_w_f} x #{max_l_f} feet")
+        return false
+      else if (l !="" && l == max_w_f && w > max_l_f) || (l !="" && l == max_l_f && w > max_w_f)
+        alert("There is a maximum of #{max_w_f} x #{max_l_f} feet")
+        return false
+
+    return true
+
   # Change Width
   $form.on 'change', '.product-width, .product-length', (e) ->
     unit = $unitOption.find(':selected').val()
@@ -128,30 +178,20 @@ ready = ->
     length = $lengthOption.val()
     rate = $productOptions.attr('data-rate')
     t_id = $thicknessOption.find(':selected').val()
-    
+
     if ($(this).val() <= 0)
       $(this).val('')
       return alert("width or length cannot be 0")
-   
-    if ($(this).hasClass('.product-width'))
-      if (unit == "inch")
-        if (length != "" && length >= 52 && width > 52) 
-          alert("width cannot be more then 52 inch")
-          $(this).val('')
-      else
-        if (length != "" && length >= 4.34 && width >= 4.34) 
-          alert("width cannot be more  then 4.34 feet")
-          $(this).val('')
-    else
-      if (unit == "inch")
-        if (width != "" && width >= 52 && length > 52) 
-          alert("length cannot be more then 52 inch")
-          $(this).val('')
-      else
-        if (width != "" && width >= 4.34 && length > 4.34) 
-          alert("length cannot be more  then 4.34 feet")
-          $(this).val('')
 
+    if $max_l == 52 && $max_w == 52
+      if !check_max_size(width, length, unit, this)
+        $(this).val('')
+        return
+    else
+      if !check_max_size_cb(width, length, unit)
+        $(this).val('')
+        return
+      
     if (rate != '' && t_id != undefined && t_id != '')
       change_price(width, length, t_id)  
 

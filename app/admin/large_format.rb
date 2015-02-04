@@ -2,7 +2,7 @@ ActiveAdmin.register LargeFormat do
   
   menu :parent => "Products"
 
-  permit_params :name, :description, :display_image, :has_two_side, :sides, :status, 
+  permit_params :name, :description, :display_image, :has_two_side, :sides, :status, :max_width, :max_length,
     :large_format_thicknesses_attributes => [:id, :thickness, :unit, :_destroy, :_destroy => true,
     :large_format_tiers_attributes => [:id, :level, :min_sqft, :max_sqft, :price, :_destroy => true ] ] 
   
@@ -28,6 +28,8 @@ ActiveAdmin.register LargeFormat do
       l.description.html_safe() if l.description
     end
     column :sides
+    column :max_width
+    column :max_length
     column "Has Two Sided?" do |l|
       if l.has_two_side
         status_tag "Yes", :ok
@@ -67,6 +69,8 @@ ActiveAdmin.register LargeFormat do
           row :description do |l|
             l.description.html_safe() if l.description
           end
+          row :max_width
+          row :max_length
           row "Has Two Sided?" do |l|
             if l.has_two_side
               status_tag "Yes", :ok
@@ -141,6 +145,8 @@ ActiveAdmin.register LargeFormat do
       f.input :name, label: "Material Name"
       f.input :description, input_html: { class: "tinymce" }
       f.input :display_image, :as => :file
+      f.input :max_width, label: "Max Width(Inchs)"
+      f.input :max_length, label: "Max Length(Inchs)"
       f.input :has_two_side, :as => :select, :collection => options_for_select([["Yes", true], ["No", false]], (f.object.has_two_side || false))
       f.input :sides, :as => :select, :collection => options_for_select(["1", "2"], f.object.sides)
       f.input :status, :as => :select, :collection => options_for_select(['Active', 'Deactive'], f.object.status)
