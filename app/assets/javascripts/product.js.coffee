@@ -53,6 +53,7 @@ ready = ->
     $thicknessOption.prop('selectedIndex', 0)
     set_per_unit_price(0)
     set_total_price(0)
+    $quantityOption.val(0)
 
   set_per_unit_price = (price) ->
     $unitPrice.val(price)
