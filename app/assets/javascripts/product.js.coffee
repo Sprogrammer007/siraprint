@@ -78,7 +78,7 @@ ready = ->
         set_total_price(price)
         
   # Change Price
-  change_price = (w, l, t_id) ->
+  change_price = (t_id) ->
     w = $widthOption.val()
     l = $lengthOption.val()
     side = parseInt($('.side-selection').find(':selected').val())
@@ -88,7 +88,10 @@ ready = ->
     sqft = calc_sqft(w, l)
     rate = $productOptions.attr('data-rate')
     price = parseFloat(calc_price(sqft, rate))
-
+    console.log(sqft)
+    if quantity > 1 && t_id != undefined
+      sqft = parseFloat(calc_sqft(w, l)) * parseFloat(quantity)
+      console.log(sqft)
     if t_id != undefined
       $.post($url, sqft: sqft, t_id: t_id,undefined, "json").done (data) ->
 
@@ -193,7 +196,7 @@ ready = ->
         return
       
     if (rate != '' && t_id != undefined && t_id != '')
-      change_price(width, length, t_id)  
+      change_price(t_id)  
 
   $form.on 'focus', '.product-width, .product-length', (e)->
     rate = $productOptions.attr('data-rate')
@@ -224,7 +227,7 @@ ready = ->
       $(this).prop('selectedIndex', 0)
       return alert("You must enter a length & width")
 
-    if (rate != '') then change_price(width, length, id) else set_price(sqft, id)
+    if (rate != '') then change_price(id) else set_price(sqft, id)
     
   #  Finish Options
 
@@ -259,7 +262,6 @@ ready = ->
       $('.grommets-field').val(0)
 
   $form.on 'change', '.finish-select', ->
-    
     w = $widthOption.val()
     l = $lengthOption.val()
     r = $productOptions.attr('data-rate')
@@ -279,7 +281,7 @@ ready = ->
     else if option == "None"
       reset_finish_options(this.checked)
 
-    change_price(w, l)
+    change_price()
   
   # Grommet Quantity Change
   $form.on 'change', '.grommets-field', ->
@@ -297,6 +299,7 @@ ready = ->
   $form.on 'change', '.quantity-field', (e) ->
     quantity = $(this).val()
     price = parseFloat($('.per-placeholder').html().replace("$", ''))
+    t_id = $thicknessOption.find(':selected').val()
 
     if (price == 0)
       $(this).val(1)
@@ -306,8 +309,7 @@ ready = ->
     else if (price == '')
       $(this).val(1)
     else
-      new_price = Math.round((price * quantity) * 100) / 100
-      set_total_price(new_price)
+      change_price(t_id)
 
   # Update Quantity for Order Page
   $('.qty-update-button').click (e) ->
