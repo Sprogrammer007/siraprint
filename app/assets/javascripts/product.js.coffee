@@ -113,7 +113,7 @@ ready = ->
 
     if side == 2
       price = price * 2
-
+    console.log(price)
     set_per_unit_price(price)
 
     if (quantity != 0)
