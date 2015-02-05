@@ -45,11 +45,13 @@ Rails.application.routes.draw do
     post 'cancel',            to: 'users#cancel',        as: :cancel_user
   end
 
-  match  'orders/cart',       to: 'orders#show',                via: 'get', :as => 'cart'
-  match  'orders/delivery_info', to: 'orders#delivery_info',    via: 'get', :as => 'delivery_info'
-  match  'orders/payment',    to: 'orders#payment',             via: 'get', :as => 'payment'
+  match  'orders/cart',          to: 'orders#show',                via: 'get', :as => 'cart'
+  match  'orders/delivery_info', to: 'orders#delivery_info',       via: 'get', :as => 'delivery_info'
+  match  'orders/payment',       to: 'orders#payment',             via: 'get', :as => 'payment'
 
   match '/help',              to: 'static_pages#help',          via: 'get'
   match '/about',             to: 'static_pages#about',         via: 'get'
   match '/contact',           to: 'static_pages#contact',       via: 'get'
+  match '/terms_of_use',      to: 'static_pages#terms',         via: 'get'
+  match '/private_policy',    to: 'static_pages#privacy',       via: 'get'
 end

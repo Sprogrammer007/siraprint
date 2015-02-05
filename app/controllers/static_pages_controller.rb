@@ -14,6 +14,12 @@ class StaticPagesController < ApplicationController
   def contact
   end
 
+  def privacy
+  end
+
+  def terms
+  end
+  
   def ud
     render :layout => false
   end
