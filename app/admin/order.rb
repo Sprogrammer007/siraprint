@@ -46,8 +46,7 @@ ActiveAdmin.register Order do
         status_tag o.status.camelize, nil, class: "cancel"
       end
     end
-    column :created_at
-    column :updated_at
+    column :ordered_date
     actions defaults: false, dropdown: true, dropdown_name: "Options" do |o|
       item("Order Details", admin_order_path(o))
       item("Remove Order", admin_order_path(o), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
@@ -88,6 +87,7 @@ ActiveAdmin.register Order do
               status_tag o.status.camelizes, nil, class: "cancel"
             end
           end
+          row :ordered_date
         end
       end
     end

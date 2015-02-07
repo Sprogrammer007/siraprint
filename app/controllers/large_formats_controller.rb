@@ -3,12 +3,11 @@ class LargeFormatsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show, :get_thickness, :get_price, :change_side] 
 
   def index
-  	@large_formats = LargeFormat.side(1)
+  	@large_formats = LargeFormat.all
   end
 
   def show
     @large_format = LargeFormat.find(params[:id])
-    @x = 1
   end
 
   # def change_side

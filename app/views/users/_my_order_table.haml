@@ -8,7 +8,10 @@
     - order.ordered_products.each do |p|
       %ul
         %li
-          = "#{p.quantity}x #{p.product_type.camelize.split("_").join(" ")}"
+          = "#{p.quantity}x #{p.product.name}"
+  %td
+    - if order.ordered_date
+      = "#{order.ordered_date.strftime('%d, %m, %Y')}"
   %td
     = "$#{order.total}"
   %td

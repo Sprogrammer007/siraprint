@@ -27,7 +27,7 @@ class LargeFormat < ActiveRecord::Base
   end
 
   def side_options
-    [["One Side Printing", 1], ["Two Side Printing", 2]]
+    [["1 side 4/0", 1], ["2 side 4/4", 2]]
   end
   
 
