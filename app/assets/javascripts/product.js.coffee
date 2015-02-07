@@ -239,6 +239,13 @@ ready = ->
   # Change Side
   $form.on 'change', '.side-selection ', ()->
     t_id = $thicknessOption.find(':selected').val()
+    side = $(this).find(':selected').val()
+
+    if side == 2
+      $('.file_2').show()
+    else
+      $('.file_2').hide()
+      
     if (t_id != undefined && t_id != '')
       change_price(t_id)
 

@@ -95,18 +95,17 @@
       </span>
     </div>
     <span class='error hidden' style="display: block; width: 100%; color: red;">Please upload your design!</span>
-    <% if @large_format.sides == 2 %>
-      <div class="input-group mtt">
-        <%= text_field_tag 'design_pdf_2_name', nil, class: "form-control", placeholder: "Back Design", readonly: true  %>
-        <span class="input-group-btn">
-          <span class="btn btn-primary btn-file">
-            Browse 
-            <%= file_field_tag '[order]design_pdf_2', class: 'design_pdf' %>
-          </span>
+    <div class="input-group file_2 mtt hidden">
+      <%= text_field_tag 'design_pdf_2_name', nil, class: "form-control", placeholder: "Back Design", readonly: true  %>
+      <span class="input-group-btn">
+        <span class="btn btn-primary btn-file">
+          Browse 
+          <%= file_field_tag '[order]design_pdf_2', class: 'design_pdf' %>
         </span>
-      </div>
-      <span class='error hidden' style="display: block; width: 100%; color: red;">Please upload your design!</span>
-    <% end %>
+      </span>
+    </div>
+    <span class='error hidden' style="display: block; width: 100%; color: red;">Please upload your design!</span>
+
   </div>
   
   <div class="item-checkout product-box">
