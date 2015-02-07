@@ -10,11 +10,11 @@
     <h3>Size</h3>
     <div class="wlu-box">
       <%= label_tag "[order][details]width", "Width" %>
-      <%= number_field_tag "[order][details]width", nil, class: "product-width form-control", in: 1...100, :step => 0.1 %>
+      <%= text_field_tag "[order][details]width", nil, class: "product-width form-control" %>
     </div>
     <div class="wlu-box">
       <%= label_tag "[order][details]length", "Length" %>
-      <%= number_field_tag '[order][details]length', nil, class: "product-length form-control", in: 1...100, :step => 0.1 %>
+      <%= text_field_tag '[order][details]length', nil, class: "product-length form-control" %>
     </div>
     <div class="wlu-box">
       <%= label_tag "[order][details]unit", "Unit" %>
