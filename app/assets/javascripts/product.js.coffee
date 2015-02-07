@@ -37,7 +37,10 @@ ready = ->
 
   # Calc Price
   calc_price = (s, r) ->
-    return parseFloat(Math.round((s * r) * 100) / 100).toFixed(2) 
+    return (s * r)
+
+  round_numb = (num) ->
+    return parseFloat(Math.round(num * 100) / 100)
 
   # Update Unit
   update_unit = (u, w, l)->
@@ -74,27 +77,27 @@ ready = ->
         alert("There are no matching sizes for your print, pelase re-enter width and length")
       else
         $productOptions.attr('data-rate', data.price)
-        price = calc_price(sqft, data.price)
+        price = round_numb(calc_price(sqft, data.price))
         set_per_unit_price(price)
         set_total_price(price)
         
   # Change Price
 
-  change_price_calc = (price, quantity)->
+  change_price_calc = (price, quantity, side)->
     l_price = parseFloat($productOptions.attr('data-l-price'))
     g_price = parseFloat($productOptions.attr('data-g-price'))
-    side = parseInt($('.side-selection').find(':selected').val())
 
     if ( l_price != '' || g_price != '')
-      f_price = Math.round((l_price + g_price) * 100) / 100 
+      f_price = round_numb(l_price + g_price)
       price = price + parseFloat(f_price)
-      price = Math.round(price * 100) / 100      
-      set_finish_price(f_price)
-
-    if side == 2
-      price = price * 2
+      price = round_numb(price) 
+      
+    if side 
+      price = price * 2.0
+      f_price = f_price * 2.0
 
     set_per_unit_price(price)
+    set_finish_price(f_price)
 
     if (quantity != 0)
       price = price * parseFloat(quantity)
@@ -104,15 +107,17 @@ ready = ->
   change_price = (t_id) ->
     w = $widthOption.val()
     l = $lengthOption.val()
-    
-    quantity = $quantityOption.val()
-  
-    sqft = calc_sqft(w, l)
+    quantity = parseFloat($quantityOption.val())
+    side = parseInt($('.side-selection').find(':selected').val())
+    sqft = parseFloat(calc_sqft(w, l))
     rate = $productOptions.attr('data-rate')
-    price = parseFloat(calc_price(sqft, rate))
+    price = round_numb(calc_price(sqft, rate))
+
+    if side && t_id != undefined
+      sqft = sqft * side
 
     if quantity > 1 && t_id != undefined
-      sqft = parseFloat(calc_sqft(w, l)) * parseFloat(quantity)
+      sqft = sqft * quantity
   
     if t_id != undefined
       $.post($url, sqft: sqft, t_id: t_id,undefined, "json").done (data) ->
@@ -122,8 +127,8 @@ ready = ->
           alert("There are no matching sizes for your print, pelase re-enter width and length")
         else
           $productOptions.attr('data-rate', data.price)
-          price = calc_price(calc_sqft(w, l), data.price)
-          change_price_calc(price, quantity)
+          price = round_numb(calc_price(calc_sqft(w, l), data.price))
+          change_price_calc(price, quantity, side)
     else
       change_price_calc(price, quantity)
 
@@ -162,29 +167,44 @@ ready = ->
   check_max_size_cb = (w, l, u) ->
     max_l_f = parseFloat(convert_to_feet($max_l))
     max_w_f = parseFloat(convert_to_feet($max_w))
-
+    
     if (u == "inch")
       w = parseInt(w)
       l = parseInt(l)
+      if ($max_w > $max_l) 
+        min_size = $max_l 
+      else
+        min_size = $max_w
+
       if (w !="" && w == $max_w && l > $max_l) || (w !="" && w == $max_l && l > $max_w)
         alert("There is a maximum of #{$max_w} x #{$max_l} inch")
         return false
       else if (l !="" && l == $max_w && w > $max_l) || (l !="" && l == $max_l && w > $max_w)
         alert("There is a maximum of #{$max_w} x #{$max_l} inch")
         return false
+      else if (w !="" && w > min_size && l > min_size) || (l !="" && l > min_size && w > min_size)
+        alert("One of your side must be lesser or equal to #{min_size} inch")
+        return false 
     else
       w = parseFloat(w)
       l = parseFloat(l)
+      if (max_w_f > max_l_f) 
+        min_size_f = max_l_f 
+      else
+        min_size_f = max_w_f
       if (w !="" && w == max_w_f && l > max_l_f) || (w !="" && w == max_l_f && l > max_w_f)
         alert("There is a maximum of #{max_w_f} x #{max_l_f} feet")
         return false
       else if (l !="" && l == max_w_f && w > max_l_f) || (l !="" && l == max_l_f && w > max_w_f)
         alert("There is a maximum of #{max_w_f} x #{max_l_f} feet")
         return false
+      else if (w !="" && w > min_size_f && l > min_size_f) || (l !="" && l > min_size_f && w > min_size_f)
+        alert("One of your side must be lesser or equal to #{min_size_f} feet")
+        return false 
 
     return true
 
-  # Change Width
+  # Change Width Length
   $form.on 'change', '.product-width, .product-length', (e) ->
     unit = $unitOption.find(':selected').val()
     width = $widthOption.val()
@@ -216,15 +236,15 @@ ready = ->
       $(this).blur()
       return false
 
-  # # Change Sides
+  # Change Side
   $form.on 'change', '.side-selection ', ()->
-    rate = $productOptions.attr('data-rate')
-    if rate != ''
-      change_price()
+    t_id = $thicknessOption.find(':selected').val()
+    if (t_id != undefined && t_id != '')
+      change_price(t_id)
 
   $form.on 'change', '.thickness-selection', (e)->
     id = $(this).find(':selected').val()
-    
+
     if (id == '')
       return
 
