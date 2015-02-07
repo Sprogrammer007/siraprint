@@ -59,10 +59,10 @@
     <div class="grommets-box mtl hidden">
       <div class="row">
         <div class="col-lg-8">
-          <%= label_tag '[details]grommets_quantity', "Number of Grommets" %>
+          <%= label_tag '[details]grommets_quantity', "# of Grommets Per Print" %>
         </div>
         <div class="col-lg-4">
-          <%= number_field_tag '[order][details]grommets_quantity', nil, class: "grommets-field form-control", in: 1...10000 %>
+          <%= text_field_tag '[order][details]grommets_quantity', nil, class: "grommets-field form-control"%>
         </div>
       </div>
     </div>
