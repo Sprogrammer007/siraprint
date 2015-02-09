@@ -241,7 +241,7 @@ ready = ->
     t_id = $thicknessOption.find(':selected').val()
     side = $(this).find(':selected').val()
 
-    if side == 2
+    if side == "2"
       $('.file_2').removeClass('hidden')
     else
       $('.file_2').addClass('hidden')
@@ -381,7 +381,7 @@ ready = ->
       $('#_orderdesign_pdf').parents('.input-group').next('.error').removeClass("hidden")
       e.preventDefault()
 
-    if side == 2 && $('#_orderdesign_pdf_2').val() == ""
+    if side == "2" && $('#_orderdesign_pdf_2').val() == ""
       $('#_orderdesign_pdf_2').parents('.input-group').next('.error').removeClass("hidden")
       e.preventDefault()
 
