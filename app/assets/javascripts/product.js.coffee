@@ -242,9 +242,9 @@ ready = ->
     side = $(this).find(':selected').val()
 
     if side == 2
-      $('.file_2').show()
+      $('.file_2').removeClass('hidden')
     else
-      $('.file_2').hide()
+      $('.file_2').addClass('hidden')
       
     if (t_id != undefined && t_id != '')
       change_price(t_id)
@@ -267,7 +267,6 @@ ready = ->
     if (rate != '') then change_price(id) else set_price(sqft, id)
     
   #  Finish Options
-
   grommets_change = (checked)->
     if checked
       $('.grommets-box').removeClass('hidden')
@@ -377,11 +376,12 @@ ready = ->
       
   # Validation Before Submit
   $('.order_form').on 'submit', "form", (e)->
+    side = $('.side-selection').find(':selected').val()
     if $('#_orderdesign_pdf').val() == ""
       $('#_orderdesign_pdf').parents('.input-group').next('.error').removeClass("hidden")
       e.preventDefault()
 
-    if $('#_orderdesign_pdf_2').val() == ""
+    if side == 2 && $('#_orderdesign_pdf_2').val() == ""
       $('#_orderdesign_pdf_2').parents('.input-group').next('.error').removeClass("hidden")
       e.preventDefault()
 
