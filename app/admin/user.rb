@@ -46,8 +46,6 @@ ActiveAdmin.register User do
     end
   end
 
-  show do 
-  end
 
   form do |f|
     f.inputs do 

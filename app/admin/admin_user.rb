@@ -11,7 +11,13 @@ ActiveAdmin.register AdminUser do
     column :current_sign_in_at
     column :sign_in_count
     column :created_at
-    actions
+    column "" do |u|
+      dropdown_menu "Actions" do 
+        item("View Admin Details", admin_admin_user_path(u))
+        item("Edit Admin", edit_admin_admin_user_path(u))
+        item("Delete Admin", admin_admin_user_path(u), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
+      end
+    end
   end
 
   filter :email
