@@ -41,7 +41,7 @@ ActiveAdmin.register User do
         item("Edit User", edit_admin_user_path(u))
         item("Delete User", admin_user_path(u), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
         item("Approve User", approve_admin_user_path(u))     
-        item("Approve User", disapprove_admin_user_path(u))     
+        item("Disapprove User", disapprove_admin_user_path(u))     
       end
     end
   end
