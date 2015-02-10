@@ -41,6 +41,7 @@ ActiveAdmin.register User do
         item("Edit User", edit_admin_user_path(u))
         item("Delete User", admin_user_path(u), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
         item("Approve User", approve_admin_user_path(u))     
+        item("Approve User", disapprove_admin_user_path(u))     
       end
     end
   end
@@ -73,6 +74,13 @@ ActiveAdmin.register User do
     else
       @user.update(status: "Disapproved")
     end
+    redirect_to :back
+  end
+
+  member_action :disapprove, method: :get do
+    @user = User.find(params[:id])
+    @user.update(status: "Disapproved")
+ 
     redirect_to :back
   end
 
