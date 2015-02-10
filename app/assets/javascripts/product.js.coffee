@@ -81,7 +81,7 @@ ready = ->
         price = round_numb(calc_price(sqft, data.price))
 
         if side 
-        price = price * 2.0
+          price = price * 2.0
 
         set_per_unit_price(price)
         set_total_price(price)
