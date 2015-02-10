@@ -68,6 +68,7 @@ ActiveAdmin.register User do
   member_action :approve, method: :get do
     @user = User.find(params[:id])
     if @user.approvable?
+      UserMailer.user_approved(@user).deliver
       @user.update(status: "Approved")
     else
       @user.update(status: "Disapproved")

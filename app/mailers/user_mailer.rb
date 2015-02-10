@@ -20,7 +20,6 @@ class UserMailer < ActionMailer::Base
 
   def user_approved(user)
     @user = user
-
     mail to: user.email, subject: "Your account has been approved!"
   end
 end
