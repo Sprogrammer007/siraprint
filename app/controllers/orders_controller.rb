@@ -92,8 +92,8 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @order.update(:express_token => params[:token])
     if @order.purchase
-      # OrderMailer.notify_order_placed(current_user, @order).deliver_now
-      # OrderMailer.thank_you_for_order(current_user, @order).deliver_now
+      OrderMailer.notify_order_placed(current_user, @order).deliver_now
+      OrderMailer.thank_you_for_order(current_user, @order).deliver_now
       @order.update(:ordered_date => Date.today)
       render 'success'
     else

@@ -410,7 +410,6 @@ ready = ->
       alert log  if log
     return
    
-
 $(document).ready(ready)
 $(document).on('page:load', ready)
 
