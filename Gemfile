@@ -8,7 +8,7 @@ gem "active_admin_import" , '2.1.1'
 gem 'polyamorous', github: 'activerecord-hackery/polyamorous'
 gem 'ransack',     github: 'activerecord-hackery/ransack'
 gem "paperclip", "~> 4.2"
-gem 'rails'
+gem 'rails', "4.2.0"
 gem 'pg'
 gem 'sass-rails', '~> 4.0.2'
 gem 'uglifier', '>= 1.3.0'
@@ -22,7 +22,7 @@ gem 'devise'
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'haml'
 gem 'tinymce-rails'
-gem 'aws-sdk'
+gem 'aws-sdk', '< 2.0'
 gem 'jquery-fileupload-rails'
 gem 'activemerchant'
 
