@@ -36,7 +36,7 @@
               = link_to "update", "#", class: "qty-update-button edit", data: { url: update_item_order_path(p.id)}
         %td
           = link_to p.print_pdf_file_name, p.print_pdf.url()
-          - if p.print_pdf2_file_name
+          - if p.print_pdf_2_file_name
             = link_to p.print_pdf_2_file_name, p.print_pdf_2.url()
         %td
           = "$#{p.price}"
