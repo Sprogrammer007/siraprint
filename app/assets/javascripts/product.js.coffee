@@ -80,7 +80,7 @@ ready = ->
         $productOptions.attr('data-rate', data.price)
         price = round_numb(calc_price(sqft, data.price))
 
-        if side 
+        if side == 2
           price = price * 2.0
 
         set_per_unit_price(price)
@@ -97,7 +97,7 @@ ready = ->
       price = price + parseFloat(f_price)
       price = round_numb(price) 
       
-    if side 
+    if side == 2
       price = price * 2.0
       f_price = f_price * 2.0
 
