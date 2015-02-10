@@ -17,7 +17,9 @@ ActiveAdmin.register Order do
   
   index :title => "Orders" do
     column "User Email" do |o|
-      o.user.email
+      if o.user
+        o.user.email
+      end
     end
     column "Delivery Address" do |o|
       o.delivery_address.html_safe() if o.delivery_address
