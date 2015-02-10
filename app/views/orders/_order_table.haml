@@ -20,6 +20,7 @@
             Thickness: 
             = "#{p.details.thickness.thickness}#{p.details.thickness.unit}"
             %br
+          - if p.details.finishing
             Finishing: 
             = p.details.finishing.join(", ")
           - unless step == "pay"
