@@ -67,8 +67,8 @@ Rails.application.configure do
     domain: "siraprint.com",
     authentication: "plain",
     enable_starttls_auto: true,
-    user_name: "steve00006@gmail.com",
-    password: "guybrush"
+    user_name: "orders@siraprint.ca",
+    password: "hello316"
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
