@@ -25,7 +25,7 @@
   <% if @large_format.has_two_side %>
     <div class="item-side product-box">
     <h3>Side</h3>
-    <%= select("order", "[details]side", options_for_select(@large_format.side_options, @large_format.sides), {}, class: "side-selection form-control", data: {name: "#{@large_format.name}", url: change_side_large_format_path(@large_format)}) %>
+    <%= select("order", "[details]side", options_for_select(@large_format.side_options), {}, class: "side-selection form-control", data: {name: "#{@large_format.name}", url: change_side_large_format_path(@large_format)}) %>
     </div>
   <% else %>
     <%= hidden_field_tag '[order][details]side', 1 %>  
