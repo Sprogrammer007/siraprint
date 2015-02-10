@@ -54,7 +54,6 @@ class OrdersController < ApplicationController
   end
 
   def select_delivery
-    Rails.logger.warn "#{params}"
     @order = Order.find(params[:id])
     if params[:method] == "Pickup"
       @order.update!(delivery_address: DeliveryAddress.html_pickup_address, delivery_method: params[:method])

@@ -17,8 +17,8 @@ class User < ActiveRecord::Base
   validates :company_phone, format: { with: VALID_PHONE_REGEX }
   validates :company_hst, format: { with: VALID_HST_REGEX }
 
-  has_many :delivery_addresses
-  has_many :orders
+  has_many :delivery_addresses, dependent: :destroy
+  has_many :orders, dependent: :destroy
   before_create :set_default_state
 
   scope :approved, -> { where(:status => "Approved") }

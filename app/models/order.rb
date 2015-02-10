@@ -2,8 +2,8 @@ class Order < ActiveRecord::Base
   
   STATE = %w{open payed completed canceled}
   belongs_to :user
-  has_many :ordered_products, :foreign_key => :order_id
-  has_many :transactions, :class_name => "OrderTransaction"
+  has_many :ordered_products, :foreign_key => :order_id, dependent: :destroy
+  has_many :transactions, :class_name => "OrderTransaction", dependent: :destroy
 
   scope :open, -> { where(status: "open") }
   scope :canceled, -> { where(status: "canceled") }

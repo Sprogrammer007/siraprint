@@ -12,6 +12,7 @@ class OrderedProduct < ActiveRecord::Base
   scope :large_format, -> { where(product_type: "large_format") }
   scope :metal_sign, -> { where(product_type: "metal_sign") }
   
+  before_destroy :remove_details
   def details
     "Ordered#{self.product_type.camelize.gsub("_", "")}Detail".constantize.find(self.product_detail_id)
   end
@@ -33,9 +34,8 @@ class OrderedProduct < ActiveRecord::Base
     (self.unit_price*100).round()
   end
 
-  def remove
+  def remove_details
     self.details.destroy
-    self.destroy
   end
 
 end
