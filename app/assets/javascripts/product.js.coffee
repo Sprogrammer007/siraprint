@@ -71,6 +71,7 @@ ready = ->
     $('.total-placeholder').html("$#{price}")
 
   set_price = (sqft, t_id) ->
+    side = parseInt($('.side-selection').find(':selected').val())
     $.post($url, sqft: sqft, t_id: t_id, undefined, "json").done (data) ->
       if data == null
         reset_values()
@@ -78,9 +79,13 @@ ready = ->
       else
         $productOptions.attr('data-rate', data.price)
         price = round_numb(calc_price(sqft, data.price))
+
+        if side 
+        price = price * 2.0
+
         set_per_unit_price(price)
         set_total_price(price)
-        
+          
   # Change Price
 
   change_price_calc = (price, quantity, side)->
