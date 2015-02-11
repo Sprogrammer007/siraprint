@@ -3,7 +3,6 @@ class OrdersController < ApplicationController
   before_filter :authenticate_approved_user!
 
   def create
-
     oparams = params[:order]
     @order = current_user.open_order || current_user.new_order(request.remote_ip)
     if @order

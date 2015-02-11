@@ -37,6 +37,9 @@ ActiveAdmin.register Order do
     column "Order Total" do |o|
       "$#{o.total}"
     end
+    column "Items" do |o|
+      o.ordered_products.map { |p| "#{p.quantity}x #{p.product.name}"}.join(", ")
+    end
 
     column "Status" do |o|
       case o.status

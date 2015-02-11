@@ -50,7 +50,9 @@ ActiveAdmin.register_page "Dashboard" do
             column "Order Total" do |o|
               "$#{o.total}" 
             end
-
+            column "Items" do |o|
+              o.ordered_products.map { |p| "#{p.quantity}x #{p.product.name}"}.join(", ")
+            end
             column "Status" do |o|
               case o.status
               when "open", "payed"
@@ -61,7 +63,6 @@ ActiveAdmin.register_page "Dashboard" do
                 status_tag o.status.camelize, nil, class: "cancel"
               end
             end
-            column :created_at
             column :updated_at
           end
         end
