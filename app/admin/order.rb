@@ -102,9 +102,9 @@ ActiveAdmin.register Order do
           .any?
           h2 "Large Formats"
           table_for order.ordered_products.large_format do
-            column "Product" do |p|
-              image_tag p.product.display_image.url()
-            end
+            # column "Product" do |p|
+            #   image_tag p.product.display_image.url()
+            # end
             column "Material Name" do |p|
               link_to p.product.name, admin_large_format_path(p.product)
             end

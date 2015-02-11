@@ -48,7 +48,7 @@
 
       <% @large_format.large_format_finishings.each_with_index do |f, i| %>
         <% next if f.name == "None" %>
-        <%= check_box_tag "[order][details]finishing[]", f.name, ( (i == 0  && !@none ) ? true : false ), id: "finishing_#{f.id}", class: "finish-select" %>
+        <%= check_box_tag "[order][details]finishing[]", f.name, false, id: "finishing_#{f.id}", class: "finish-select" %>
         <label for="<%= "finishing_#{f.id}" %>" class="finsihing-select">
           <%= f.name %>
         </label>
