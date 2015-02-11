@@ -8,6 +8,7 @@ class LargeFormatsController < ApplicationController
 
   def show
     @large_format = LargeFormat.find(params[:id])
+    @none = @large_format.large_format_finishings.has_none.any?
   end
 
   # def change_side

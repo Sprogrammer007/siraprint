@@ -275,7 +275,6 @@ ready = ->
   grommets_change = (checked)->
     if checked
       $('.grommets-box').removeClass('hidden')
-      $('#finishing_none').attr('checked', false)
     else
       $('.grommets-box').addClass('hidden')
       $productOptions.attr('data-g-price', 0)
@@ -286,7 +285,6 @@ ready = ->
     if checked
       l_price = parseFloat(sqft).toFixed(2) 
       $productOptions.attr('data-l-price', l_price)
-      $('#finishing_none').attr('checked', false)
     else
       $productOptions.attr('data-l-price', 0)
 
@@ -315,6 +313,10 @@ ready = ->
       return alert("You must enter a select a thickness")
 
     option = $(this).val()
+   
+    if this.checked && option != 'None'
+      $('#finishing_none').attr('checked', false)
+
     if option == "Grommets"
       grommets_change(this.checked)
     else if (option == "Lamination" || option == "Gloss Lamination " || option == "Matte Lamination")

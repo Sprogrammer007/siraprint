@@ -132,7 +132,7 @@ ActiveAdmin.register Order do
               end
             end
             column "Finishing" do |p|
-              if p.details.finishing == ''
+              if !p.details.finishing
                 "None"
               else
                 p.details.finishing.join(' | ')
