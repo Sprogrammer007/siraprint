@@ -154,9 +154,9 @@ ActiveAdmin.register Order do
         if order.ordered_products.metal_sign.any?
           h2 "Metal Signs"
           table_for order.ordered_products.metal_sign do
-            column "Product" do |p|
-              image_tag p.product.display_image.url()
-            end
+            # column "Product" do |p|
+            #   image_tag p.product.display_image.url()
+            # end
             column "Product Name" do |p|
               link_to p.product.name, admin_metal_sign_path(p)
             end
