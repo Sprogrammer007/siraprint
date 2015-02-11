@@ -20,9 +20,9 @@
             Thickness: 
             = "#{p.details.thickness.thickness}#{p.details.thickness.unit}"
             %br
-          - if p.details.finishing.any?
-            Finishing: 
-            = p.details.finishing.join(", ")
+            - if p.details.finishing.any?
+              Finishing: 
+              = p.details.finishing.join(", ")
           - unless step == "pay"
             %br
             = link_to "remove", remove_item_order_path(p), class: "remove-ordered-product", :method => :post
