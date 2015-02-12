@@ -9,7 +9,7 @@ class OrderMailer < ActionMailer::Base
   def notify_order_placed(user, order)
     @user = user
     @order = order
-    mail to: "stevenag006@hotmail.com", subject: "New Order from #{user.company_name}"
+    mail to: "info@siraprint.ca", subject: "New Order from #{user.company_name}"
   end
 
   def thank_you_for_order(user, order)
