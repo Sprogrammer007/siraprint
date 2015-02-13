@@ -319,7 +319,7 @@ ready = ->
     console.log(option)
     if option == "Grommets"
       grommets_change(this.checked)
-    else if (option == "Lamination" || option == "Gloss Lamination" || option == "Matte Lamination")
+    else if (option == "Lamination" || option == "Gloss lamination" || option == "Matte Lamination")
       lamination_change(this.checked, w, l)
     else if option == "None"
       reset_finish_options(this.checked)
