@@ -282,11 +282,14 @@ ready = ->
   
   lamination_change = (checked, w, l) ->
     sqft = calc_sqft(w, l)
+    old_l_price = parseFloat($productOptions.attr('data-l-price'))
     if checked
-      l_price = parseFloat(sqft).toFixed(2) 
+      l_price = (parseFloat(sqft) + old_l_price).toFixed(2) 
       $productOptions.attr('data-l-price', l_price)
     else
-      $productOptions.attr('data-l-price', 0)
+      if old_l_price != 0
+        l_price = (old_l_price - parseFloat(sqft)).toFixed(2) 
+        $productOptions.attr('data-l-price', l_price)
 
   reset_finish_options = (checked) ->
     if checked
@@ -316,7 +319,6 @@ ready = ->
    
     if this.checked && option != 'None'
       $('#finishing_none').attr('checked', false)
-    console.log(option)
     if option == "Grommets"
       grommets_change(this.checked)
     else if (option == "Lamination" || option == "Gloss lamination" || option == "Matte Lamination")
