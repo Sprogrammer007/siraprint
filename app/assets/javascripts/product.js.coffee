@@ -316,7 +316,7 @@ ready = ->
    
     if this.checked && option != 'None'
       $('#finishing_none').attr('checked', false)
-
+    console.log(option)
     if option == "Grommets"
       grommets_change(this.checked)
     else if (option == "Lamination" || option == "Gloss Lamination " || option == "Matte Lamination")
