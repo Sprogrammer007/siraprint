@@ -9,7 +9,6 @@ ready = ->
   $finishingOption = $('.finishing-placeholder')
   $productOptions = $('#product-options')
   $url = $productOptions.data('price-url')
-  $unitPrice = $('#_orderunit_price')
   $max_w = parseInt($productOptions.attr('data-max-w'))
   $max_l = parseInt($productOptions.attr('data-max-l'))
 
@@ -55,11 +54,12 @@ ready = ->
     $lengthOption.val(0)
     $thicknessOption.prop('selectedIndex', 0)
     set_per_unit_price(0)
+    set_finish_price(0)
     set_total_price(0)
     $quantityOption.val(1)
+    reset_finish_options(true)
 
   set_per_unit_price = (price) ->
-    $unitPrice.val(price)
     $('.per-placeholder').html("$#{price}")
   
   set_finish_price = (price) ->
@@ -67,7 +67,6 @@ ready = ->
     $('.finishing-placeholder').html("$#{price}")
 
   set_total_price = (price) ->
-    $('#_ordertotal_price').val(price)
     $('.total-placeholder').html("$#{price}")
 
   set_price = (sqft, t_id) ->
@@ -105,7 +104,7 @@ ready = ->
     set_finish_price(f_price)
 
     if (quantity != 0)
-      price = price * parseFloat(quantity)
+      price = price * quantity
 
     set_total_price(price)
 
@@ -123,7 +122,7 @@ ready = ->
 
     if quantity > 1 && t_id != undefined
       sqft = sqft * quantity
-  
+
     if t_id != undefined
       $.post($url, sqft: sqft, t_id: t_id,undefined, "json").done (data) ->
 
@@ -135,7 +134,7 @@ ready = ->
           price = round_numb(calc_price(calc_sqft(w, l), data.price))
           change_price_calc(price, quantity, side)
     else
-      change_price_calc(price, quantity)
+      change_price_calc(price, quantity, side)
 
 
   # Change Unit
@@ -270,7 +269,20 @@ ready = ->
       return alert("You must enter a length & width")
 
     if (rate != '') then change_price(id) else set_price(sqft, id)
-    
+
+  # Reset all Finish options
+  reset_finish_options = (checked) ->
+    if checked
+      $('#finishing_none').prop('checked', true)
+      $('.finish-select').each (i)->
+        if i != 0
+          $(this).attr('checked', false)
+      $productOptions.attr('data-l-price', 0)
+      $productOptions.attr('data-g-price', 0)
+      $productOptions.attr('data-fin-price', 0)
+      $('.grommets-box').addClass('hidden')
+      $('.grommets-field').val(0)
+      
   #  Finish Options
   grommets_change = (checked)->
     if checked
@@ -282,32 +294,19 @@ ready = ->
   
   lamination_change = (checked, w, l) ->
     sqft = calc_sqft(w, l)
-    old_l_price = parseFloat($productOptions.attr('data-l-price'))
+
     if checked
-      l_price = (parseFloat(sqft) + old_l_price).toFixed(2) 
+      l_price = parseFloat(sqft).toFixed(2) 
       $productOptions.attr('data-l-price', l_price)
     else
       if old_l_price != 0
-        l_price = (old_l_price - parseFloat(sqft)).toFixed(2) 
-        $productOptions.attr('data-l-price', l_price)
-
-  reset_finish_options = (checked) ->
-    if checked
-      $('#finishing_none').attr('checked', true)
-      $('.finish-select').each (i)->
-        if i != 0
-          $(this).attr('checked', false)
-      $productOptions.attr('data-l-price', 0)
-      $productOptions.attr('data-g-price', 0)
-      $productOptions.attr('data-fin-price', 0)
-      $('.grommets-box').addClass('hidden')
-      $('.grommets-field').val(0)
+        $productOptions.attr('data-l-price', 0)
 
   $form.on 'change', '.finish-select', ->
     w = $widthOption.val()
     l = $lengthOption.val()
     r = $productOptions.attr('data-rate')
-
+    number_of_checked = $('.finish-select:checked').length;
     if (w == "" || l == "")
       $(this).prop('checked', false)
       return alert("You must enter a length & width")
@@ -316,12 +315,21 @@ ready = ->
       return alert("You must enter a select a thickness")
 
     option = $(this).val()
-   
+
     if this.checked && option != 'None'
-      $('#finishing_none').attr('checked', false)
+      $('#finishing_none').prop('checked', false)
+    else if !this.checked && number_of_checked == 0
+      $('#finishing_none').prop('checked', true)
+
     if option == "Grommets"
       grommets_change(this.checked)
-    else if (option == "Lamination" || option == "Gloss lamination" || option == "Matte Lamination")
+    else if option == "Gloss lamination"
+      if $(":radio[value='Matte Lamination']").attr('checked', true)
+        $(":radio[value='Matte Lamination']").prop('checked', false)
+      lamination_change(this.checked, w, l)
+    else if option == "Matte Lamination"
+      if $(":radio[value='Gloss lamination']").attr('checked', true)
+        $(":radio[value='Gloss lamination']").prop('checked', false)
       lamination_change(this.checked, w, l)
     else if option == "None"
       reset_finish_options(this.checked)
@@ -353,8 +361,11 @@ ready = ->
       alert("Number of prints must be atleast 1")
     else if (price == '')
       $(this).val(1)
-    else
+    else if (t_id != undefined)
       change_price(t_id)
+    else if $('#_orderproduct_type').val() == "metal_sign"
+      price = price * parseFloat(quantity)
+      set_total_price(price)
 
   # Update Quantity for Order Page
   $('.qty-update-button').click (e) ->
@@ -376,7 +387,7 @@ ready = ->
           set_per_unit_price(0)
           set_total_price(0)
         else
-          price = data.price * $quantityOption.val()
+          price = parseFloat(data.price) * parseFloat($quantityOption.val())
           set_per_unit_price(price)
           set_total_price(price)
     else

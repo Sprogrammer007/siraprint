@@ -13,6 +13,11 @@ class MetalSignsController < ApplicationController
   
   def get_price
     @metal_sign_size = MetalSignSize.find(params[:s_id])
+    if @metal_sign_size
+      session[:current_rate] = @metal_sign_size.price
+    else
+      session[:current_rate] = nil
+    end
     respond_to do |format|
       format.html { redirect_to root_path }
       format.json { render :json => @metal_sign_size }

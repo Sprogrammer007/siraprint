@@ -6,7 +6,7 @@ class OrdersController < ApplicationController
     oparams = params[:order]
     @order = current_user.open_order || current_user.new_order(request.remote_ip)
     if @order
-      op = @order.create_new_ordered_product(oparams)
+      op = @order.create_new_ordered_product(oparams, session[:current_rate])
       if op.save
         detail = op.create_details(oparams[:product_type], oparams[:details])
         if detail.save
@@ -21,6 +21,7 @@ class OrdersController < ApplicationController
       end
       @order.update_price
     end
+    session[:current_rate] = nil
     redirect_to cart_path()
   end
 

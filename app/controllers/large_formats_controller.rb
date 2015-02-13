@@ -19,6 +19,11 @@ class LargeFormatsController < ApplicationController
     thickness = LargeFormatThickness.find(params[:t_id])
     sqft = params[:sqft].to_f.round(2)
     @price = thickness.large_format_tiers.sqft_eq(sqft)
+    if @price.first
+      session[:current_rate] = @price.first.price
+    else
+      session[:current_rate] = nil
+    end
     respond_to do |format|
       format.html { redirect_to root_path }
       format.json { render :json => @price.first }

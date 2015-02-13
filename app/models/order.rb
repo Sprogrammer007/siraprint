@@ -46,15 +46,24 @@ class Order < ActiveRecord::Base
     @address ||= DeliveryAddress.find(self.delivery_id)
   end
 
-  def create_new_ordered_product(params)
+  def create_new_ordered_product(params, rate)
+
+    unit_price = if params[:product_type] == 'large_format'
+      calc_unit_price(params[:details], rate, params[:quantity].to_i)
+    else
+      metal_sign_unit_price(rate, params[:details][:size_id]) 
+    end
+
+    total_price = (unit_price.to_f * params[:quantity].to_i)
+
     op = self.ordered_products.create(
       quantity: params[:quantity], 
       product_type: params[:product_type],
       print_pdf: params[:design_pdf], 
       print_pdf_2: params[:design_pdf_2], 
       product_id: params[:product_id], 
-      unit_price: params[:unit_price],
-      price: params[:total_price]
+      unit_price: unit_price,
+      price: total_price
     )
     return op
   end
@@ -144,4 +153,57 @@ class Order < ActiveRecord::Base
         :currency   => 'CAD'
       }
     end
+
+    def calc_sqft(w, l, unit)
+      (unit == "inch") ? ((w * l) / 144) : (w * l)
+    end
+
+    def get_rate(id, s, side, quantity)
+      sqft = s
+      quantity = quantity.to_i
+      if side == 2
+        sqft = sqft * 2
+      end
+
+      if quantity
+        sqft = sqft * quantity
+      end
+
+      thickness = LargeFormatThickness.find_by_id(id)
+      rate = thickness.large_format_tiers.sqft_eq(sqft)
+      return rate.first.price
+    end
+
+    def calc_unit_price(details, rate, quantity)
+      width = details[:width].to_f.round(2)
+      length = details[:length].to_f.round(2)
+      unit = details [:unit]
+      side = details[:side].to_i
+      sqft = calc_sqft(width, length, unit).to_f.round(2)
+      rate = (rate || get_rate(details[:thickness_id], sqft, side, quantity)) 
+
+      unit_price = (sqft * rate.to_f.round(2))
+
+      if details[:finishing]
+        f_price = 0
+        if details[:finishing].include?('Gloss lamination') || details[:finishing].include?('Matte Lamination') 
+          f_price = sqft
+        end
+        if details[:finishing].include?('Grommets')
+          f_price += details[:grommets_quantity].to_i
+        end
+        unit_price += f_price
+      end
+
+      if side == 2
+        unit_price = unit_price * 2
+      end
+
+      return unit_price.to_f
+    end
+
+    def metal_sign_unit_price(price, size)
+      price || MetalSignSize.find_by_id(size).price           
+    end
+
 end
