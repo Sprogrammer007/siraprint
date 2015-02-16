@@ -55,8 +55,8 @@ class Order < ActiveRecord::Base
     end
 
     total_price = (unit_price.to_f * params[:quantity].to_i)
-    unit_price = unit_price.round(2)
-    total_price = total_price.round(2)
+    unit_price = unit_price.to_f.round(2)
+    total_price = total_price.to_f.round(2)
     op = self.ordered_products.create(
       quantity: params[:quantity], 
       product_type: params[:product_type],

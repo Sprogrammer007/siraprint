@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 # ruby '2.1.1'
 #ruby-gemset=sira
 
@@ -26,8 +26,8 @@ gem 'aws-sdk', '< 2.0'
 gem 'jquery-fileupload-rails'
 gem 'activemerchant'
 
-# PDF kit
-gem 'pdfkit'
+# PDF
+gem 'prawn'
 
 group :development do
   gem 'faker', '1.2.0'

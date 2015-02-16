@@ -105,6 +105,19 @@ class OrdersController < ApplicationController
     redirect_to cart_path()
   end
 
+  def invoice
+    @order = Order.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = OrderPdf.new(@order, view_context)
+        send_data pdf.render, filename: "order_#{@order.order_id}#{Date.today}.pdf",
+                              type: "application/pdf",
+                              disposition: "inline"
+      end
+    end
+  end
+
   private
     def authenticate_approved_user!
       authenticate_user!

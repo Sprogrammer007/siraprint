@@ -19,6 +19,7 @@
       = order.status.camelize
   %th 
     - if order.status == "open"
+      = link_to "Download Invoice", invoice_order_path(order)
       = link_to "Cancel Order", cancel_order_path(order)
       | 
       = link_to "Update Order", cart_path()
