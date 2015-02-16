@@ -35,6 +35,7 @@ Rails.application.routes.draw do
       get  'confirm'
       get  'select_delivery'
       get  'check_out'
+      get  'invoice'
     end
   end
   

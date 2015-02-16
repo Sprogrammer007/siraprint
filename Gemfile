@@ -26,6 +26,8 @@ gem 'aws-sdk', '< 2.0'
 gem 'jquery-fileupload-rails'
 gem 'activemerchant'
 
+# PDF kit
+gem 'pdfkit'
 
 group :development do
   gem 'faker', '1.2.0'
