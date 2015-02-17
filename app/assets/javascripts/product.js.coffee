@@ -324,12 +324,12 @@ ready = ->
     if option == "Grommets"
       grommets_change(this.checked)
     else if option == "Gloss lamination"
-      if $(":radio[value='Matte Lamination']").attr('checked', true)
-        $(":radio[value='Matte Lamination']").prop('checked', false)
+      if $("input:radio[value='Matte Lamination']").attr('checked', true)
+        $("input:radio[value='Matte Lamination']").prop('checked', false)
       lamination_change(this.checked, w, l)
     else if option == "Matte Lamination"
-      if $(":radio[value='Gloss lamination']").attr('checked', true)
-        $(":radio[value='Gloss lamination']").prop('checked', false)
+      if $("input:radio[value='Gloss lamination']").attr('checked', true)
+        $("input:radio[value='Gloss lamination']").prop('checked', false)
       lamination_change(this.checked, w, l)
     else if option == "None"
       reset_finish_options(this.checked)
