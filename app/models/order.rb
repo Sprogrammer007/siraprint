@@ -57,11 +57,11 @@ class Order < ActiveRecord::Base
     else
       metal_sign_unit_price(rate, params[:details][:size_id]) 
     end
-    unit_price = round(unit_price.to_d)
+    unit_price = round(unit_price.to_f)
     total_price = (unit_price.to_f * params[:quantity].to_i)
     Rails.logger.warn "#{total_price}"
     Rails.logger.warn "#{total_price}"
-    total_price = total_price
+    total_price = ('%.2f' % total_price)
  
     op = self.ordered_products.create(
       quantity: params[:quantity], 
