@@ -21,6 +21,10 @@ class Order < ActiveRecord::Base
     status.inquiry
   end
 
+  def sub_total
+    self.round(read_attribute(:sub_total))
+  end
+
   def update_price
     t = ordered_products.pluck(:price).inject{|sum,x| sum + x }
     self.update(:sub_total => t)
@@ -28,7 +32,7 @@ class Order < ActiveRecord::Base
 
   def get_tax
     if self.sub_total
-      ((self.sub_total * 1.13) - self.sub_total).round(2)
+      self.round((self.sub_total * 1.13) - self.sub_total)
     else
       0
     end
@@ -36,7 +40,7 @@ class Order < ActiveRecord::Base
 
   def total
     if self.sub_total
-      (self.sub_total * 1.13).round(2)
+      self.round((self.sub_total * 1.13))
     else
       0
     end
@@ -55,8 +59,10 @@ class Order < ActiveRecord::Base
     end
 
     total_price = (unit_price.to_f * params[:quantity].to_i)
-    unit_price = unit_price.to_f.round(2)
-    total_price = total_price.to_f.round(2)
+    
+    unit_price = self.round(unit_price.to_f)
+    total_price = self.round(total_price.to_f)
+
     op = self.ordered_products.create(
       quantity: params[:quantity], 
       product_type: params[:product_type],
@@ -124,6 +130,10 @@ class Order < ActiveRecord::Base
 
 
   private
+
+    def round(num)
+      ((num*100).round / 100.0)
+    end
     def process_purchase
       if express_token.blank?
         STANDARD_GATEWAY.purchase(total_in_cents, credit_card, standard_purchase_options)
