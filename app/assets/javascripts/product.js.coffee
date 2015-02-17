@@ -323,11 +323,11 @@ ready = ->
     if option == "Grommets"
       grommets_change(this.checked)
     else if option == "Gloss lamination"
-      if $("#finishing_3").attr('checked')
+      if $("#finishing_3").is(':checked')
         $("#finishing_3").prop('checked', false)
       lamination_change(this.checked, w, l)
     else if option == "Matte Lamination"
-      if $("#finishing_4").attr('checked')
+      if $("#finishing_4").is(':checked')
         $("#finishing_4").prop('checked', false)
       lamination_change(this.checked, w, l)
     else if option == "None"
