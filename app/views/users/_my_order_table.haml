@@ -17,12 +17,14 @@
   %td
     %span{class: "order_status status_#{order.status}"}
       = order.status.camelize
-  %th 
+  %th{class: 'my_order_links'}
+    - if order.status == 'payed'
+      = link_to " Invoice", invoice_order_path(order, format: 'pdf')
+      |
     - if order.status == "open"
-      = link_to "Download Invoice", invoice_order_path(order)
       = link_to "Cancel Order", cancel_order_path(order)
       | 
       = link_to "Update Order", cart_path()
       - if order.delivery_method
         |
-        = link_to "Pay for Order", check_out_order_path(order)
+        = link_to "Pay for Order", check_out_order_path(order)   

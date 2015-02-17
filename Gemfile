@@ -28,6 +28,7 @@ gem 'activemerchant'
 
 # PDF
 gem 'prawn'
+gem 'prawn-table', '~> 0.2.1'
 
 group :development do
   gem 'faker', '1.2.0'

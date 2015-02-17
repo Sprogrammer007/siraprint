@@ -31,6 +31,9 @@ class User < ActiveRecord::Base
     return order
   end
 
+  def has_order?(id)
+    self.orders.where(id: id).any?
+  end
 
   def set_default_state
     self.status = "Registered"

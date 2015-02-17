@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   
-  before_filter :authenticate_approved_user!
+  before_filter :authenticate_approved_user!, except: [:invoice]
 
   def create
     oparams = params[:order]
@@ -107,14 +107,19 @@ class OrdersController < ApplicationController
 
   def invoice
     @order = Order.find(params[:id])
-    respond_to do |format|
-      format.html
-      format.pdf do
-        pdf = OrderPdf.new(@order, view_context)
-        send_data pdf.render, filename: "order_#{@order.order_id}#{Date.today}.pdf",
-                              type: "application/pdf",
-                              disposition: "inline"
+    validate_order
+    if @order.status == "payed"
+      respond_to do |format|
+        format.html
+        format.pdf do
+          pdf = OrderPdf.new(@order, view_context)
+          send_data pdf.render, filename: "order_#{@order.order_id}#{Date.today}.pdf",
+                                type: "application/pdf",
+                                disposition: "inline"
+        end
       end
+    else
+      redirect_to root_path
     end
   end
 
@@ -124,6 +129,19 @@ class OrdersController < ApplicationController
       unless current_user.approved?
         flash[:alert] = "You account is not yet approved"
         redirect_to root_path()
+      end
+    end
+
+    def validate_order
+          
+      if current_user && !current_user.has_order?(params[:id]) 
+        flash[:notice] = "This is not your order!"
+        return redirect_to new_user_session_path()
+      end
+
+      unless current_user
+        flash[:notice] = "Please sign in first"
+        return redirect_to new_user_session_path()
       end
     end
 
