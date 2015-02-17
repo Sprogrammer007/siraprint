@@ -22,7 +22,7 @@ class Order < ActiveRecord::Base
   end
 
   def sub_total
-    self.round(read_attribute(:sub_total))
+    round(read_attribute(:sub_total))
   end
 
   def update_price
@@ -32,7 +32,7 @@ class Order < ActiveRecord::Base
 
   def get_tax
     if self.sub_total
-      self.round((self.sub_total * 1.13) - self.sub_total)
+      round((self.sub_total * 1.13) - self.sub_total)
     else
       0
     end
@@ -40,7 +40,7 @@ class Order < ActiveRecord::Base
 
   def total
     if self.sub_total
-      self.round((self.sub_total * 1.13))
+      round((self.sub_total * 1.13))
     else
       0
     end
@@ -60,8 +60,8 @@ class Order < ActiveRecord::Base
 
     total_price = (unit_price.to_f * params[:quantity].to_i)
     
-    unit_price = self.round(unit_price.to_f)
-    total_price = self.round(total_price.to_f)
+    unit_price = round(unit_price.to_f)
+    total_price = round(total_price.to_f)
 
     op = self.ordered_products.create(
       quantity: params[:quantity], 
