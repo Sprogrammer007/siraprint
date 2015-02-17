@@ -32,7 +32,7 @@ class Order < ActiveRecord::Base
 
   def get_tax
     if self.sub_total
-      (self.sub_total * 1.13).to_f - self.sub_total).round(2)
+      ((self.sub_total * 1.13) - self.sub_total).round(2)
     else
       0
     end
