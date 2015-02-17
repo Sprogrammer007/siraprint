@@ -59,8 +59,7 @@ class Order < ActiveRecord::Base
     end
     unit_price = round(unit_price.to_f)
     total_price = (unit_price.to_f * params[:quantity].to_i)
-    Rails.logger.warn "#{total_price}"
-    Rails.logger.warn "#{total_price}"
+ 
     total_price = ('%.2f' % total_price)
  
     op = self.ordered_products.create(
@@ -69,6 +68,7 @@ class Order < ActiveRecord::Base
       print_pdf: params[:design_pdf], 
       print_pdf_2: params[:design_pdf_2], 
       product_id: params[:product_id], 
+      comment: params[:comment], 
       unit_price: unit_price,
       price: total_price
     )

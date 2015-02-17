@@ -6,6 +6,7 @@ class OrdersController < ApplicationController
     oparams = params[:order]
     @order = current_user.open_order || current_user.new_order(request.remote_ip)
     if @order
+      
       op = @order.create_new_ordered_product(oparams, session[:current_rate])
       if op.save
         detail = op.create_details(oparams[:product_type], oparams[:details])

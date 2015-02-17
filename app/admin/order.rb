@@ -146,6 +146,7 @@ ActiveAdmin.register Order do
             end
             column :unit_price
             column :price
+            column :comment
             column "" do |p|
               link_to("Remove", admin_ordered_product_path(p), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
             end
@@ -169,6 +170,7 @@ ActiveAdmin.register Order do
             end
             column :unit_price
             column :price
+            column :comment
             column "" do |p|
               link_to("Remove", admin_ordered_product_path(p), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
             end
