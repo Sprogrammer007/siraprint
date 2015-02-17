@@ -132,6 +132,7 @@ class Order < ActiveRecord::Base
   private
 
     def round(num)
+      Rails.logger.warn "#{num}   ==== #{((num*100).round / 100.0)}"
       ((num*100).round / 100.0)
     end
     def process_purchase
