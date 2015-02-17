@@ -22,7 +22,7 @@ class Order < ActiveRecord::Base
   end
 
   def sub_total
-    round(read_attribute(:sub_total)).to_f
+    read_attribute(:sub_total).to_f
   end
 
   def update_price
@@ -32,7 +32,7 @@ class Order < ActiveRecord::Base
 
   def get_tax
     if self.sub_total
-      round((self.sub_total * 1.13).to_f - self.sub_total_in_cents)
+      (self.sub_total * 1.13).to_f - self.sub_total).round(2)
     else
       0
     end
@@ -40,7 +40,7 @@ class Order < ActiveRecord::Base
 
   def total
     if self.sub_total
-      round((self.sub_total * 1.13))
+      (self.sub_total * 1.13).round(2)
     else
       0
     end
@@ -58,10 +58,10 @@ class Order < ActiveRecord::Base
       metal_sign_unit_price(rate, params[:details][:size_id]) 
     end
     unit_price = round(unit_price.to_d)
-    total_price = (unit_price * params[:quantity].to_i)
-    Rails.logger.warn "#{unit_price}"
+    total_price = (unit_price.to_f * params[:quantity].to_i)
     Rails.logger.warn "#{total_price}"
-    total_price = round(total_price.to_d)
+    Rails.logger.warn "#{total_price}"
+    total_price = total_price
  
     op = self.ordered_products.create(
       quantity: params[:quantity], 
