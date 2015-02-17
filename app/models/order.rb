@@ -59,7 +59,8 @@ class Order < ActiveRecord::Base
     end
     unit_price = round(unit_price.to_f)
     total_price = (unit_price.to_f * params[:quantity].to_i)
- 
+    
+    # cover to 2 decimal places 
     total_price = ('%.2f' % total_price)
  
     op = self.ordered_products.create(
