@@ -276,7 +276,7 @@ ready = ->
       $('#finishing_none').prop('checked', true)
       $('.finish-select').each (i)->
         if i != 0
-          $(this).attr('checked', false)
+          $(this).prop('checked', false)
       $productOptions.attr('data-l-price', 0)
       $productOptions.attr('data-g-price', 0)
       $productOptions.attr('data-fin-price', 0)
@@ -299,8 +299,7 @@ ready = ->
       l_price = parseFloat(sqft).toFixed(2) 
       $productOptions.attr('data-l-price', l_price)
     else
-      if old_l_price != 0
-        $productOptions.attr('data-l-price', 0)
+      $productOptions.attr('data-l-price', 0)
 
   $form.on 'change', '.finish-select', ->
     w = $widthOption.val()
