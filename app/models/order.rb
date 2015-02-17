@@ -32,7 +32,7 @@ class Order < ActiveRecord::Base
 
   def get_tax
     if self.sub_total
-      round((self.sub_total * 1.13).to_f - self.sub_total)
+      round((self.sub_total * 1.13).to_f - self.sub_total_in_cents)
     else
       0
     end
@@ -59,8 +59,8 @@ class Order < ActiveRecord::Base
     end
     unit_price = round(unit_price.to_d)
     total_price = (unit_price * params[:quantity].to_i)
-    
-    
+    Rails.logger.warn "#{unit_price}"
+    Rails.logger.warn "#{total_price}"
     total_price = round(total_price.to_d)
  
     op = self.ordered_products.create(
