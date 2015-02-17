@@ -22,7 +22,7 @@ class Order < ActiveRecord::Base
   end
 
   def sub_total
-    round(read_attribute(:sub_total))
+    round(read_attribute(:sub_total)).to_f
   end
 
   def update_price
@@ -32,7 +32,7 @@ class Order < ActiveRecord::Base
 
   def get_tax
     if self.sub_total
-      round((self.sub_total * 1.13) - self.sub_total)
+      round((self.sub_total * 1.13).to_f - self.sub_total)
     else
       0
     end
@@ -57,12 +57,12 @@ class Order < ActiveRecord::Base
     else
       metal_sign_unit_price(rate, params[:details][:size_id]) 
     end
-    unit_price = round(unit_price.to_f)
+    unit_price = round(unit_price.to_d)
     total_price = (unit_price * params[:quantity].to_i)
     
     
-    total_price = round(total_price.to_f)
-
+    total_price = round(total_price.to_d)
+ 
     op = self.ordered_products.create(
       quantity: params[:quantity], 
       product_type: params[:product_type],
@@ -132,8 +132,8 @@ class Order < ActiveRecord::Base
   private
 
     def round(num)
-      Rails.logger.warn "#{num}   ==== #{((num*100).round / 100.0)}"
-      ((num*100).round / 100.0)
+      f = ((num*100).round / 100.0)
+      return  ('%.2f' % f)
     end
     def process_purchase
       if express_token.blank?
