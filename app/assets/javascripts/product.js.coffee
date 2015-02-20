@@ -90,9 +90,11 @@ ready = ->
   change_price_calc = (price, quantity, side)->
     l_price = parseFloat($productOptions.attr('data-l-price'))
     g_price = parseFloat($productOptions.attr('data-g-price'))
+    dc_price = parseFloat($productOptions.attr('data-dc-price'))
+    fs_price = parseFloat($productOptions.attr('data-sf-price'))
 
     if ( l_price != '' || g_price != '')
-      f_price = round_numb(l_price + g_price)
+      f_price = round_numb(l_price + g_price + dc_price + fs_price)
       price = price + parseFloat(f_price)
       price = round_numb(price) 
       
@@ -301,6 +303,25 @@ ready = ->
     else
       $productOptions.attr('data-l-price', 0)
 
+  diecut_change = (checked, w, l) ->
+    sqft = calc_sqft(w, l)
+
+    if checked
+      dc_price = parseFloat(sqft * 5).toFixed(2) 
+      $productOptions.attr('data-dc-price', dc_price)
+    else
+      $productOptions.attr('data-dc-price', 0)
+
+
+  stretch_change = (checked, w, l) ->
+    sqft = calc_sqft(w, l)
+
+    if checked
+      sf_price = parseFloat(sqft * 3).toFixed(2)
+      $productOptions.attr('data-sf-price', sf_price)
+    else
+      $productOptions.attr('data-sf-price', 0)
+
   $form.on 'change', '.finish-select', ->
     w = $widthOption.val()
     l = $lengthOption.val()
@@ -330,6 +351,10 @@ ready = ->
       if $("#finishing_3").is(':checked')
         $("#finishing_3").prop('checked', false)
       lamination_change(this.checked, w, l)
+    else if option == "Die Cutting"
+      diecut_change(this.checked, w, l)
+    else if option == "Stretch on Frame"  
+      stretch_change(this.checked, w, l)
     else if option == "None"
       reset_finish_options(this.checked)
 

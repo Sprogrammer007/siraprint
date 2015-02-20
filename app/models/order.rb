@@ -57,6 +57,7 @@ class Order < ActiveRecord::Base
     else
       metal_sign_unit_price(rate, params[:details][:size_id]) 
     end
+
     unit_price = round(unit_price.to_f)
     total_price = (unit_price.to_f * params[:quantity].to_i)
     
@@ -188,23 +189,34 @@ class Order < ActiveRecord::Base
     end
 
     def calc_unit_price(details, rate, quantity)
-      width = details[:width].to_f.round(2)
-      length = details[:length].to_f.round(2)
+      width = details[:width].to_f
+      length = details[:length].to_f
       unit = details [:unit]
       side = details[:side].to_i
-      sqft = calc_sqft(width, length, unit).to_f.round(2)
+      sqft = calc_sqft(width, length, unit).to_f
       rate = (rate || get_rate(details[:thickness_id], sqft, side, quantity)) 
 
-      unit_price = (sqft * rate.to_f.round(2))
+      unit_price = (sqft * rate.to_f)
 
       if details[:finishing]
         f_price = 0
+
         if details[:finishing].include?('Gloss lamination') || details[:finishing].include?('Matte Lamination') 
           f_price = sqft
         end
+
         if details[:finishing].include?('Grommets')
           f_price += details[:grommets_quantity].to_i
+        end  
+
+        if details[:finishing].include?('Die Cutting')
+          f_price += sqft * 5
+        end  
+
+        if details[:finishing].include?('Stretch on Frame')
+          f_price += sqft * 3
         end
+
         unit_price += f_price
       end
 
