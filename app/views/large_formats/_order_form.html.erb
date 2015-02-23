@@ -1,5 +1,5 @@
 <%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "large-formats-form", multipart: true do %>
-  <div id="product-options" data-price-url="<%=  get_price_large_format_path(@large_format) %>" data-l-price="0" data-g-price="0" data-dc-price="0" data-sf-price="0" data-fin-price="0" data-rate="" data-max-w="<%=  @large_format.max_width() %>" data-max-l="<%=  @large_format.max_length() %>"></div>
+  <div id="product-options" data-price-url="<%=  get_price_large_format_path(@large_format) %>"  data-max-w="<%=  @large_format.max_width() %>" data-max-l="<%=  @large_format.max_length() %>"></div>
   <%= hidden_field_tag '[order]product_type', 'large_format' %>
   <%= hidden_field_tag '[order]product_id', @large_format.id %>
   

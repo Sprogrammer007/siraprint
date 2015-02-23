@@ -12,6 +12,25 @@ ready = ->
   $max_w = parseInt($productOptions.attr('data-max-w'))
   $max_l = parseInt($productOptions.attr('data-max-l'))
 
+  currentItem = {
+    l_price: 0
+    g_price: 0
+    dc_price: 0
+    sf_price: 0
+    rate: 0
+    fin_price: 0
+    unit_price: 0
+    total_price: 0
+
+    resetFinishingPrice: ->
+      this.l_price = 0
+      this.g_price = 0
+      this.dc_price = 0
+      this.sf_price = 0
+      this.fin_price =0
+  }
+
+
   # Overlay for product items
   $('.product-item').hover (->
     $(this).addClass "show"
@@ -39,7 +58,7 @@ ready = ->
     return (s * r)
 
   round_numb = (num) ->
-    return parseFloat(Math.round(num * 100) / 100)
+    return (Math.round(num * 100) / 100)
 
   # Update Unit
   update_unit = (u, w, l)->
@@ -49,7 +68,7 @@ ready = ->
     $lengthOption.val(new_l)
 
   reset_values = ->
-    $productOptions.attr('data-rate', '')
+    currentItem.rate = 0
     $widthOption.val(0)
     $lengthOption.val(0)
     $thicknessOption.prop('selectedIndex', 0)
@@ -60,14 +79,16 @@ ready = ->
     reset_finish_options(true)
 
   set_per_unit_price = (price) ->
-    $('.per-placeholder').html("$#{price}")
+    currentItem.unit_price = parseFloat(round_numb(price))
+    $('.per-placeholder').html("$#{currentItem.unit_price}")
   
   set_finish_price = (price) ->
-    $productOptions.attr('data-fin-price', price)
-    $('.finishing-placeholder').html("$#{price}")
+    currentItem.fin_price = parseFloat(round_numb(price))
+    $('.finishing-placeholder').html("$#{currentItem.fin_price}")
 
   set_total_price = (price) ->
-    $('.total-placeholder').html("$#{price}")
+    currentItem.total_price = parseFloat(round_numb(price))
+    $('.total-placeholder').html("$#{currentItem.total_price}")
 
   set_price = (sqft, t_id) ->
     side = parseInt($('.side-selection').find(':selected').val())
@@ -76,50 +97,44 @@ ready = ->
         reset_values()
         alert("There are no matching sizes for your print, pelase re-enter width and length")
       else
-        $productOptions.attr('data-rate', data.price)
-        price = round_numb(calc_price(sqft, data.price))
+        currentItem.rate = data.price
+        price = calc_price(sqft, data.price)
+
         if side == 2
-          price = price * 2.0
+          price = price * 2
 
         set_per_unit_price(price)
         set_total_price(price)
           
   # Change Price
+  change_price_calc = (quantity, side)->
+    price = currentItem.unit_price
+    fin_price = 0
 
-  change_price_calc = (price, quantity, side)->
-    l_price = parseFloat($productOptions.attr('data-l-price'))
-    g_price = parseFloat($productOptions.attr('data-g-price'))
-    dc_price = parseFloat($productOptions.attr('data-dc-price'))
-    fs_price = parseFloat($productOptions.attr('data-sf-price'))
-    f_price = 0
+    if (currentItem.l_price != 0 || currentItem.g_price != 0 || currentItem.dc_price != 0  || currentItem.sf_price != 0)
+      fin_price = (currentItem.l_price + currentItem.g_price + currentItem.dc_price + currentItem.sf_price)
+      price = price + fin_price
 
-    if ( l_price != 0 || g_price != 0 || dc_price != 0  || fs_price != 0)
-      f_price = l_price + g_price + dc_price + fs_price
-      f_price = round_numb(f_price)
-      price = price + parseFloat(f_price)
-      
     if side == 2
-   
-      price = price * 2
-      if f_price != 0
-        f_price = f_price * 2
+      price =  price * 2
+      if fin_price != 0
+        fin_price = fin_price * 2
 
     set_per_unit_price(price)
-    set_finish_price(f_price)
+    set_finish_price(fin_price)
 
     if (quantity != 0)
-      price = price * quantity
+      total_price = price * quantity
 
-    set_total_price(price)
+    set_total_price(total_price)
 
   change_price = (t_id) ->
-    w = $widthOption.val()
-    l = $lengthOption.val()
-    quantity = parseFloat($quantityOption.val())
+    w = parseFloat($widthOption.val())
+    l = parseFloat($lengthOption.val())
+    quantity = parseInt($quantityOption.val())
     side = parseInt($('.side-selection').find(':selected').val())
-    sqft = parseFloat(calc_sqft(w, l))
-    rate = $productOptions.attr('data-rate')
-    price = round_numb(calc_price(sqft, rate))
+    sqft = calc_sqft(w, l)
+    price = calc_price(sqft, currentItem.rate)
 
     if side && t_id != undefined
       sqft = sqft * side
@@ -134,12 +149,13 @@ ready = ->
           reset_values()
           alert("There are no matching sizes for your print, pelase re-enter width and length")
         else
-          $productOptions.attr('data-rate', data.price)
-          price = round_numb(calc_price(calc_sqft(w, l), data.price))
-          change_price_calc(price, quantity, side)
+          currentItem.rate = data.price
+          price = calc_price(calc_sqft(w, l), data.price)
+          set_per_unit_price(price)
+          change_price_calc(quantity, side)
     else
-      change_price_calc(price, quantity, side)
-
+      set_per_unit_price(price)
+      change_price_calc(quantity, side)
 
   # Change Unit
   $form.on 'change', '.product-unit', (e) ->
@@ -216,8 +232,7 @@ ready = ->
   $form.on 'change', '.product-width, .product-length', (e) ->
     unit = $unitOption.find(':selected').val()
     width = $widthOption.val()
-    length = $lengthOption.val()
-    rate = $productOptions.attr('data-rate')
+    length = $lengthOption.val() 
     t_id = $thicknessOption.find(':selected').val()
 
     if ($(this).val() <= 0)
@@ -233,13 +248,12 @@ ready = ->
         $(this).val('')
         return
       
-    if (rate != '' && t_id != undefined && t_id != '')
+    if (currentItem.rate != 0 && t_id != undefined && t_id != '')
       change_price(t_id)  
 
   $form.on 'focus', '.product-width, .product-length', (e)->
-    rate = $productOptions.attr('data-rate')
     thickness = $thicknessOption.find(':selected').val()
-    if (rate != '' && thickness != undefined && thickness == '')
+    if (currentItem.rate != 0 && thickness != undefined && thickness == '')
       alert("Please select a thickness")
       $(this).blur()
       return false
@@ -266,13 +280,12 @@ ready = ->
     width = $widthOption.val()
     length = $lengthOption.val()
     sqft = calc_sqft(width, length)
-    rate = $productOptions.attr('data-rate')
 
     if (width == "" || length == "")
       $(this).prop('selectedIndex', 0)
       return alert("You must enter a length & width")
 
-    if (rate != '') then change_price(id) else set_price(sqft, id)
+    if (currentItem.rate != 0) then change_price(id) else set_price(sqft, id)
 
   # Reset all Finish options
   reset_finish_options = (checked) ->
@@ -281,9 +294,7 @@ ready = ->
       $('.finish-select').each (i)->
         if i != 0
           $(this).prop('checked', false)
-      $productOptions.attr('data-l-price', 0)
-      $productOptions.attr('data-g-price', 0)
-      $productOptions.attr('data-fin-price', 0)
+      currentItem.resetFinishingPrice()
       $('.grommets-box').addClass('hidden')
       $('.grommets-field').val(0)
       
@@ -293,46 +304,42 @@ ready = ->
       $('.grommets-box').removeClass('hidden')
     else
       $('.grommets-box').addClass('hidden')
-      $productOptions.attr('data-g-price', 0)
+      currentItem.g_price = 0
       $('.grommets-field').val(0)
   
   lamination_change = (checked, w, l) ->
     sqft = calc_sqft(w, l)
 
     if checked
-      l_price = parseFloat(sqft).toFixed(2) 
-      $productOptions.attr('data-l-price', l_price)
+      currentItem.l_price  = parseFloat(round_numb(sqft)) 
     else
-      $productOptions.attr('data-l-price', 0)
+      currentItem.l_price = 0
 
   diecut_change = (checked, w, l) ->
     sqft = calc_sqft(w, l)
 
     if checked
-      dc_price = parseFloat(sqft * 5).toFixed(2) 
-      $productOptions.attr('data-dc-price', dc_price)
+      currentItem.dc_price = parseFloat(round_numb(sqft * 5)) 
     else
-      $productOptions.attr('data-dc-price', 0)
-
+      currentItem.dc_price = 0
 
   stretch_change = (checked, w, l) ->
     sqft = calc_sqft(w, l)
 
     if checked
-      sf_price = parseFloat(sqft * 3).toFixed(2)
-      $productOptions.attr('data-sf-price', sf_price)
+      currentItem.sf_price = parseFloat(round_numb(sqft * 3))
     else
-      $productOptions.attr('data-sf-price', 0)
+      currentItem.sf_price = 0
 
   $form.on 'change', '.finish-select', ->
     w = $widthOption.val()
     l = $lengthOption.val()
-    r = $productOptions.attr('data-rate')
+
     number_of_checked = $('.finish-select:checked').length;
     if (w == "" || l == "")
       $(this).prop('checked', false)
       return alert("You must enter a length & width")
-    else if (r == "")
+    else if (currentItem.rate == 0)
       $(this).prop('checked', false)
       return alert("You must enter a select a thickness")
 
@@ -344,6 +351,7 @@ ready = ->
       $('#finishing_none').prop('checked', true)
 
     if option == "Grommets"
+      console.log('changed')
       grommets_change(this.checked)
     else if option == "Gloss lamination"
       if $("#finishing_4").is(':checked')
@@ -370,14 +378,13 @@ ready = ->
       $(this).val(1)
       gq = 1
       alert("Number of prints must be atleast 1")
-    $productOptions.attr('data-g-price', gq)
-
+    currentItem.g_price = parseInt(gq)
     change_price()
 
   # Quantity Change
   $form.on 'change', '.quantity-field', (e) ->
-    quantity = $(this).val()
-    price = parseFloat($('.per-placeholder').html().replace("$", ''))
+    quantity = parseInt($(this).val())
+    price = currentItem.unit_price
     t_id = $thicknessOption.find(':selected').val()
 
     if (price == 0)
@@ -385,12 +392,10 @@ ready = ->
     else if (quantity < 1)
       $(this).val(1)
       alert("Number of prints must be atleast 1")
-    else if (price == '')
-      $(this).val(1)
     else if (t_id != undefined)
       change_price(t_id)
     else if $('#_orderproduct_type').val() == "metal_sign"
-      price = price * parseFloat(quantity)
+      price = price * quantity
       set_total_price(price)
 
   # Update Quantity for Order Page
@@ -451,6 +456,7 @@ ready = ->
       alert log  if log
     return
    
+
 $(document).ready(ready)
 # $(document).on('page:load', ready)
 
