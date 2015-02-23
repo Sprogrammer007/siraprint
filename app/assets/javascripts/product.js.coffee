@@ -91,18 +91,18 @@ ready = ->
     g_price = parseFloat($productOptions.attr('data-g-price'))
     dc_price = parseFloat($productOptions.attr('data-dc-price'))
     fs_price = parseFloat($productOptions.attr('data-sf-price'))
+    f_price = 0
 
     if ( l_price != 0 || g_price != 0 || dc_price != 0  || fs_price != 0)
       f_price = l_price + g_price + dc_price + fs_price
-      console.log("finish #{f_price}")
       f_price = round_numb(f_price)
       price = price + parseFloat(f_price)
-      price = parseFloat(price) 
       
     if side == 2
-      console.log("change price side #{parseFloat(price)}")
+   
       price = price * 2
-      f_price = f_price * 2
+      if f_price != 0
+        f_price = f_price * 2
 
     set_per_unit_price(price)
     set_finish_price(f_price)
