@@ -77,8 +77,9 @@ ready = ->
         alert("There are no matching sizes for your print, pelase re-enter width and length")
       else
         $productOptions.attr('data-rate', data.price)
+        console.log(data.price)
         price = round_numb(calc_price(sqft, data.price))
-
+        console.log(price)
         if side == 2
           price = price * 2.0
 
