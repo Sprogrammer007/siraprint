@@ -93,8 +93,8 @@ ready = ->
     fs_price = parseFloat($productOptions.attr('data-sf-price'))
     console.log(0)
     if ( l_price != 0 || g_price != 0 || dc_price != 0  || fs_price != 0)
-      console.log("finish #{price}")
       f_price = l_price + g_price + dc_price + fs_price
+      console.log("finish #{f_price}")
       f_price = round_numb(f_price)
       price = price + parseFloat(f_price)
       price = parseFloat(price) 
