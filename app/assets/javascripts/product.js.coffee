@@ -98,9 +98,9 @@ ready = ->
       price = parseFloat(round_numb(price)) 
       
     if side == 2
-      console.log("change price side #{price}")
-      price = price * 2.0
-      f_price = f_price * 2.0
+      console.log("change price side #{parseFloat(price)}")
+      price = price * 2
+      f_price = f_price * 2
 
     set_per_unit_price(price)
     set_finish_price(f_price)
