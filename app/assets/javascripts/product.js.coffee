@@ -100,6 +100,7 @@ ready = ->
       price = round_numb(price) 
       
     if side == 2
+      console.log("change price side #{price}")
       price = price * 2.0
       f_price = f_price * 2.0
 
@@ -134,7 +135,9 @@ ready = ->
           alert("There are no matching sizes for your print, pelase re-enter width and length")
         else
           $productOptions.attr('data-rate', data.price)
+          console.log(data.price)
           price = round_numb(calc_price(calc_sqft(w, l), data.price))
+          console.log(price)
           change_price_calc(price, quantity, side)
     else
       change_price_calc(price, quantity, side)
