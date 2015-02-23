@@ -91,7 +91,7 @@ ready = ->
     g_price = parseFloat($productOptions.attr('data-g-price'))
     dc_price = parseFloat($productOptions.attr('data-dc-price'))
     fs_price = parseFloat($productOptions.attr('data-sf-price'))
-    console.log(0)
+
     if ( l_price != 0 || g_price != 0 || dc_price != 0  || fs_price != 0)
       f_price = l_price + g_price + dc_price + fs_price
       console.log("finish #{f_price}")
