@@ -351,7 +351,6 @@ ready = ->
       $('#finishing_none').prop('checked', true)
 
     if option == "Grommets"
-      console.log('changed')
       grommets_change(this.checked)
     else if option == "Gloss lamination"
       if $("#finishing_4").is(':checked')

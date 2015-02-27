@@ -62,6 +62,9 @@ h1, h2, h3, h4
   right: 0
   width: 286px
 
+span.alert-text 
+  color: #FB393F
+  
 // Style Helper
 .radius-r
   border-radius: 5px
@@ -985,30 +988,11 @@ span.status_completed
       width: 244px
       transition: all 0.2s ease-in 0s
 
-.checkout-buttons a
-  float: right
-  background-color: #DF11CC
-  border: none
-  color: #fff
-  cursor: pointer
+.checkout-buttons .btn
   font-family: "futura-pt-1","futura-pt-2", sans-serif
-  font-size: 1.2em
-  font-weight: 800
-  padding: 10px 20px
-  border-radius: 4px
-  text-align: center
+  font-size: 20px
+  font-weight: 600
   text-transform: uppercase
-  -webkit-transition: all .2s ease-in
-  -moz-transition: all .2s ease-in
-  -o-transition: all .2s ease-in
-  transition: all .2s ease-in
-
-.express-checkout-button
-  float: right
-  margin-left: 20px
-
-.express-checkout-button a > img
-  width: 100%
 
 // Delivery Page
 
@@ -1119,7 +1103,7 @@ span.status_completed
 .summary .totals dt 
   clear: both
   margin-bottom: 10px
-  width: 280px
+  width: 250px
 
 .summary .totals dd 
   float: right
@@ -1170,7 +1154,7 @@ span.status_completed
 .summary .items dd:nth-of-type(3n+2) span, .summary strong 
   overflow: hidden
   text-overflow: ellipsis
-  width: 200px
+  width: 180px
   white-space: nowrap
   -o-text-overflow: ellipsis
   -ms-text-overflow: ellipsis
@@ -1180,6 +1164,15 @@ span.status_completed
   text-align: right
   width: 50px
 
+.expire-date label
+  width: 100%
+
+.expire-date .form-control
+  width: 48%
+  float: left
+
+.expire-date select:first-of-type
+  margin-right: 17px
 // Posts
 
 .post-wrapper

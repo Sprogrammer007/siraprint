@@ -23,14 +23,14 @@ class OrderPdf < Prawn::Document
 
   def questions
     move_down 50
-    text "Got Questions? Call 41.648.9265, or Email us at info@siraprint.ca", align: :center
+    text "Got Questions? Call 416.648.9265, or Email us at info@siraprint.ca", align: :center
   end
   
   def  items_table
     move_down 20
     table item_rows, cell_style: table_style do
       row(0).font_style = :bold
-      columns(0).width = 350
+      columns(0).width = 360
       columns(1..3).align = :right
       self.row_colors = ["F8F8F8", "FFFFFF"]
       self.header = true

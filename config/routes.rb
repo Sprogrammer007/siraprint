@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       post 'update_item'
       get  'express'
       get  'confirm'
+      patch  'pay'
       get  'select_delivery'
       get  'check_out'
       get  'invoice'

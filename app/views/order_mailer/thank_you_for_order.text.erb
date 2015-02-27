@@ -3,4 +3,4 @@ Thank You for purchasing with Sira Print Inc.
 You order will be <%= @order.delivery_method.camelize() %> 
 Your Order ID #: <%= @order.order_id %>
 
-You can also download your invoice here: <%= link_to "Order Invoice", invoice_order_path(@order) %> 
+You can also download your invoice here: <%= link_to "Order Invoice", invoice_order_url(@order) %> 

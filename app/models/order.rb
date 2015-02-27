@@ -1,9 +1,20 @@
 class Order < ActiveRecord::Base
   
+  attr_accessor :card_number, :card_verification, :final
+
   STATE = %w{open payed completed canceled}
   belongs_to :user
   has_many :ordered_products, :foreign_key => :order_id, dependent: :destroy
   has_many :transactions, :class_name => "OrderTransaction", dependent: :destroy
+
+  with_options :if => :is_final_step? do |order|
+    order.validates :billing_address, presence: true, on: :update
+    order.validates :billing_city, presence: true, on: :update
+    order.validates :billing_postal, presence: true, on: :update
+    order.validates :billing_postal, format: { with: User::VALID_POSTAL_CODE_REGEX }, on: :update
+    order.validates :name_on_card, presence: true, on: :update
+    order.validate :validate_card, on: :update
+  end
 
   scope :open, -> { where(status: "open") }
   scope :canceled, -> { where(status: "canceled") }
@@ -11,6 +22,15 @@ class Order < ActiveRecord::Base
   scope :payed, -> { where(status: "payed") }
   scope :recent, -> (n) { order('created_at DESC').limit(n) }
   
+  def initialize
+    super
+    @final = false
+  end
+  
+  def is_final_step?
+    @final
+  end
+
   def create_order_id
     self.update(order_id: (self.id + 100))
   end
@@ -32,7 +52,7 @@ class Order < ActiveRecord::Base
 
   def get_tax
     if self.sub_total
-      ((self.sub_total * 1.13) - self.sub_total).round(2)
+      ((self.sub_total * 1.13).ceil - self.sub_total).round(2)
     else
       0
     end
@@ -40,7 +60,7 @@ class Order < ActiveRecord::Base
 
   def total
     if self.sub_total
-      (self.sub_total * 1.13).round(2)
+      (self.sub_total * 1.13).ceil
     else
       0
     end
@@ -77,32 +97,41 @@ class Order < ActiveRecord::Base
     return op
   end
 
+  # Validate CC and Add any error to model base messages
+  def validate_card
+    
+    if card_expires_on && credit_card.validate.any?
+      credit_card.validate.each do |key, message|
+        next if (key == :last_name || key == :first_name)
+        errors.add key, message.join()
+      end
+    end
+  end
+
+  def credit_card
+    @credit_card ||= ActiveMerchant::Billing::CreditCard.new(
+      :brand              => card_type,
+      :number             => card_number,
+      :verification_value => card_verification,
+      :month              => card_expires_on.month,
+      :year               => card_expires_on.year,
+    )
+  end
+
   def purchase
     response = process_purchase
     transactions.create!(:action => "purchase", :amount => total_in_cents, :response => response)
-    self.update(status: "payed") if response.success?
+    self.update(status: "payed", :ordered_date => Time.now) if response.success?
     response.success?
   end
-  
+
+  # TO BE REMOVED
   def express_token=(token)
     write_attribute(:express_token, token)
     if !token.blank?
       details = EXPRESS_GATEWAY.details_for(token)
       self.express_payer_id = details.payer_id
     end
-  end
-
-
-  def total_in_cents
-    (total*100).round()
-  end
-
-  def sub_total_in_cents
-    (self.sub_total*100).round()
-  end 
-
-  def tax_in_cents
-    (get_tax*100).round()
   end
 
   def prepare_paypal_items
@@ -130,13 +159,21 @@ class Order < ActiveRecord::Base
     end
   end
 
+  ## END
+  def total_in_cents
+    (total*100).round()
+  end
+
+  def sub_total_in_cents
+    (self.sub_total*100).round()
+  end 
+
+  def tax_in_cents
+    (get_tax*100).round()
+  end
+
 
   private
-
-    def round(num)
-      f = ((num*100).round / 100.0)
-      return  ('%.2f' % f)
-    end
     def process_purchase
       if express_token.blank?
         STANDARD_GATEWAY.purchase(total_in_cents, credit_card, standard_purchase_options)
@@ -145,26 +182,31 @@ class Order < ActiveRecord::Base
       end
     end
 
-    def standard_purchase_options
-      {
-        :ip => ip_address,
-        :billing_address => {
-          :name     => "",
-          :address1 => "",
-          :city     => "",
-          :state    => "",
-          :country  => "",
-          :zip      => ""
-        }
-      }
-    end
-
     def express_purchase_options
       {
         :ip         => ip_address,
         :token      => express_token,
         :payer_id   => express_payer_id,
         :currency   => 'CAD'
+      }
+    end
+
+    def round(num)
+      f = ((num*100).round / 100.0)
+      return  ('%.2f' % f)
+    end
+
+    def standard_purchase_options
+      {
+        :ip => ip_address,
+        :billing_address => {
+          :name     => name_on_card,
+          :address1 => billing_address,
+          :city     => billing_city,
+          :state    => billing_prov,
+          :country  => "Canada",
+          :zip      => billing_postal
+        }
       }
     end
 

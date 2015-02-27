@@ -5,15 +5,11 @@
     = form_tag url_for(:controller => 'orders', :action => 'create'), class: "large-prints-form" do
       = render 'order_table', order: @order, step: ""
 
-      - if @order.delivery_method()
-        .express-checkout-button.group.mgl
-          = link_to image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), express_order_path(@order)
-        
-      .checkout-buttons.group.mgl
+      .checkout-buttons.group.mgl.pull-right
         - if @order.delivery_method()
-          = link_to "Update Delivery Method", delivery_info_path(), class: ""
+          = link_to "Update Delivery Method", delivery_info_path(), class: "btn btn-primary"
         - else
-          = link_to "Select Delivery Method", delivery_info_path(), class: ""
+          = link_to "Select Delivery Method", delivery_info_path(), class: "btn btn-primary"
           
   - else
     #empty_cart.empty_cart

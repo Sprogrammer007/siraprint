@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150217162728) do
+ActiveRecord::Schema.define(version: 20150227174333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -164,10 +164,17 @@ ActiveRecord::Schema.define(version: 20150217162728) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "delivery_method"
-    t.string   "express_payer_id"
-    t.string   "express_token"
     t.string   "ip_address"
     t.datetime "ordered_date"
+    t.string   "name_on_card"
+    t.string   "card_type"
+    t.date     "card_expires_on"
+    t.string   "billing_address"
+    t.string   "billing_prov"
+    t.string   "billing_city"
+    t.string   "billing_postal"
+    t.string   "express_payer_id"
+    t.string   "express_token"
   end
 
   create_table "posts", force: :cascade do |t|

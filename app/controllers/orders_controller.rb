@@ -68,8 +68,11 @@ class OrdersController < ApplicationController
   def check_out
     @order = current_user.open_order
     @order.update_price
+    # @final = true
+    # render 'delivery_info'
   end
 
+  ## TO BE REMOVE LATER
   def express
     @order = Order.find(params[:id])
     response = EXPRESS_GATEWAY.setup_purchase(@order.total_in_cents,
@@ -87,7 +90,7 @@ class OrdersController < ApplicationController
     Rails.logger.warn "#{response.inspect}"
     redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
   end
-
+  # To be removed
   def confirm
     @order = Order.find(params[:id])
     @order.update(:express_token => params[:token])
@@ -100,6 +103,25 @@ class OrdersController < ApplicationController
       render 'failure'
     end
   end
+
+  # def pay
+  #   @order = current_user.open_order
+  #   @order.final = true
+  #   if @order.update(safe_order_cc)
+  #     if @order.purchase
+  #       OrderMailer.notify_order_placed(current_user, @order).deliver_now
+  #       OrderMailer.thank_you_for_order(current_user, @order).deliver_now
+  #       render 'success'
+  #     else
+  #       render 'failure'
+  #     end
+  #   else 
+  #     @errors = @order.errors.messages
+  #     @final = true
+  #     render 'delivery_info'
+  #   end
+      
+  # end
   
   def remove_item
     item = OrderedProduct.find(params[:id]).delete()
@@ -148,5 +170,10 @@ class OrdersController < ApplicationController
 
     def prepare_flash_errors(msgs)
       msgs.map { |m| "<li>#{m}</li>" }.join(" ")  
+    end
+
+    def safe_order_cc
+      params.require(:order).permit(:name_on_card, :card_type, :card_number, :card_verification, :card_expires_on,
+        :billing_address, :billing_city, :billing_prov, :billing_postal)
     end
 end

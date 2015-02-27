@@ -2,4 +2,5 @@
 .panel.panel-success
   .panel-body.success-text
     %span.glyphicon.glyphicon-thumbs-up{"aria-hidden" => "true"} 
-    = "Thank you for shopping with Sira Print. You're order ##{@order.order_id} has been placed and will be process in 1 to 3 business days. You can also download your #{= link_to 'Invoice Here', invoice_order_path(order, format: 'pdf')}"
+    = "Thank you for shopping with Sira Print. You're order ##{@order.order_id} has been placed and will be process in 1 to 3 business days. You can also download your" 
+    = link_to('Invoice Here', invoice_order_path(@order, format: 'pdf'))
