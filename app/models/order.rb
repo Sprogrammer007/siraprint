@@ -52,7 +52,7 @@ class Order < ActiveRecord::Base
 
   def get_tax
     if self.sub_total
-      ((self.sub_total * 1.13).ceil - self.sub_total).round(2)
+      ((self.sub_total * 1.13).round(2) - self.sub_total).round(2)
     else
       0
     end
@@ -60,7 +60,7 @@ class Order < ActiveRecord::Base
 
   def total
     if self.sub_total
-      (self.sub_total * 1.13).ceil
+      (self.sub_total * 1.13).round(2)
     else
       0
     end
