@@ -1,6 +1,7 @@
 class Order < ActiveRecord::Base
   
   attr_accessor :card_number, :card_verification, :final
+  after_initialize :init
 
   STATE = %w{open payed completed canceled}
   belongs_to :user
@@ -22,8 +23,7 @@ class Order < ActiveRecord::Base
   scope :payed, -> { where(status: "payed") }
   scope :recent, -> (n) { order('created_at DESC').limit(n) }
   
-  def initialize
-    super
+  def init
     @final = false
   end
   
