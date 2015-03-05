@@ -103,8 +103,8 @@ Rails.application.configure do
     ActiveMerchant::Billing::Base.mode = :production
 
     ::STANDARD_GATEWAY = ActiveMerchant::Billing::AuthorizeNetGateway .new(
-      :login => ENV['ANet_Login']
-      :password => ENV['ANet_Pass']
+      :login => ENV['ANet_Login'],
+      :password => ENV['ANet_Pass'],
       :test => false
     )
     ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(
