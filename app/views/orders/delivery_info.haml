@@ -122,17 +122,17 @@
                 = f.select :card_type,  options_for_select([["Visa", "visa"], ["MasterCard", "master"], ["Discover", "discover"], ["American Express", "american_express"]]), {}, class: "form-control"
               .fieldset.mbs
                 .row
-                  .col-lg-8
+                  .col-lg-8.col-md-8.col-sm-8.col-xs-8
                     = f.label :card_number, class: "form-label"
-                  .col-lg-4
+                  .col-lg-4.col-md-4.col-sm-4.col-xs-4
                     = f.label :card_verification, "CVV", class: "form-label"
                 .row
-                  .col-lg-8
+                  .col-lg-8.col-md-8.col-sm-8.col-xs-8
                     = f.text_field :card_number, class: "form-input"
                     -if @errors && @errors.has_key?(:number)
                       %span.alert-text
                         = @errors[:number].join() 
-                  .col-lg-4
+                  .col-lg-4.col-md-4.col-sm-4.col-xs-4
                     = f.text_field :card_verification, class: "form-input"
                     -if @errors && @errors.has_key?(:verification_value)
                       %span.alert-text
