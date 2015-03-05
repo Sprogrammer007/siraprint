@@ -53,6 +53,7 @@ Rails.application.routes.draw do
   match '/help',              to: 'static_pages#help',          via: 'get'
   match '/about',             to: 'static_pages#about',         via: 'get'
   match '/contact',           to: 'static_pages#contact',       via: 'get'
+  match '/contact_submit',    to: 'static_pages#contact_submit',via: 'post'
   match '/terms_of_use',      to: 'static_pages#terms',         via: 'get'
   match '/private_policy',    to: 'static_pages#privacy',       via: 'get'
 end

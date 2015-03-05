@@ -14,6 +14,11 @@ class StaticPagesController < ApplicationController
   def contact
   end
 
+  def contact_submit
+    UserMailer.contact(params[:info]).deliver
+    flash[:notice] = "Thanks, your comments has been submited!"
+    redirect_to root_path()
+  end
   def privacy
   end
 

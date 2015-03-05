@@ -22,4 +22,9 @@ class UserMailer < ActionMailer::Base
     @user = user
     mail to: user.email, subject: "Your account has been approved!"
   end
+
+  def contact(info)
+    @info = info
+    mail to: "info@siraprint.ca", subject: "New Contact Submittion"
+  end
 end

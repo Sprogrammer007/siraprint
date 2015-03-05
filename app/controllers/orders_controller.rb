@@ -68,60 +68,60 @@ class OrdersController < ApplicationController
   def check_out
     @order = current_user.open_order
     @order.update_price
-    # @final = true
-    # render 'delivery_info'
+    @final = true
+    render 'delivery_info'
   end
 
   ## TO BE REMOVE LATER
-  def express
-    @order = Order.find(params[:id])
-    response = EXPRESS_GATEWAY.setup_purchase(@order.total_in_cents,
-      :items             => @order.prepare_paypal_items,
-      :subtotal          => @order.sub_total_in_cents,
-      :tax               => @order.tax_in_cents,
-      :currency          => 'CAD',
-      :shipping          => 0,
-      :handling          => 0,
-      :no_shipping       => true,
-      :ip                => @order.ip_address,
-      :return_url        => confirm_order_url(id: @order.id),
-      :cancel_return_url => root_url
-    )
-    Rails.logger.warn "#{response.inspect}"
-    redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
-  end
-  # To be removed
-  def confirm
-    @order = Order.find(params[:id])
-    @order.update(:express_token => params[:token])
-    if @order.purchase
-      OrderMailer.notify_order_placed(current_user, @order).deliver_now
-      OrderMailer.thank_you_for_order(current_user, @order).deliver_now
-      @order.update(:ordered_date => Date.today)
-      render 'success'
-    else
-      render 'failure'
-    end
-  end
-
-  # def pay
-  #   @order = current_user.open_order
-  #   @order.final = true
-  #   if @order.update(safe_order_cc)
-  #     if @order.purchase
-  #       OrderMailer.notify_order_placed(current_user, @order).deliver_now
-  #       OrderMailer.thank_you_for_order(current_user, @order).deliver_now
-  #       render 'success'
-  #     else
-  #       render 'failure'
-  #     end
-  #   else 
-  #     @errors = @order.errors.messages
-  #     @final = true
-  #     render 'delivery_info'
-  #   end
-      
+  # def express
+  #   @order = Order.find(params[:id])
+  #   response = EXPRESS_GATEWAY.setup_purchase(@order.total_in_cents,
+  #     :items             => @order.prepare_paypal_items,
+  #     :subtotal          => @order.sub_total_in_cents,
+  #     :tax               => @order.tax_in_cents,
+  #     :currency          => 'CAD',
+  #     :shipping          => 0,
+  #     :handling          => 0,
+  #     :no_shipping       => true,
+  #     :ip                => @order.ip_address,
+  #     :return_url        => confirm_order_url(id: @order.id),
+  #     :cancel_return_url => root_url
+  #   )
+  #   Rails.logger.warn "#{response.inspect}"
+  #   redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
   # end
+  # To be removed
+  # def confirm
+  #   @order = Order.find(params[:id])
+  #   @order.update(:express_token => params[:token])
+  #   if @order.purchase
+  #     OrderMailer.notify_order_placed(current_user, @order).deliver_now
+  #     OrderMailer.thank_you_for_order(current_user, @order).deliver_now
+  #     @order.update(:ordered_date => Date.today)
+  #     render 'success'
+  #   else
+  #     render 'failure'
+  #   end
+  # end
+
+  def pay
+    @order = current_user.open_order
+    @order.final = true
+    if @order.update(safe_order_cc)
+      if @order.purchase
+        OrderMailer.notify_order_placed(current_user, @order).deliver_now
+        OrderMailer.thank_you_for_order(current_user, @order).deliver_now
+        render 'success'
+      else
+        render 'failure'
+      end
+    else 
+      @errors = @order.errors.messages
+      @final = true
+      render 'delivery_info'
+    end
+      
+  end
   
   def remove_item
     item = OrderedProduct.find(params[:id]).delete()
