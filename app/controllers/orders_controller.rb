@@ -116,7 +116,6 @@ class OrdersController < ApplicationController
         render 'failure'
       end
     else 
-
       @errors = @order.errors.messages
       Rails.logger.warn "#{@errors.inspect}"
       @final = true

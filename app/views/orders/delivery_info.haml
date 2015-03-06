@@ -120,6 +120,9 @@
               .fieldset.mbs
                 = f.label :card_type, class: "form-label"
                 = f.select :card_type,  options_for_select([["Visa", "visa"], ["MasterCard", "master"], ["Discover", "discover"], ["American Express", "american_express"]]), {}, class: "form-control"
+                -if @errors && @errors.has_key?(:brand)
+                  %span.alert-text
+                    = "Card brand #{@errors[:brand].join()}"
               .fieldset.mbs
                 .row
                   .col-lg-8.col-md-8.col-sm-8.col-xs-8
