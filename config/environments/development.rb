@@ -57,10 +57,10 @@ Rails.application.configure do
   config.after_initialize do 
     ActiveMerchant::Billing::Base.mode = :test
 
-    ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(
-      :login => "Steve00006-facilitator_api1.gmail.com",
-      :password => "J5XM9SECLJQUQ9L4",
-      :signature => "AFcWxV21C7fd0v3bYYYRCpSSRl31AtyS01HpkH8lotQ-jwoMdrqVlah7"
+    ::STANDARD_GATEWAY = ActiveMerchant::Billing::AuthorizeNetGateway.new(
+      :login => '9tGRm4AC677',
+      :password => '2A33A46m9ds6YNfw',
+      :test => true
     )
   end
 end
