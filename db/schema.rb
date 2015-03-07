@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150227174333) do
+ActiveRecord::Schema.define(version: 20150306235335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20150227174333) do
 
   create_table "large_format_thicknesses", force: :cascade do |t|
     t.integer "large_format_id"
-    t.integer "thickness"
+    t.decimal "thickness"
     t.string  "unit"
   end
 
