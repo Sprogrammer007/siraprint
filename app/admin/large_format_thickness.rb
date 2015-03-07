@@ -8,7 +8,7 @@ ActiveAdmin.register LargeFormatThickness do
   form do |f|
     f.inputs do
       f.input :thickness, label: "Thickness"
-      f.input :unit, :as => :select, :collection => options_for_select(["cm", "mm"], f.object.unit)
+      f.input :unit, :as => :select, :collection => options_for_select(['cm', 'mm', 'pt', 'mil', 'inch'], f.object.unit)
       f.input :large_format_id, :as => :hidden, :input_html => { value: "#{params[:large_format_id] }"}
     end
     
