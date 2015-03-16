@@ -114,11 +114,6 @@ Rails.application.configure do
       :signature => ENV['PAYPAL_SI'] 
     )    
 
-    ::WEBPAY_GATEWAY = ActiveMerchant::Billing::WebpayGateway.new(
-      :login => ENV['PAYPAL_LOGIN'],
-      :password => ENV['PAYPAL_PASS'],
-      :signature => ENV['PAYPAL_SI'] 
-    )
   end
 
 end

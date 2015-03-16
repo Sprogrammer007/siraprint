@@ -75,7 +75,11 @@ class Order < ActiveRecord::Base
     unit_price = if params[:product_type] == 'large_format'
       calc_unit_price(params[:details], rate, params[:quantity].to_i)
     else
-      metal_sign_unit_price(rate, params[:details][:size_id]) 
+      if params[:details][:size_id]
+        metal_sign_unit_price(rate, params[:details][:size_id]) 
+      else
+        return errors.add :size, 'please select metal sign size'
+      end
     end
 
     unit_price = round(unit_price.to_f)
