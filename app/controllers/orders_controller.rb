@@ -83,7 +83,7 @@ class OrdersController < ApplicationController
       :shipping             => 0,
       :handling             => 0,
       :no_shipping          => true,
-      :allow_guest_checkout => true
+      :allow_guest_checkout => true,
       :ip                   => @order.ip_address,
       :return_url           => confirm_order_url(id: @order.id),
       :cancel_return_url    => root_url
