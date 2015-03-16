@@ -60,7 +60,7 @@ Rails.application.configure do
     # ::STANDARD_GATEWAY = ActiveMerchant::Billing::AuthorizeNetGateway.new(
     #   :login => '9tGRm4AC677',
     #   :password => '2A33A46m9ds6YNfw',
-    #   :test => true
+    #   :test => truer
     # )
     
 
