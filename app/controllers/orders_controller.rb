@@ -76,16 +76,17 @@ class OrdersController < ApplicationController
   def express
     @order = Order.find(params[:id])
     response = EXPRESS_GATEWAY.setup_purchase(@order.total_in_cents,
-      :items             => @order.prepare_paypal_items,
-      :subtotal          => @order.sub_total_in_cents,
-      :tax               => @order.tax_in_cents,
-      :currency          => 'CAD',
-      :shipping          => 0,
-      :handling          => 0,
-      :no_shipping       => true,
-      :ip                => @order.ip_address,
-      :return_url        => confirm_order_url(id: @order.id),
-      :cancel_return_url => root_url
+      :items                => @order.prepare_paypal_items,
+      :subtotal             => @order.sub_total_in_cents,
+      :tax                  => @order.tax_in_cents,
+      :currency             => 'CAD',
+      :shipping             => 0,
+      :handling             => 0,
+      :no_shipping          => true,
+      :allow_guest_checkout => true
+      :ip                   => @order.ip_address,
+      :return_url           => confirm_order_url(id: @order.id),
+      :cancel_return_url    => root_url
     )
     Rails.logger.warn "#{response.inspect}"
     redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
