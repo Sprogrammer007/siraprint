@@ -72,14 +72,14 @@ class Order < ActiveRecord::Base
 
   def create_new_ordered_product(params, rate)
 
+    if params[:product_type] == 'metal_sign' &&  !params[:details][:size_id]
+      return errors.add(:size, 'please select metal sign size')
+    end
+    
     unit_price = if params[:product_type] == 'large_format'
       calc_unit_price(params[:details], rate, params[:quantity].to_i)
     else
-      if params[:details][:size_id]
-        metal_sign_unit_price(rate, params[:details][:size_id]) 
-      else
-        return errors.add :size, 'please select metal sign size'
-      end
+      metal_sign_unit_price(rate, params[:details][:size_id]) 
     end
 
     unit_price = round(unit_price.to_f)
