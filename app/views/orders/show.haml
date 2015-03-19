@@ -10,9 +10,10 @@
           = link_to "Update Delivery Method", delivery_info_path(), class: "btn btn-primary"
         - else
           = link_to "Select Delivery Method", delivery_info_path(), class: "btn btn-primary"
-      - if @order.delivery_method()
-        .express-checkout-button.group.mgl.pull-right
-          = link_to image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), express_order_path(@order)
+          
+      -# - if @order.delivery_method()
+      -#   .express-checkout-button.group.mgl.pull-right
+      -#     = link_to image_tag("https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"), express_order_path(@order)
               
   - else
     #empty_cart.empty_cart
