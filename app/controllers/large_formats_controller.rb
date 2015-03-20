@@ -18,7 +18,10 @@ class LargeFormatsController < ApplicationController
   def get_price
     thickness = LargeFormatThickness.find(params[:t_id])
     sqft = params[:sqft].to_f.round(2)
+    Rails.logger.warn("#{sqft} sqft")
+    Rails.logger.warn(thickness.inspect)
     @price = thickness.large_format_tiers.sqft_eq(sqft)
+    Rails.logger.warn(@price.first.price)
     if @price.first
       session[:current_rate] = @price.first.price
     else
