@@ -4,5 +4,7 @@
     %button.primary-close{"data-dismiss" => "alert", :type => "button"}
       %span{"aria-hidden" => "true"} &times;
       %span.sr-only Close
+    - if v == 'Invalid email or password.'
+      - v = v + " " +link_to("Forgot your password?", new_password_path(resource_name))
     = v.html_safe() 
  
