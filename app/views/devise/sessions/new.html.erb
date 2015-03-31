@@ -27,8 +27,11 @@
       <%= f.submit "Log in", class: "btn btn-submit" %>
       <p class="mtt tcg ts-m">
         Don't have an account?
-        <%= link_to "Create Free Account", new_user_registration_path  %> 
-         
+        <%= link_to "Create Free Account", new_user_registration_path  %>
+        <br/> 
+         <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+          <%= link_to "Forgot your password?", new_password_path(resource_name) %>
+        <% end -%>
       </p>
     </div>
   <% end %>
