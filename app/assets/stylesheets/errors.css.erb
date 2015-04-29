@@ -1,16 +1,4 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-  <title>The page you were looking for doesn't exist (404)</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
- /*
-Author: W3layout
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
-*/
-/* reset */
+
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,dl,dt,dd,ol,nav ul,nav li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font-size:100%;font:inherit;vertical-align:baseline;}
 article, aside, details, figcaption, figure,footer, header, hgroup, menu, nav, section {display: block;}
 ol,ul{list-style:none;margin:0;padding:0;}
@@ -58,7 +46,7 @@ img{max-width:100%;}
     font-style: normal;
 }
 body {
-  background:url(../images/bg.jpg) no-repeat 100%;
+  background:url(<%= asset_data_uri 'bg.jpg' %>) no-repeat 100%;
   background-size: 100%;
   font-family: 'open_sanslight';
   font-size: 100%;
@@ -93,11 +81,15 @@ body {
   vertical-align:bottom;
   margin: 0px 10px;
 }
+
+.logo span a {
+  color: #48FFBE;
+}
 /**-----end-logo---------**/
 /**-----start-search-bar-section------**/
 .buttom
 {
-  background:url(../images/bg2.png) no-repeat 100% 0%;
+  background:url("<%= asset_path'bg2.png'%>") no-repeat 100% 0%;
   background-size: 100%;
   text-align: center;
   vertical-align: middle;
@@ -158,7 +150,7 @@ body {
 .search_box form input[type="submit"] {
   border: none;
   cursor: pointer;
-  background: url(../images/search.png) no-repeat 0px 1px;
+  background: url("<%= asset_path 'search.png'%>") no-repeat 0px 1px;
   position: absolute;
   right: 0;
   width: 34px;
@@ -267,37 +259,3 @@ vertical-align: middle;
 }
 }
   </style>
-
-
-</head>
-<body>
-
-  <div class="wrap">
-    <div class="content">
-  
-      <div class="logo">
-        <h1><a href="#"><%= link_to(image_tag('sira_print_logo.png'), root_path) %></a></h1>
-        <span><img src="web/images/signal.png"/>Oops! The Page you requested was not found!</span>
-      </div>
-
-
-      <div class="buttom">
-        <div class="seach_bar">
-          <p>you can go to <span><a href="#">home</a></span> page or search here</p>
-
-        <!--   <div class="search_box">
-          <form>
-             <input type="text" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}"><input type="submit" value="">
-            </form>
-           </div> -->
-        </div>
-      </div>
-
-    </div>
-
-  <p class="copy_right">&#169; </a> </p>
-  </div>
-  
-
-</body>
-</html>
