@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150306235335) do
+ActiveRecord::Schema.define(version: 20150430151344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,9 +76,6 @@ ActiveRecord::Schema.define(version: 20150306235335) do
     t.text     "description"
     t.integer  "sides"
     t.string   "display_image_file_name"
-    t.string   "display_image_content_type"
-    t.integer  "display_image_file_size"
-    t.datetime "display_image_updated_at"
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -99,9 +96,6 @@ ActiveRecord::Schema.define(version: 20150306235335) do
     t.string   "name"
     t.text     "description"
     t.string   "display_image_file_name"
-    t.string   "display_image_content_type"
-    t.integer  "display_image_file_size"
-    t.datetime "display_image_updated_at"
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -138,14 +132,8 @@ ActiveRecord::Schema.define(version: 20150306235335) do
     t.integer  "quantity"
     t.decimal  "unit_price"
     t.decimal  "price"
-    t.string   "print_pdf_file_name"
-    t.string   "print_pdf_content_type"
-    t.integer  "print_pdf_file_size"
-    t.datetime "print_pdf_updated_at"
-    t.string   "print_pdf_2_file_name"
-    t.string   "print_pdf_2_content_type"
-    t.integer  "print_pdf_2_file_size"
-    t.datetime "print_pdf_2_updated_at"
+    t.string   "print_pdf"
+    t.string   "print_pdf_2"
     t.string   "product_type"
     t.integer  "product_detail_id"
     t.integer  "product_id"
@@ -184,18 +172,12 @@ ActiveRecord::Schema.define(version: 20150306235335) do
     t.string   "author"
     t.string   "category"
     t.string   "featured_image_file_name"
-    t.string   "featured_image_content_type"
-    t.integer  "featured_image_file_size"
-    t.datetime "featured_image_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "slider_images", force: :cascade do |t|
     t.string   "slide_image_file_name"
-    t.string   "slide_image_content_type"
-    t.integer  "slide_image_file_size"
-    t.datetime "slide_image_updated_at"
     t.string   "product_type"
     t.datetime "created_at"
     t.datetime "updated_at"

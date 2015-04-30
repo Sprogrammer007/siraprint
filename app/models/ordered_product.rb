@@ -2,10 +2,10 @@ class OrderedProduct < ActiveRecord::Base
   
   belongs_to :order
 
-  mount_uploader :print_pdf_file_name, PrintPdfUploader
-  mount_uploader :print_pdf_2_file_name, PrintPdf2Uploader
-  validates_presence_of :print_pdf_file_name
-  validates_presence_of :print_pdf_2_file_name
+  mount_uploader :print_pdf, PrintPdfUploader
+  mount_uploader :print_pdf_2, PrintPdf2Uploader
+  validates_presence_of :print_pdf
+
   scope :large_format, -> { where(product_type: "large_format") }
   scope :metal_sign, -> { where(product_type: "metal_sign") }
   
