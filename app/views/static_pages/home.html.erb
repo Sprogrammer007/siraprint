@@ -14,7 +14,7 @@
       <%- if SliderImage.home.any? %>
         <%- SliderImage.home.each_with_index do |image, i| %>
           <div class='item <%= (i == 0) ? "active" : "" %>'>
-            <%= image_tag(image.slide_image_file_name.url()) if image.slide_image? %>
+            <%= image_tag(image.slide_image_file_name.url()) if image.slide_image_file_name.any? %>
           </div>
         <%- end %>
       <%- end %>
