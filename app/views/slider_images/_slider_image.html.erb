@@ -1,5 +1,5 @@
 <div class="slide_item">
-  <%= image_tag(slider_image.slide_image_file_name.url()) if slider_image.slide_image? %>
+  <%= image_tag(slider_image.slide_image_file_name.url()) %>
   <div class="slide_actions">
     <%= link_to "Remove", slider_image, :confirm => 'Are you sure?', :method => :delete %>
   </div>
