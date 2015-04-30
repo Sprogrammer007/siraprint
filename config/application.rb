@@ -1,7 +1,6 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
-
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -21,5 +20,6 @@ module Siraprint
     # config.i18n.default_locale = :de
     config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
     config.exceptions_app = self.routes
+    config.active_job.queue_adapter = :delayed_job
   end
 end

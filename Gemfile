@@ -26,6 +26,8 @@ gem 'aws-sdk', '< 2.0'
 gem 'jquery-fileupload-rails'
 gem 'activemerchant'
 
+gem 'delayed_job_active_record'
+gem 'delayed_paperclip'
 # PDF
 gem 'prawn'
 gem 'prawn-table', '~> 0.2.1'
