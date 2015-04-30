@@ -2,7 +2,8 @@
 #= require tinymce-jquery
 #= require jquery-fileupload/basic
 $(document).ready ->
-  $('#slider_image_slide_image').fileupload dataType: 'script'
+  $('#slider_image_slide_image_file_name').fileupload dataType: 'script'
+  
   tinyMCE.init
     mode: 'textareas'
     theme: 'modern'
