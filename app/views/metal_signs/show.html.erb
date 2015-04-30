@@ -3,7 +3,7 @@
   <div class="galleria" id="galleria" style="height: 518px">
     <%- if SliderImage.where(product_type: @metal_sign.name_for_db).any? %>
       <%- SliderImage.where(product_type: @metal_sign.name_for_db).each do |image| %>
-        <%= image_tag(image.slide_image_file_name.url()) if image.slide_image? %>
+        <%= image_tag(image.slide_image_file_name.url())  %>
       <%- end %>
     <%- end %>
   </div>
