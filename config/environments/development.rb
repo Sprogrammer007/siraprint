@@ -53,6 +53,18 @@ Rails.application.configure do
   #     :test => true
   #   )
   # end
+
+  #S3 Setup
+  config.paperclip_defaults = {
+    :storage => :s3,
+    :s3_protocol => 'http',
+    :bucket => 'stevetest2',
+    :s3_credentials => {
+      :access_key_id => 'AKIAJQFWQPZ6HD6JFLUA',
+      :secret_access_key => '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'
+    }
+  }
+
   config.consider_all_requests_local = false
   config.after_initialize do 
     ActiveMerchant::Billing::Base.mode = :test
