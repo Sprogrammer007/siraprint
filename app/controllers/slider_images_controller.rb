@@ -12,6 +12,6 @@ class SliderImagesController < ApplicationController
   private
 
     def permitted_params
-       params.require(:slider_image).permit(:slide_image, :product_type) 
+       params.require(:slider_image).permit(:slide_image_file_name, :product_type) 
     end
 end
