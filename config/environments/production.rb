@@ -89,15 +89,15 @@ Rails.application.configure do
 
 
   #S3 Setup
-  config.paperclip_defaults = {
-    :storage => :s3,
-    :s3_protocol => 'http',
-    :bucket => ENV['AWS_BUCKET'],
-    :s3_credentials => {
-      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
-    }
-  }
+  # config.paperclip_defaults = {
+  #   :storage => :s3,
+  #   :s3_protocol => 'http',
+  #   :bucket =>
+  #   :s3_credentials => {
+  #     :access_key_id => 
+  #     :secret_access_key => 
+  #   }
+  # }
 
   config.after_initialize do 
     ActiveMerchant::Billing::Base.mode = :production
