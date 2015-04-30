@@ -25,7 +25,7 @@ gem 'tinymce-rails'
 gem 'jquery-fileupload-rails'
 gem 'activemerchant'
 
-gem 'delayed_job_active_record'
+# gem 'delayed_job_active_record'
 gem "carrierwave"
 gem 'carrierwave-aws'
 
