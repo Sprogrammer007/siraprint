@@ -2,7 +2,7 @@ ActiveAdmin.register LargeFormat do
   
   menu :parent => "Products"
 
-  permit_params :name, :description, :display_image, :has_two_side, :sides, :status, :max_width, :max_length,
+  permit_params :name, :description, :display_image_file_name, :has_two_side, :sides, :status, :max_width, :max_length,
     :large_format_thicknesses_attributes => [:id, :thickness, :unit, :_destroy, :_destroy => true,
     :large_format_tiers_attributes => [:id, :level, :min_sqft, :max_sqft, :price, :_destroy => true ] ] 
   
@@ -64,7 +64,7 @@ ActiveAdmin.register LargeFormat do
             l.name
           end
           row "Display Image" do |l|
-            image_tag(l.display_image.url(), class: "display-image")
+            image_tag(l.display_image_file_name.url(), class: "display-image")
           end
           row :description do |l|
             l.description.html_safe() if l.description
@@ -150,7 +150,7 @@ ActiveAdmin.register LargeFormat do
     f.inputs do 
       f.input :name, label: "Material Name"
       f.input :description, input_html: { class: "tinymce" }
-      f.input :display_image, :as => :file
+      f.input :display_image_file_name, :as => :file
       f.input :max_width, label: "Max Width(Inchs)"
       f.input :max_length, label: "Max Length(Inchs)"
       f.input :has_two_side, :as => :select, :collection => options_for_select([["Yes", true], ["No", false]], (f.object.has_two_side || false))

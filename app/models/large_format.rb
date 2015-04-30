@@ -7,11 +7,8 @@ class LargeFormat < ActiveRecord::Base
   scope :active, -> { where(status: "Active") }
   scope :deactive, -> { where(status: "Deactive") }
   scope :side, -> (n) { where(sides: n) }
-  
-  has_attached_file :display_image, :default_url => "no-image.png"
-  validates_attachment :display_image, :presence => true,
-  :content_type => { :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"] } 
-
+  mount_uploader :display_image_file_name, LargeFormatDisplayUploader
+  validates_presence_of :display_image_file_name
   accepts_nested_attributes_for :large_format_thicknesses, :allow_destroy => true
 
   delegate :active?, :deactive?, to: :current_state?

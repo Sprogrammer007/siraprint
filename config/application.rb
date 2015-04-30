@@ -20,6 +20,6 @@ module Siraprint
     # config.i18n.default_locale = :de
     config.assets.precompile << /\.(?:svg|eot|woff|ttf)$/
     config.exceptions_app = self.routes
-    config.active_job.queue_adapter = :delayed_job
+    
   end
 end

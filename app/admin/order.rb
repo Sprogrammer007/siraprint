@@ -125,11 +125,11 @@ ActiveAdmin.register Order do
             end
             column :quantity
             column "User Design" do |p|
-              link_to p.print_pdf_file_name, p.print_pdf.url()
+              link_to File.basename(p.print_pdf_file_name.path), p.print_pdf_file_name.url()
             end
             column "User Design 2" do |p|
               if p.print_pdf_2_file_name
-                link_to p.print_pdf_2_file_name, p.print_pdf_2.url()
+                link_to File.basename(p.print_pdf_2_file_name.path), p.print_pdf_2_file_name.url()
               else
                 "None"
               end
@@ -166,7 +166,7 @@ ActiveAdmin.register Order do
             end
             column :quantity
             column "User Design" do |p|
-              link_to p.print_pdf_file_name, p.print_pdf.url()
+              link_to File.basename(p.print_pdf_file_name.path), p.print_pdf_file_name.url()
             end
             column :unit_price
             column :price

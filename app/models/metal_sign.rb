@@ -5,10 +5,8 @@ class MetalSign < ActiveRecord::Base
   scope :active, -> { where(status: "Active") }
   scope :deactive, -> { where(status: "Deactive") }
 
-  has_attached_file :display_image, :default_url => "no-image.png"
-  validates_attachment :display_image, :presence => true,
-  :content_type => { :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"] } 
-
+  mount_uploader :display_image_file_name, MetalSignDisplayUploader
+  validates_presence_of :display_image_file_name 
   accepts_nested_attributes_for :metal_sign_sizes
   
   delegate :active?, :deactive?, to: :current_state?

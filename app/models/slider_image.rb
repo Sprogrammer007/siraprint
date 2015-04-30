@@ -4,8 +4,6 @@ class SliderImage < ActiveRecord::Base
   scope :metal_sign, -> { where(product_type: "metal_sign") }
   scope :home, -> { where(product_type: "home") }
 
-  has_attached_file :slide_image, :default_url => "no-image.png"
-  validates_attachment :slide_image, :presence => true,
-  :content_type => { :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"] } 
-
+  mount_uploader :slide_image_file_name, SliderImageUploader
+  validates_presence_of :slide_image_file_name 
 end

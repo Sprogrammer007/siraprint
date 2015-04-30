@@ -2,7 +2,7 @@
   <p>Drag and drop images anywhere in this box or use the upload button below to add new slides.</p>  
   <%= form_for SliderImage.new do |f| %>
     <%= f.label :slide_image, "Upload Slides:" %>
-    <%= f.file_field :slide_image, multiple: true, name: "slider_image[slide_image]" %>
+    <%= f.file_field :slide_image_file_name, multiple: true, name: "slider_image[slide_image_file_name]" %>
     <%= f.hidden_field :product_type, :value => type %>
   <% end %>
 </div>

@@ -7,12 +7,12 @@ gem 'activeadmin', github: 'gregbell/active_admin'
 gem "active_admin_import" , '2.1.1'
 gem 'polyamorous', github: 'activerecord-hackery/polyamorous'
 gem 'ransack',     github: 'activerecord-hackery/ransack'
-gem "paperclip", "~> 4.2"
 gem 'rails', "4.2.0"
 gem 'pg'
+gem 'execjs', "2.2.2"
 gem 'sass-rails', '~> 4.0.2'
 gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails'
+gem 'coffee-rails', "4.0.1"
 gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 5.0.0'
 gem 'puma'
@@ -22,12 +22,13 @@ gem 'devise'
 gem 'bootstrap-sass', '~> 3.1.1'
 gem 'haml'
 gem 'tinymce-rails'
-gem 'aws-sdk', '< 2.0'
 gem 'jquery-fileupload-rails'
 gem 'activemerchant'
 
 gem 'delayed_job_active_record'
-gem 'delayed_paperclip'
+gem "carrierwave"
+gem 'carrierwave-aws'
+
 # PDF
 gem 'prawn'
 gem 'prawn-table', '~> 0.2.1'

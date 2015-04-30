@@ -2,7 +2,7 @@ ActiveAdmin.register MetalSign do
 
   menu :parent => "Products"
  
-  permit_params :name, :description, :display_image, :status, 
+  permit_params :name, :description, :display_image_file_name, :status, 
     :metal_sign_sizes_attributes => [:id, :width, :height, :unit, :price, :_destroy, :_destroy => true] 
   
   #Filters
@@ -43,7 +43,7 @@ ActiveAdmin.register MetalSign do
         attributes_table do
           row :name
           row "Display Image" do |l|
-            image_tag(l.display_image.url(), class: "display-image")
+            image_tag(l.display_image_file_name.url(), class: "display-image")
           end
           row :description do |l|
             l.description.html_safe() if l.description
@@ -90,7 +90,7 @@ ActiveAdmin.register MetalSign do
     f.inputs do 
       f.input :name
       f.input :description, input_html: { class: "tinymce" }
-      f.input :display_image, :as => :file
+      f.input :display_image_file_name, :as => :file
       f.input :status, :as => :select, :collection => options_for_select(['Active', 'Deactive'], f.object.status)
     end
     f.inputs do 

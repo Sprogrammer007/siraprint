@@ -2,7 +2,7 @@ ActiveAdmin.register Post do
 
   menu :parent => "Content"
 
-  permit_params :title, :excerpt, :content, :featured_image,
+  permit_params :title, :excerpt, :content, :featured_image_file_name,
   :author, :category
 
   #Filters
@@ -38,7 +38,7 @@ ActiveAdmin.register Post do
       f.input :content, input_html: { class: "tinymce" }
       f.input :author
       f.input :category
-      f.input :featured_image, :as => :file
+      f.input :featured_image_file_name, :as => :file
     end
     f.actions
   end

@@ -11,7 +11,7 @@
     - order.ordered_products.each do |p|
       %tr
         %td
-          = image_tag p.product.display_image.url()
+          = image_tag p.product.display_image_file_name.url()
         %td
           %strong
             = p.product.name
@@ -36,9 +36,9 @@
             %span.update-quantity
               = link_to "update", "#", class: "qty-update-button edit", data: { url: update_item_order_path(p.id)}
         %td
-          = link_to p.print_pdf_file_name, p.print_pdf.url()
+          = link_to File.basename(p.print_pdf_file_name.path), p.print_pdf_file_name.url()
           - if p.print_pdf_2_file_name
-            = link_to p.print_pdf_2_file_name, p.print_pdf_2.url()
+            = link_to File.basename(p.print_pdf_2_file_name.path), p.print_pdf_2_file_name.url()
         %td
           = "$#{p.price}"
 
