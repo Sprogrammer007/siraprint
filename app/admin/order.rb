@@ -17,10 +17,15 @@ ActiveAdmin.register Order do
   
   index :title => "Orders" do
     column "User Email" do |o|
-      if o.user
-        o.user.email
+      if o.user!
+        o.user!.email
       end
+    end    
+
+    column "User Type" do |o|
+      o.user!.class.name
     end
+
     column "Delivery Address" do |o|
       o.delivery_address.html_safe() if o.delivery_address
     end
@@ -64,7 +69,10 @@ ActiveAdmin.register Order do
       div class: "order-main" do
         attributes_table do
           row "User Email" do |o|
-            o.user.email
+            o.user!.email
+          end
+          row "User Type" do |o|
+            o.user!.class.name
           end
           row "Delivery Address" do |o|
             o.delivery_address.html_safe() if o.delivery_address

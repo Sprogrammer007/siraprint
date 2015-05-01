@@ -1,6 +1,6 @@
 class MetalSignsController < ApplicationController
   
-  before_filter :authenticate_user!, :except => [:index, :show, :get_thickness, :get_price] 
+  before_filter :authenticate_all!, :except => [:index, :show, :get_thickness, :get_price] 
 
   def index
     @metal_signs = MetalSign.all

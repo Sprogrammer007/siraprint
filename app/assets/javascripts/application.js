@@ -15,3 +15,11 @@
 //= require bootstrap
 //= require galleria-1.4.2
 //= require product
+
+$(function () {
+  $('[data-toggle="popover"]').popover({
+    html: true,
+    trigger: 'focus',
+    placement: 'bottom'
+  })
+})

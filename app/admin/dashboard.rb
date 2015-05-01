@@ -6,11 +6,30 @@ ActiveAdmin.register_page "Dashboard" do
 
     columns do
       column do
-        panel "New Users" do
-          table_for User.recent(5) do
+        panel "New Brokers" do
+          table_for Broker.recent(5) do
             column :email
             column :company_name
             column :company_hst
+            column :last_sign_in_at
+            column "Joined At" do |u|
+              u.created_at.strftime("%m-%d-%Y")
+            end
+            column "Status" do |u|
+              if u.status == "Approved"
+                status_tag "Approved",:ok
+              elsif u.status == "Disapproved"
+                status_tag "Disapproved", :error
+              else
+                status_tag "#{u.status}"
+              end 
+            end
+          end
+        end 
+
+        panel "New Users" do
+          table_for User.recent(5) do
+            column :email
             column :last_sign_in_at
             column "Joined At" do |u|
               u.created_at.strftime("%m-%d-%Y")
@@ -32,8 +51,9 @@ ActiveAdmin.register_page "Dashboard" do
         panel "New Orders" do
           table_for Order.recent(5) do
             column "User Email" do |o|
-              o.user.email
+              o.user!.email
             end
+
             column "Delivery Address" do |o|
               o.delivery_address.html_safe() if o.delivery_address
             end

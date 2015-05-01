@@ -1,6 +1,7 @@
 class DeliveryAddress < ActiveRecord::Base
 
-	belongs_to :user
+  belongs_to :user
+	belongs_to :broker
 
   attr_reader :order_form
 

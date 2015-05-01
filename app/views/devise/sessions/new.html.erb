@@ -1,5 +1,5 @@
 
-<div class="col-lg-offset-1 col-lg-6 mgtb-l">
+<div class="col-lg-offset-1 col-lg-7 mgtb-l">
 
   <div class="align-center">
     <h2>Sign In</h2>
@@ -27,7 +27,7 @@
       <%= f.submit "Log in", class: "btn btn-submit" %>
       <p class="mtt tcg ts-m">
         Don't have an account?
-        <%= link_to "Create Free Account", new_user_registration_path  %>
+        <%= link_to "Create a Account", new_user_registration_path  %> | <%= link_to "Create a Broker Account", new_broker_registration_path  %> 
         <br/> 
          <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
           <%= link_to "Forgot your password?", new_password_path(resource_name) %>

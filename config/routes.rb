@@ -1,20 +1,18 @@
 Rails.application.routes.draw do
-  get 'errors/file_not_found'
-
-  get 'errors/unprocessable'
-
-  get 'errors/internal_server_error'
 
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   root  'static_pages#home'
   
-  devise_for( :users, 
-              :controllers  => { :registrations => "users", :sessions => "sessions" }, 
-              :path => ""
-            )
+  devise_for( :brokers, 
+              :controllers  => { :registrations => "brokers" }, 
+              :path => "brokers/"
+            )  
+
+  devise_for( :users, :path => "users/")
 
   resources :users 
+  resources :brokers 
   resources :delivery_addresses
   resources :slider_images
   resources :posts
@@ -46,11 +44,11 @@ Rails.application.routes.draw do
     end
   end
   
-  devise_scope :user do  
-    get 'profile/:id',        to: 'users#show',          as: :user_profile
-    get 'my_orders',          to: 'users#my_orders',     as: :user_my_orders
-    post 'cancel',            to: 'users#cancel',        as: :cancel_user
-  end
+ 
+  get 'profile/:id',        to: 'accounts#show',          as: :profile
+  get 'my_orders',          to: 'accounts#my_orders',     as: :my_orders
+  post 'cancel',            to: 'accounts#cancel',        as: :cancel
+
 
   match  'orders/cart',          to: 'orders#show',                via: 'get', :as => 'cart'
   match  'orders/delivery_info', to: 'orders#delivery_info',       via: 'get', :as => 'delivery_info'

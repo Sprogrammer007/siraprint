@@ -1,38 +1,39 @@
-- if current_user.approved?
+- if @user.approved?
   .col-lg-7.mtl
     .panel.panel-default.boxed-m
       .panel-heading.profile-title.group
         %h3.panel-title.pull-left
           Account Details:
         .pull-right
-          = link_to "Edit", edit_user_registration_path()
+          = link_to "Edit", edit_registration_path(@user)
       .panel-body.profile-body
         
         .account-details
           .profile-label.mtxs
             Email
           .profile-info.mbs
-            = current_user.email
-          .profile-label
-            Company Name
-          .profile-info.mbs
-            = current_user.company_name
-          .profile-label.va-top
-            Company Address
-          .profile-info.mbs
-            = current_user.company_address
-            %br
-            = "#{current_user.company_city}, #{current_user.company_province}"
-            %br
-            = current_user.company_postal.upcase!
-          .profile-label
-            Company Phone #
-          .profile-info.mbs
-            = current_user.company_phone
-          .profile-label
-            Company HST #
-          .profile-info.mbs
-            = current_user.company_hst
+            = @user.email
+          - if @user.is_a?(Broker)
+            .profile-label
+              Company Name
+            .profile-info.mbs
+              = @user.company_name
+            .profile-label.va-top
+              Company Address
+            .profile-info.mbs
+              = @user.company_address
+              %br
+              = "#{@user.company_city}, #{@user.company_province}"
+              %br
+              = @user.company_postal.upcase!
+            .profile-label
+              Company Phone #
+            .profile-info.mbs
+              = @user.company_phone
+            .profile-label
+              Company HST #
+            .profile-info.mbs
+              = @user.company_hst
   .col-lg-5.mtl
     .panel.panel-default.boxed-m
       .panel-heading.profile-title.group
@@ -73,8 +74,8 @@
           Cancel My Account:
       .panel-body.profile-body  
         %p
-          = button_to "Cancel my account", cancel_user_path(current_user), class: "profile-button", data: { confirm: "Are you sure?" }
-- elsif current_user.cancelled?
+          = button_to "Cancel my account", cancel_path(@user), class: "profile-button", data: { confirm: "Are you sure?" }
+- elsif @user.cancelled?
   .not-approved
     Oops! It looks like you're account has been canceled. If you have question on your account status please contact us at accounts@siraprint.com
 

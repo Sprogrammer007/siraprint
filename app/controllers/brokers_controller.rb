@@ -1,45 +1,18 @@
-class UsersController < Devise::RegistrationsController
+class BrokersController < Devise::RegistrationsController
 
   respond_to :html, :js
 
-  before_filter :authenticate_user!
+  before_filter :authenticate_broker!
   before_filter :configure_permitted_parameters
   
   def new
     super
   end
 
-
-  def show
-    unless user_signed_in?
-      set_flash_message :alert, :not_signed_in
-      redirect_to root_path()
-    end
-  end
-
   def edit
     @resource = resource
   end
 
-  def cancel
-    if current_user.status == "Approved"
-      current_user.update!(status: "Canceled")
-      sign_out(current_user)
-      redirect_to root_path
-    else
-      flash[:alert] = "You cannot cancel this account!"
-      redirect_to :back
-    end
-  end
-
-  def my_orders
-    if user_signed_in? && current_user.approved?
-      @orders = current_user.orders
-    else
-      flash[:alert] = "You cannot access this page, please sign in first!"
-      redirect_to root_path()
-    end
-  end
 
   protected
 

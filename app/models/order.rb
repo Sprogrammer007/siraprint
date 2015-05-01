@@ -4,7 +4,10 @@ class Order < ActiveRecord::Base
   after_initialize :init
 
   STATE = %w{open payed completed canceled}
+ 
+  belongs_to :broker
   belongs_to :user
+
   has_many :ordered_products, :foreign_key => :order_id, dependent: :destroy
   has_many :transactions, :class_name => "OrderTransaction", dependent: :destroy
 
@@ -12,7 +15,7 @@ class Order < ActiveRecord::Base
     order.validates :billing_address, presence: true, on: :update
     order.validates :billing_city, presence: true, on: :update
     order.validates :billing_postal, presence: true, on: :update
-    order.validates :billing_postal, format: { with: User::VALID_POSTAL_CODE_REGEX }, on: :update
+    order.validates :billing_postal, format: { with: Broker::VALID_POSTAL_CODE_REGEX }, on: :update
     order.validates :name_on_card, presence: true, on: :update
     order.validate :validate_card, on: :update
   end
@@ -77,9 +80,9 @@ class Order < ActiveRecord::Base
     end
     
     unit_price = if params[:product_type] == 'large_format'
-      calc_unit_price(params[:details], rate, params[:quantity].to_i)
+      calc_unit_price(params[:details], rate, params[:quantity].to_i, params[:product_id])
     else
-      metal_sign_unit_price(rate, params[:details][:size_id]) 
+      metal_sign_unit_price(rate, params[:details][:size_id], params[:product_id]) 
     end
 
     unit_price = round(unit_price.to_f)
@@ -176,7 +179,9 @@ class Order < ActiveRecord::Base
     (get_tax*100).round()
   end
 
-
+  def user!
+    return self.user || self.broker
+  end
   private
     def process_purchase
       if express_token.blank?
@@ -235,16 +240,20 @@ class Order < ActiveRecord::Base
       return rate.first.price
     end
 
-    def calc_unit_price(details, rate, quantity)
+    def calc_unit_price(details, rate, quantity, id)
       width = details[:width].to_f
       length = details[:length].to_f
+      brokerDiscount = (LargeFormat.find(id).broker_discount).to_f
       unit = details [:unit]
       side = details[:side].to_i
       sqft = calc_sqft(width, length, unit).to_f
       rate = (rate || get_rate(details[:thickness_id], sqft, side, quantity)) 
 
       unit_price = (sqft * rate.to_f)
-
+      if self.user!.is_a?(Broker) && brokerDiscount != 0
+        unit_price = (unit_price - ((unit_price * brokerDiscount) / 100.0));
+      end
+    
       if details[:finishing]
         f_price = 0
 
@@ -274,7 +283,11 @@ class Order < ActiveRecord::Base
       return unit_price.to_f
     end
 
-    def metal_sign_unit_price(price, size)
+    def metal_sign_unit_price(price, size, id)
+      brokerDiscount = (MetalSign.find(id).broker_discount).to_f
+      if self.user!.is_a?(Broker) && brokerDiscount != 0
+        price = (price - ((price * brokerDiscount) / 100.0));
+      end
       price || MetalSignSize.find_by_id(size).price           
     end
 

@@ -64,7 +64,12 @@ h1, h2, h3, h4
 
 span.alert-text 
   color: #FB393F
-  
+
+.modal .btn
+  width: 45%
+  font-size: 30px !important
+  text-transform: capitalize !important
+
 // Style Helper
 .radius-r
   border-radius: 5px
@@ -169,7 +174,8 @@ span.alert-text
   background: #ffffff
   border: #E9E9E9
 
-.navbar .navbar-nav > li > a
+.navbar .navbar-nav > li > a,
+.navbar-nav > li > button
   color: #191919
   font-size: 16px
   font-weight: 600
@@ -200,21 +206,27 @@ span.alert-text
   text-transform: uppercase
 
 .btn-signup
-  background-color: #1A9DEC
+  background-color: #30A4E9
   color: #ffffff !important
 
 .btn-signin
   background-color: #E6E6E6
 
-.btn-signup:hover
-  background-color: #7ECCFA !important
+.btn-signup:hover,
+.navbar-default .navbar-nav > li > .btn_signup:focus
+  background-color: #147BB9 !important
 
 .btn-signin:hover
-  background-color: #E3E3E3 !important
+  background-color: #A0A0A0 !important
 
 .navbar-nav > li > a 
   padding: 10px 10px 
   line-height: 20px
+
+.navbar-nav > li > button 
+  padding 20px 10px
+  font-weight: bold
+  line-height: 25px
 
 .btn-cart
   font-size: 20px !important
@@ -452,7 +464,6 @@ span.alert-text
   
 .signup-form h2
   text-align: center
-  margin-left: 18px
 
 .signup-form h3
   font-size: 120%
@@ -773,16 +784,27 @@ span.status_completed
 .product-box .wlu-box:last-child
   margin-right: 0
 
-.per-price-box, .finishing-price-box
+.per-price-box, 
+.finishing-price-box, 
+.bd-box
+  text-align: left
   font-size: 1.2em
+  margin-bottom: 2px
 
 .total-price-box
   font-size: 1.5em
 
-.total-price-box, .per-price-box, .finishing-price-box
-  font-weight: 900
+.finishing-price-box, 
+.per-price-box, 
+.bd-box
+  font-weight: 600
 
-.per-placeholder, .finishing-placeholder, .total-placeholder
+.total-price-box
+  font-weight: 900
+.per-placeholder, 
+.finishing-placeholder, 
+.total-placeholder,
+.bd-placeholder
   float: right
 
 .btn-file 

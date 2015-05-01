@@ -2,7 +2,7 @@ ActiveAdmin.register MetalSign do
 
   menu :parent => "Products"
  
-  permit_params :name, :description, :display_image_file_name, :status, 
+  permit_params :name, :description, :display_image_file_name, :broker_discount, :status, 
     :metal_sign_sizes_attributes => [:id, :width, :height, :unit, :price, :_destroy, :_destroy => true] 
   
   #Filters
@@ -16,6 +16,9 @@ ActiveAdmin.register MetalSign do
 
   index :title => "Metal Signs" do
     column :name
+    column :broker_discount do |l|
+      "#{l.broker_discount}%"
+    end
     column :description do |m|
       m.description.html_safe() if m.description
     end
@@ -44,6 +47,9 @@ ActiveAdmin.register MetalSign do
           row :name
           row "Display Image" do |l|
             image_tag(l.display_image_file_name.url(), class: "display-image")
+          end
+          row :broker_discount do |l|
+            "#{l.broker_discount}%"
           end
           row :description do |l|
             l.description.html_safe() if l.description
@@ -90,6 +96,7 @@ ActiveAdmin.register MetalSign do
     f.inputs do 
       f.input :name
       f.input :description, input_html: { class: "tinymce" }
+      f.input :broker_discount, label: "Broker Discount(in %)"
       f.input :display_image_file_name, :as => :file
       f.input :status, :as => :select, :collection => options_for_select(['Active', 'Deactive'], f.object.status)
     end

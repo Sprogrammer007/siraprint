@@ -1,24 +1,22 @@
 class DeliveryAddressesController < ApplicationController
   
-  before_filter :authenticate_user!
+  before_filter :authenticate_all!
   before_filter :safe_params, :only => :create
 
 	def new
-    @no_sidebar = true
 		@daddress = DeliveryAddress.new()
 	end
 
 	def create
-    address = current_user.delivery_addresses.create!(safe_params)
+    address = current_active.delivery_addresses.create!(safe_params)
     if params[:order_form]
       redirect_to select_delivery_order_path(delivery_address_id: address.id, method: "Deliver")
     else
-  		redirect_to user_profile_path(current_user)
+  		redirect_to profile_path(current_active)
     end
 	end
 
   def edit
-    @no_sidebar = true
     @daddress = DeliveryAddress.find(params[:id])
   end
 
@@ -28,7 +26,7 @@ class DeliveryAddressesController < ApplicationController
     if params[:delivery_address][:order_form]
       redirect_to delivery_info_path()
     else
-      redirect_to user_profile_path(@daddress.user_id)
+      redirect_to profile_path(current_active)
     end
   end
 
@@ -37,7 +35,7 @@ class DeliveryAddressesController < ApplicationController
     if params[:order_form]
       redirect_to delivery_info_path()
     else
-      redirect_to user_profile_path(current_user)
+      redirect_to profile_path(current_active)
     end
   end
 

@@ -16,7 +16,7 @@
       <fieldset class="form-field mbs row">
         <div class="col-lg-5">   
         <%= f.label :province, "Province", class: "form-label" %>
-        <%= f.select(:province, options_for_select(User.provinces), {}, class: "form-control") %>
+        <%= f.select(:province, options_for_select(Broker.provinces), {}, class: "form-control") %>
         </div>
         <div class="col-lg-4">  
         <%= f.label :city, "City", class: "form-label" %>

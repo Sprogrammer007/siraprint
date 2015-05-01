@@ -1,7 +1,9 @@
 var ready;
 
 ready = function() {
-  var $finishingOption, $form, $lengthOption, $max_l, $max_w, $productOptions, $quantityOption, $thicknessOption, $unitOption, $url, $widthOption, calc_price, calc_sqft, change_price, change_price_calc, check_max_size, check_max_size_cb, convert_to_feet, convert_to_inch, currentItem, diecut_change, grommets_change, lamination_change, reset_finish_options, reset_values, round_numb, set_finish_price, set_per_unit_price, set_price, set_total_price, stretch_change, update_unit;
+
+
+  var $finishingOption, $form, $userType, $brokerDiscount, $lengthOption, $max_l, $max_w, $productOptions, $quantityOption, $thicknessOption, $unitOption, $url, $widthOption, calc_price, calc_sqft, change_price, change_price_calc, check_max_size, check_max_size_cb, convert_to_feet, convert_to_inch, currentItem, diecut_change, grommets_change, lamination_change, reset_finish_options, reset_values, round_numb, set_finish_price, set_per_unit_price, set_price, set_total_price, stretch_change, update_unit;
   $form = $('.order_form');
   $widthOption = $('.product-width');
   $lengthOption = $('.product-length');
@@ -11,6 +13,8 @@ ready = function() {
   $finishingOption = $('.finishing-placeholder');
   $productOptions = $('#product-options');
   $url = $productOptions.data('price-url');
+  $userType = $productOptions.data('u-type');
+  $brokerDiscount = parseFloat($productOptions.attr('data-b-disc'));
   $max_w = parseInt($productOptions.attr('data-max-w'));
   $max_l = parseInt($productOptions.attr('data-max-l'));
   currentItem = {
@@ -103,6 +107,9 @@ ready = function() {
         if (side === 2) {
           price = price * 2;
         }
+        if ($userType === "Broker" && $brokerDiscount !== 0) {
+          price = (price - ((price * $brokerDiscount) / 100.0));
+        }
         set_per_unit_price(price);
         return set_total_price(price);
       }
@@ -111,6 +118,12 @@ ready = function() {
   change_price_calc = function(quantity, side) {
     var fin_price, price, total_price;
     price = currentItem.unit_price;
+
+    //apply discount
+    if ($userType === "Broker" && $brokerDiscount !== 0) {
+      price = (price - ((price * $brokerDiscount) / 100.0));
+    }
+    
     fin_price = 0;
     if (currentItem.l_price !== 0 || currentItem.g_price !== 0 || currentItem.dc_price !== 0 || currentItem.sf_price !== 0) {
       fin_price = currentItem.l_price + currentItem.g_price + currentItem.dc_price + currentItem.sf_price;
@@ -122,6 +135,7 @@ ready = function() {
         fin_price = fin_price * 2;
       }
     }
+
     set_per_unit_price(price);
     set_finish_price(fin_price);
     if (quantity !== 0) {
@@ -436,6 +450,7 @@ ready = function() {
       quantity: quantity
     }, void 0, "script");
   });
+
   $('.sign-item-size').on('change', 'select', function() {
     var index, s_id, that;
     that = $(this);
@@ -461,18 +476,27 @@ ready = function() {
       return set_total_price(0);
     }
   });
+
   $('.order_form').on('submit', "form", function(e) {
-    var side;
+    var side, t_id;
+    t_id = $thicknessOption.find(':selected').val();
     side = $('.side-selection').find(':selected').val();
+
+    if (t_id === 'undefined') {
+      alert("please select thickness")
+      return e.preventDefault();
+    }
     if ($('#_orderdesign_pdf').val() === "") {
       $('#_orderdesign_pdf').parents('.input-group').next('.error').removeClass("hidden");
-      e.preventDefault();
+      return e.preventDefault();
     }
     if (side === "2" && $('#_orderdesign_pdf_2').val() === "") {
       $('#_orderdesign_pdf_2').parents('.input-group').next('.error').removeClass("hidden");
       return e.preventDefault();
     }
   });
+
+
   $form.on('change', '.btn-file :file', function() {
     var input, label, numFiles;
     input = $(this);
@@ -480,7 +504,8 @@ ready = function() {
     label = input.val().replace(/\\/g, "/").replace(/.*\//, "");
     input.trigger("fileselect", [numFiles, label]);
   });
-  return $form.on("fileselect", ".btn-file :file", function(event, numFiles, label) {
+
+  $form.on("fileselect", ".btn-file :file", function(event, numFiles, label) {
     var input, log;
     input = $(this).parents(".input-group").find(":text");
     log = (numFiles > 1 ? numFiles + " files selected" : label);

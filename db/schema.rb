@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150430151344) do
+ActiveRecord::Schema.define(version: 20150501030853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,8 +34,36 @@ ActiveRecord::Schema.define(version: 20150430151344) do
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
+  create_table "brokers", force: :cascade do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "name",                   default: ""
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.string   "status"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet     "current_sign_in_ip"
+    t.inet     "last_sign_in_ip"
+    t.string   "company_name"
+    t.string   "company_address"
+    t.string   "company_province"
+    t.string   "company_city"
+    t.string   "company_postal"
+    t.string   "company_hst"
+    t.string   "company_phone"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "brokers", ["email"], name: "index_brokers_on_email", unique: true, using: :btree
+  add_index "brokers", ["reset_password_token"], name: "index_brokers_on_reset_password_token", unique: true, using: :btree
+  add_index "brokers", ["status"], name: "index_brokers_on_status", using: :btree
+
   create_table "delivery_addresses", force: :cascade do |t|
-    t.integer  "user_id"
+    t.integer  "broker_id"
     t.string   "full_name"
     t.string   "address"
     t.string   "province"
@@ -43,6 +71,7 @@ ActiveRecord::Schema.define(version: 20150430151344) do
     t.string   "postal"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   create_table "finishing_options", id: false, force: :cascade do |t|
@@ -82,6 +111,7 @@ ActiveRecord::Schema.define(version: 20150430151344) do
     t.boolean  "has_two_side"
     t.decimal  "max_width"
     t.decimal  "max_length"
+    t.integer  "broker_discount",         default: 0
   end
 
   create_table "metal_sign_sizes", force: :cascade do |t|
@@ -99,6 +129,7 @@ ActiveRecord::Schema.define(version: 20150430151344) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "broker_discount",         default: 0
   end
 
   create_table "order_transactions", force: :cascade do |t|
@@ -143,7 +174,7 @@ ActiveRecord::Schema.define(version: 20150430151344) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.integer  "user_id"
+    t.integer  "broker_id"
     t.string   "order_id"
     t.integer  "delivery_id"
     t.text     "delivery_address"
@@ -163,6 +194,7 @@ ActiveRecord::Schema.define(version: 20150430151344) do
     t.string   "billing_postal"
     t.string   "express_payer_id"
     t.string   "express_token"
+    t.integer  "user_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -196,13 +228,6 @@ ActiveRecord::Schema.define(version: 20150430151344) do
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.string   "company_name"
-    t.string   "company_address"
-    t.string   "company_province"
-    t.string   "company_city"
-    t.string   "company_postal"
-    t.string   "company_hst"
-    t.string   "company_phone"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

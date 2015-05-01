@@ -14,8 +14,17 @@ module ApplicationHelper
     "active" if current_page?(path)
   end
 
+  def current_active
+    active_user = current_broker || current_user
+    return active_user
+  end
+
+  def active_signed_in?
+    return broker_signed_in? || user_signed_in?
+  end
+
   def badge_number
-    current_user.open_order ? current_user.open_order.ordered_products.count() : 0
+    current_active.open_order ? current_active.open_order.ordered_products.count() : 0
   end
 
   # Convert Devise Alert keys to Booststrap

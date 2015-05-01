@@ -1,6 +1,7 @@
 class StaticPagesController < ApplicationController
   
   def home
+
   end
 
   def about
@@ -19,6 +20,7 @@ class StaticPagesController < ApplicationController
     flash[:notice] = "Thanks, your comments has been submited!"
     redirect_to root_path()
   end
+  
   def privacy
   end
 

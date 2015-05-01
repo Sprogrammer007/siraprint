@@ -26,12 +26,10 @@
 </div>
 
 <div class="order_form col-side">
-  <% if user_signed_in? %>
+  <% if active_signed_in? %>
     <%= render 'order_form' %>
   <% else %>
-    <%= link_to new_user_session_path() do %>
-      <%= image_tag('lg_not_signed_in.png') %>
-    <% end %>   
+    <%= image_tag('lg_not_signed_in.png') %>
   <% end %> 
 </div>
 

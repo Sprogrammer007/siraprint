@@ -1,8 +1,9 @@
-ActiveAdmin.register User do
+ActiveAdmin.register Broker do
 
   menu :parent => "Adminstration"
  
-  permit_params :email, :password, :status
+  permit_params :email, :password, :status, :company_name, :company_address,
+   :company_province, :company_city, :company_postal, :company_hst, :company_phone
    
   #Scopes
   scope :all, default: true
@@ -10,6 +11,8 @@ ActiveAdmin.register User do
 
   #Filters
   filter :email
+  filter :company_name
+  filter :company_hst
   filter :created_at
 
 
@@ -17,6 +20,8 @@ ActiveAdmin.register User do
   index do
     column :id
     column :email
+    column :company_name
+    column :company_hst
     column :last_sign_in_at
     column "Joined At" do |u|
       u.created_at.strftime("%m-%d-%Y")
@@ -32,11 +37,11 @@ ActiveAdmin.register User do
     end
     column "" do |u|
       dropdown_menu "Actions" do 
-        item("View User Details", admin_user_path(u))
-        item("Edit User", edit_admin_user_path(u))
-        item("Delete User", admin_user_path(u), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
-        item("Approve User", approve_admin_user_path(u))     
-        item("Disapprove User", disapprove_admin_user_path(u))     
+        item("View Broker Details", admin_broker_path(u))
+        item("Edit Broker", edit_admin_broker_path(u))
+        item("Delete Broker", admin_broker_path(u), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
+        item("Approve Broker", approve_admin_broker_path(u))     
+        item("Disapprove Broker", disapprove_admin_broker_path(u))     
       end
     end
   end
@@ -47,13 +52,20 @@ ActiveAdmin.register User do
       f.input :email
       f.input :password, :as => :string
       f.input :status, :as => :select, :collection => options_for_select(['Registered', 'Approved', "Disapproved"], f.object.status)
+      f.input :company_name
+      f.input :company_address
+      f.input :company_province, :as => :select, :collection => options_for_select(User.provinces, f.object.company_province)
+      f.input :company_city
+      f.input :company_postal
+      f.input :company_phone
+      f.input :company_hst
     end
     f.actions
   end
 
   #Actions
   member_action :approve, method: :get do
-    @user = User.find(params[:id])
+    @user = Broker.find(params[:id])
     if @user.approvable?
       UserMailer.user_approved(@user).deliver
       @user.update(status: "Approved")
@@ -64,7 +76,7 @@ ActiveAdmin.register User do
   end
 
   member_action :disapprove, method: :get do
-    @user = User.find(params[:id])
+    @user = Broker.find(params[:id])
     @user.update(status: "Disapproved")
  
     redirect_to :back

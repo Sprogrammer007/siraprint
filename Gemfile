@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-ruby '2.1.4'
+ruby '2.1.6'
 #ruby-gemset=sira
 
 gem 'inherited_resources', github: 'josevalim/inherited_resources', branch: 'master'
@@ -9,10 +9,9 @@ gem 'polyamorous', github: 'activerecord-hackery/polyamorous'
 gem 'ransack',     github: 'activerecord-hackery/ransack'
 gem 'rails', "4.2.0"
 gem 'pg'
-gem 'execjs', "2.2.2"
 gem 'sass-rails', '~> 4.0.2'
 gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', "4.0.1"
+gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails', '~> 5.0.0'
 gem 'puma'
@@ -25,6 +24,7 @@ gem 'tinymce-rails'
 gem 'jquery-fileupload-rails'
 gem 'activemerchant'
 
+gem 'coffee-script-source', '1.8.0'
 # gem 'delayed_job_active_record'
 gem "carrierwave"
 gem 'carrierwave-aws'
@@ -38,7 +38,7 @@ group :development do
   # gem 'rspec-rails', '2.14.0'
   gem 'guard-rspec', '4.2.0'
   gem 'letter_opener' # serve as local email
-  gem 'debugger'
+  gem 'byebug'
   gem 'quiet_assets' # Quiet Assets turns off the Rails asset pipeline log.
   gem "better_errors" # Handles errors
   gem "binding_of_caller" # optional plusing for better errors

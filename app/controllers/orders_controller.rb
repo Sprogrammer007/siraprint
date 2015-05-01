@@ -1,12 +1,11 @@
 class OrdersController < ApplicationController
   
-  before_filter :authenticate_approved_user!, except: [:invoice]
+  before_filter :authenticate_approved!
 
   def create
     oparams = params[:order]
-    @order = current_user.open_order || current_user.new_order(request.remote_ip)
-    if @order
-      
+    @order = current_active.open_order || current_active.new_order(request.remote_ip)
+    if @order     
       op = @order.create_new_ordered_product(oparams, session[:current_rate])
       if op.save
         detail = op.create_details(oparams[:product_type], oparams[:details])
@@ -27,14 +26,14 @@ class OrdersController < ApplicationController
   end
 
   def show
-    if current_user.open_order && current_user.open_order.ordered_products.any?
-      @order = current_user.open_order
+    if current_active.open_order && current_active.open_order.ordered_products.any?
+      @order = current_active.open_order
       @order.update_price
     end
   end
 
   def delivery_info
-    @order = current_user.open_order
+    @order = current_active.open_order
   end
 
   def update_item
@@ -66,7 +65,7 @@ class OrdersController < ApplicationController
   end
 
   def check_out
-    @order = current_user.open_order
+    @order = current_active.open_order
     @order.update_price
     @final = true
     render 'delivery_info'
@@ -97,8 +96,8 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
     @order.update(:express_token => params[:token])
     if @order.purchase
-      OrderMailer.notify_order_placed(current_user, @order).deliver_now
-      OrderMailer.thank_you_for_order(current_user, @order).deliver_now
+      OrderMailer.notify_order_placed(current_active, @order).deliver_now
+      OrderMailer.thank_you_for_order(current_active, @order).deliver_now
       @order.update(:ordered_date => Date.today)
       render 'success'
     else
@@ -107,12 +106,12 @@ class OrdersController < ApplicationController
   end
 
   def pay
-    @order = current_user.open_order
+    @order = current_active.open_order
     @order.final = true
     if @order.update(safe_order_cc)
       if @order.purchase
-        OrderMailer.notify_order_placed(current_user, @order).deliver_now
-        OrderMailer.thank_you_for_order(current_user, @order).deliver_now
+        OrderMailer.notify_order_placed(current_active, @order).deliver_now
+        OrderMailer.thank_you_for_order(current_active, @order).deliver_now
         render 'success'
       else
         render 'failure'
@@ -149,9 +148,17 @@ class OrdersController < ApplicationController
   end
 
   private
-    def authenticate_approved_user!
-      authenticate_user!
-      unless current_user.approved?
+    def authenticate_approved!
+
+      if user_signed_in?
+        authenticate_user!
+      end
+
+      if broker_signed_in?
+        authenticate_broker!
+      end
+
+      unless current_active.approved?
         flash[:alert] = "You account is not yet approved"
         redirect_to root_path()
       end
@@ -159,14 +166,14 @@ class OrdersController < ApplicationController
 
     def validate_order
           
-      if current_user && !current_user.has_order?(params[:id]) 
+      if current_active && !current_active.has_order?(params[:id]) 
         flash[:notice] = "This is not your order!"
-        return redirect_to new_user_session_path()
+        return redirect_to root_path()
       end
 
-      unless current_user
+      unless current_active
         flash[:notice] = "Please sign in first"
-        return redirect_to new_user_session_path()
+        return redirect_to root_path()
       end
     end
 
