@@ -94,8 +94,8 @@ class Order < ActiveRecord::Base
     op = self.ordered_products.create(
       quantity: params[:quantity], 
       product_type: params[:product_type],
-      print_pdf: params[:design_pdf], 
-      print_pdf_2: params[:design_pdf_2], 
+      # print_pdf: params[:design_pdf], 
+      # print_pdf_2: params[:design_pdf_2], 
       product_id: params[:product_id], 
       comment: params[:comment], 
       unit_price: unit_price,

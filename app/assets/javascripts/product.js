@@ -2,7 +2,6 @@ var ready;
 
 ready = function() {
 
-
   var $finishingOption, $form, $userType, $brokerDiscount, $lengthOption, $max_l, $max_w, $productOptions, $quantityOption, $thicknessOption, $unitOption, $url, $widthOption, calc_price, calc_sqft, change_price, change_price_calc, check_max_size, check_max_size_cb, convert_to_feet, convert_to_inch, currentItem, diecut_change, grommets_change, lamination_change, reset_finish_options, reset_values, round_numb, set_finish_price, set_per_unit_price, set_price, set_total_price, stretch_change, update_unit;
   $form = $('.order_form');
   $widthOption = $('.product-width');
@@ -293,19 +292,16 @@ ready = function() {
       return false;
     }
   });
+
   $form.on('change', '.side-selection ', function() {
     var side, t_id;
     t_id = $thicknessOption.find(':selected').val();
     side = $(this).find(':selected').val();
-    if (side === "2") {
-      $('.file_2').removeClass('hidden');
-    } else {
-      $('.file_2').addClass('hidden');
-    }
     if (t_id !== void 0 && t_id !== '') {
       return change_price(t_id);
     }
   });
+
   $form.on('change', '.thickness-selection', function(e) {
     var id, length, sqft, width;
     id = $(this).find(':selected').val();
@@ -424,6 +420,7 @@ ready = function() {
     currentItem.g_price = parseInt(gq);
     return change_price();
   });
+
   $form.on('change', '.quantity-field', function(e) {
     var price, quantity, t_id;
     quantity = parseInt($(this).val());
@@ -477,46 +474,7 @@ ready = function() {
     }
   });
 
-  $('.order_form').on('submit', "form", function(e) {
-    var side, t_id;
-    t_id = $thicknessOption.find(':selected').val();
-    side = $('.side-selection').find(':selected').val();
 
-    if (t_id === 'undefined') {
-      alert("please select thickness")
-      return e.preventDefault();
-    }
-    if ($('#_orderdesign_pdf').val() === "") {
-      $('#_orderdesign_pdf').parents('.input-group').next('.error').removeClass("hidden");
-      return e.preventDefault();
-    }
-    if (side === "2" && $('#_orderdesign_pdf_2').val() === "") {
-      $('#_orderdesign_pdf_2').parents('.input-group').next('.error').removeClass("hidden");
-      return e.preventDefault();
-    }
-  });
-
-
-  $form.on('change', '.btn-file :file', function() {
-    var input, label, numFiles;
-    input = $(this);
-    numFiles = (input.get(0).files ? input.get(0).files.length : 1);
-    label = input.val().replace(/\\/g, "/").replace(/.*\//, "");
-    input.trigger("fileselect", [numFiles, label]);
-  });
-
-  $form.on("fileselect", ".btn-file :file", function(event, numFiles, label) {
-    var input, log;
-    input = $(this).parents(".input-group").find(":text");
-    log = (numFiles > 1 ? numFiles + " files selected" : label);
-    if (input.length) {
-      input.val(log);
-    } else {
-      if (log) {
-        alert(log);
-      }
-    }
-  });
 };
 
 $(document).ready(ready);

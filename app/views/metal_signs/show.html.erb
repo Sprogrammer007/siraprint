@@ -27,19 +27,6 @@
       <%= select("order", "[details]size_id", @metal_sign.metal_sign_sizes.collect {|s| [ "#{s.width}\" x #{s.height}\"", s.id ] }, {include_blank: 'Please select your size'}, class: "size-selection form-control") %>
     </div>
 
-    <div class="item-upload product-box">
-      <h3>Upload Files</h3>
-      <div class="input-group">
-        <%= text_field_tag 'design_pdf_name', nil, class: "form-control", readonly: true  %>
-        <span class="input-group-btn">
-          <span class="btn btn-primary btn-file">
-            Browse 
-            <%= file_field_tag '[order]design_pdf', class: 'design_pdf' %>
-          </span>
-        </span>
-      </div>
-      <span class='error hidden' style="display: block; width: 100%; color: red;">Please upload your design!</span>
-    </div>
 
     <div class="item-final product-box">
       <h3>Quantity</h3>

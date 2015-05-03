@@ -1,4 +1,4 @@
-<%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "large-formats-form", multipart: true do %>
+<%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "large-formats-form", multipart: true, remote: true do %>
   <div id="product-options" data-price-url="<%=  get_price_large_format_path(@large_format) %>"  data-max-w="<%=  @large_format.max_width() %>" data-max-l="<%=  @large_format.max_length() %>" data-u-type="<%=  current_active.class.name %>" data-b-disc="<%=  @large_format.broker_discount %>"></div>
   <%= hidden_field_tag '[order]product_type', 'large_format' %>
   <%= hidden_field_tag '[order]product_id', @large_format.id %>
@@ -77,32 +77,6 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="item-upload product-box">
-    <h3>Upload Files</h3>
-    <div class="input-group">
-      <%= text_field_tag 'design_pdf_name', nil, class: "form-control", placeholder: "Font Design", readonly: true %>
-
-      <span class="input-group-btn">
-        <span class="btn btn-primary btn-file">
-          Browse 
-          <%= file_field_tag '[order]design_pdf', class: 'design_pdf' %>
-        </span>
-      </span>
-    </div>
-    <span class='error hidden' style="display: block; width: 100%; color: red;">Please upload your design!</span>
-    <div class="input-group file_2 mtt hidden">
-      <%= text_field_tag 'design_pdf_2_name', nil, class: "form-control", placeholder: "Back Design", readonly: true  %>
-      <span class="input-group-btn">
-        <span class="btn btn-primary btn-file">
-          Browse 
-          <%= file_field_tag '[order]design_pdf_2', class: 'design_pdf' %>
-        </span>
-      </span>
-    </div>
-    <span class='error hidden' style="display: block; width: 100%; color: red;">Please upload your design!</span>
-
   </div>
   
   <div class="product-box">

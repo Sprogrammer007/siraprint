@@ -3,26 +3,26 @@ class OrdersController < ApplicationController
   before_filter :authenticate_approved!
 
   def create
-    oparams = params[:order]
+    @errors = validate_order(params[:order][:details])
     @order = current_active.open_order || current_active.new_order(request.remote_ip)
-    if @order     
-      op = @order.create_new_ordered_product(oparams, session[:current_rate])
+    if @order && !@errors.any?    
+      op = @order.create_new_ordered_product(params[:order], session[:current_rate])
       if op.save
-        detail = op.create_details(oparams[:product_type], oparams[:details])
+        detail = op.create_details(params[:order][:product_type], params[:order][:details])
         if detail.save
           op.update(:product_detail_id => detail.id)
-        else
-          flash[:danger] = "<ul>#{prepare_flash_errors(detail.errors.full_messages) }</ul>"
-          redirect_to :back and return
         end
-      else
-        flash[:danger] = "<ul>#{prepare_flash_errors(op.errors.full_messages) }</ul>"
-        redirect_to :back and return
       end
       @order.update_price
+      @op = op
+      Rails.logger.warn "#{op.details.side}"
+      @side = (op.details.side || 1)
     end
     session[:current_rate] = nil
-    redirect_to cart_path()
+    respond_to do |format|
+      format.html 
+      format.js
+    end
   end
 
   def show
@@ -71,40 +71,6 @@ class OrdersController < ApplicationController
     render 'delivery_info'
   end
 
-  ## TO BE REMOVE LATER
-  # def express
-  #   @order = Order.find(params[:id])
-  #   response = EXPRESS_GATEWAY.setup_purchase(@order.total_in_cents,
-  #     :items                => @order.prepare_paypal_items,
-  #     :subtotal             => @order.sub_total_in_cents,
-  #     :tax                  => @order.tax_in_cents,
-  #     :currency             => 'CAD',
-  #     :shipping             => 0,
-  #     :handling             => 0,
-  #     :no_shipping          => true,
-  #     :ip                   => @order.ip_address,
-  #     :return_url           => confirm_order_url(id: @order.id),
-  #     :cancel_return_url    => root_url,
-  #     :allow_guest_checkout => true
-  #   )
-  #   Rails.logger.warn "#{response.inspect}"
-  #   redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
-  # end
-  
-  # To be removed
-  def confirm
-    @order = Order.find(params[:id])
-    @order.update(:express_token => params[:token])
-    if @order.purchase
-      OrderMailer.notify_order_placed(current_active, @order).deliver_now
-      OrderMailer.thank_you_for_order(current_active, @order).deliver_now
-      @order.update(:ordered_date => Date.today)
-      render 'success'
-    else
-      render 'failure'
-    end
-  end
-
   def pay
     @order = current_active.open_order
     @order.final = true
@@ -131,7 +97,7 @@ class OrdersController < ApplicationController
 
   def invoice
     @order = Order.find(params[:id])
-    validate_order
+    validate_invoice
     if @order.status == "payed"
       respond_to do |format|
         format.html
@@ -149,7 +115,6 @@ class OrdersController < ApplicationController
 
   private
     def authenticate_approved!
-
       if user_signed_in?
         authenticate_user!
       end
@@ -164,8 +129,7 @@ class OrdersController < ApplicationController
       end
     end
 
-    def validate_order
-          
+    def validate_invoice  
       if current_active && !current_active.has_order?(params[:id]) 
         flash[:notice] = "This is not your order!"
         return redirect_to root_path()
@@ -184,5 +148,20 @@ class OrdersController < ApplicationController
     def safe_order_cc
       params.require(:order).permit(:name_on_card, :card_type, :card_number, :card_verification, :card_expires_on,
         :billing_address, :billing_city, :billing_prov, :billing_postal)
+    end
+
+    def validate_order(p)
+      errors = []
+      if p[:width].empty?
+        errors << "Please enter width";
+      end
+      if p[:length].empty?
+        errors << "Please enter length";
+      end
+      if p[:thickness_id].empty?
+        errors << "Please select a thickness";
+      end
+
+      return errors
     end
 end

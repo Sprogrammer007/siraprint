@@ -1,0 +1,14 @@
+<%- if @errors.any? %>
+  if ($('#errors').length == 1) {
+    $('#errors').replaceWith("<%= j(render 'shared/order_errors', errors: @errors)%>")
+  } else {
+    $('.col-main').prepend("<%= j(render 'shared/order_errors', errors: @errors)%>")
+  }
+<% else %>
+  $('#uploader').find('.modal-body').prepend("<%= j(render 'shared/uploader', op: @op, side: @side)%>")
+  $(document).trigger('set.uploader')
+  $('#uploader').modal({
+    backdrop: false,
+    show: true
+  });
+<% end %>

@@ -1,9 +1,9 @@
-<div class="panel panel-danger">
-  <div class="panel-body">
+<div id="errors">
+  <div class="alert alert-danger">
     <ul>
-      <%= @errors.full_messages.each do |msg| %>
+      <%- errors.each do |msg| %>
         <li><%= "#{msg}" %></li>
-      <% end -%>
+      <% end %>
     </ul>
   </div>
 </div>

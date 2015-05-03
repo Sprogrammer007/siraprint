@@ -1,6 +1,27 @@
 @charset "utf-8"
 @import "bootstrap"
 
+
+@-webkit-keyframes progress-bar-stripes
+  from
+    background-position: 40px 0
+  to
+    background-position: 0 0
+
+
+@-o-keyframes progress-bar-stripes
+  from
+    background-position: 40px 0
+  to
+    background-position: 0 0
+
+
+@keyframes progress-bar-stripes
+  from
+    background-position: 40px 0
+  to
+    background-position: 0 0
+
 =inset
   -moz-box-shadow: inset 0 3px 8px rgba(0,0,0,.4)
   -webkit-box-shadow: inset 0 3px 8px rgba(0,0,0,.4)
@@ -65,10 +86,6 @@ h1, h2, h3, h4
 span.alert-text 
   color: #FB393F
 
-.modal .btn
-  width: 45%
-  font-size: 30px !important
-  text-transform: capitalize !important
 
 // Style Helper
 .radius-r
@@ -652,6 +669,112 @@ span.status_completed
 
 // Product 
 
+#uploader 
+  background-color: rgba(0,0,0,0.65)
+
+#uploader .modal-content
+  box-shadow: none
+  border-radius: 3px
+
+#uploader .modal-header
+  min-height: 0
+  padding: 0
+  border-bottom: 0
+
+#uploader .modal-header .close 
+  margin-top: -2px
+  position: absolute
+  top: -12px
+  right: -12px
+  background-color: #000
+  padding: 5px 10px
+  border-radius: 20px
+  opacity:  1
+  text-shadow: none
+  color: #FFF
+  z-index: 10
+
+#uploader .modal-body .btn-success 
+  color: #FFF
+  background-color: #297DEA
+  border-color: #135EC1
+
+#uploader .upload-done .btn 
+  width: 100% 
+  margin-top: 15px
+  border-radius: 2px
+  font-weight: bold
+  font-size: 20px
+
+#uploader .upload-done span
+  font-size: 20px
+  font-weight: bold
+  color: #3E3939
+  text-align: center
+  display: block
+
+.upload 
+  border-top: solid 1px #CCC
+  padding-top: 10px
+  margin-top: 10px
+
+.upload .progress
+  overflow: initial
+  height: 25px
+  border-radius: 2px
+  -moz-border-radius: 2px
+  margin-bottom: none
+
+.upload .bar 
+  height: 25px
+  background: #3EC144
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent)
+
+.upload .bar-number
+  position: relative
+  text-align: center
+  top: -22px
+  width: inherit
+  display: block
+  color: #FFF
+  color: #2C2B2F
+  z-index: 10
+  font-weight: bold
+
+.progress.active .bar 
+  animation: 2s linear 0s normal none infinite running progress-bar-stripes
+
+#uploader .info 
+  display: block
+  text-align: center
+  color: #A2A2A2
+  margin-top: 30px
+
+#uploader .info i 
+  font-size: 150px
+  margin-bottom: 20px
+  color: #A2A2A2
+
+#uploader .btn-file 
+  display: block
+  margin: auto
+  width: 50%
+  font-size: 16px
+  font-weight: bold
+  border-radius: 2px
+  margin: 20px auto
+
+.btn-file input[type=file]
+  position: absolute
+  top: 0px
+  right: 0px
+  margin: 0px
+  opacity: 0
+  direction: ltr
+  cursor: pointer
+  width: 100%
+  height: 100%
+
 .product-details 
   display: block
   text-align: center
@@ -807,24 +930,7 @@ span.status_completed
 .bd-placeholder
   float: right
 
-.btn-file 
-  position: relative
-  overflow: hidden
 
-.btn-file input[type=file] 
-  position: absolute
-  top: 0
-  right: 0
-  min-width: 100%
-  min-height: 100%
-  font-size: 100px
-  text-align: right
-  filter: alpha(opacity=0)
-  opacity: 0
-  outline: none
-  background: white
-  cursor: inherit
-  display: block
 
 .btn-place-order
   display: block

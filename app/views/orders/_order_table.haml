@@ -36,9 +36,11 @@
             %span.update-quantity
               = link_to "update", "#", class: "qty-update-button edit", data: { url: update_item_order_path(p.id)}
         %td
-          = link_to File.basename(p.print_pdf.path), p.print_pdf.url()
-          - if !p.print_pdf_2.path.nil?
-            = link_to File.basename(p.print_pdf_2.path), p.print_pdf_2.url()
+          - if !p.print_pdf.nil?
+            = link_to File.basename(p.print_pdf), p.print_pdf
+          - elsif !p.print_pdf_2.nil?
+            = link_to File.basename(p.print_pdf_2), p.print_pdf_2
+
         %td
           = "$#{p.price}"
 

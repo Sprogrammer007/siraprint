@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   resources :delivery_addresses
   resources :slider_images
   resources :posts
+
+  resources :ordered_products, :only => ['update', 'destroy']
   
   resources :large_formats do
     member do

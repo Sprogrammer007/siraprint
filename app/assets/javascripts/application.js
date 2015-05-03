@@ -15,6 +15,9 @@
 //= require bootstrap
 //= require galleria-1.4.2
 //= require product
+//= require uploader
+//= require jquery-fileupload/basic
+//= require jquery-fileupload/vendor/tmpl
 
 $(function () {
   $('[data-toggle="popover"]').popover({
