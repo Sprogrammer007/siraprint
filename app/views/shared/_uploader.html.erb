@@ -1,6 +1,6 @@
 <%= s3_uploader_form patch: ordered_product_url(op), destroy: ordered_product_url(op), success: cart_url(), as: "ordered_product", side: side do %>
   <span class="info">
-    <i class="glyphicon glyphicon-open-file"></i><br/>
+    <i class="glyphicon glyphicon-cloud-upload"></i><br/>
     <span class="notice">Please Upload Your <strong style="color: red;">Front <%= (side == 1) ? "" : "& Back" %> Design</strong> You can also Drag & Drop your Design here<br> Accepted Formats: pdf, jpeg, gif, and png</span> 
   </span>
   <span class="btn btn-success btn-file">
