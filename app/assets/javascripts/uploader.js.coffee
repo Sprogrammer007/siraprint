@@ -7,7 +7,6 @@ ready = ->
   $('#fileupload').fileupload
     dataType: 'json',
     add: (e, data) ->
-       console.log("test it's added ")
       $uploadedFile = $uploadedFile + data.originalFiles.length
 
       if $uploadedFile > $maxFileNum || data.originalFiles.length > $maxFileNum
