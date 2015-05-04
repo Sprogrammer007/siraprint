@@ -1,5 +1,5 @@
 ready = ->
-  console.log("test")
+  console.log("test it's trigger ")
   $fileDone = 0
   $maxFileNum = $('#fileupload').data('side')
   $uploadedFile = 0
