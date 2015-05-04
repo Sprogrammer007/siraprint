@@ -7,6 +7,7 @@
 <% else %>
   $('#uploader').find('.modal-body').prepend("<%= j(render 'shared/uploader', op: @op, side: @side)%>")
   $(document).trigger('set.uploader')
+  Rails.logger.warn "triigered"
   $('#uploader').modal({
     backdrop: false,
     show: true
