@@ -1,0 +1,14 @@
+<div class="upload-done">
+  <%- if v.first == "Not Signed In" %>
+    <span>You need to sign in to continue.</span>
+    <div class="row">
+    <div class="col-md-6">
+      <%= link_to "Signin as Broker", new_broker_session_path(), class: "btn btn-success" %>
+    </div>
+    <div class="col-md-6" >
+      <%= link_to "Signin", new_user_session_path(), class: "btn btn-success"  %>
+    </div>
+  <%- else %>
+    <span>You're account is not approved yet. Please contact us if you have any questions.</span>
+  <% end %>
+</div>

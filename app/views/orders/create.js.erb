@@ -5,6 +5,13 @@
   } else {
     $('.col-main').prepend("<%= j(render 'shared/order_errors', errors: @errors)%>")
   }
+<% elsif @validate.any? %>
+  $('#uploader').find('.modal-body').html("<%= j(render 'shared/not_logged_in', v: @validate)%>")
+  $('#uploader').modal({
+    backdrop: false,
+    show: true
+  });
+  
 <% else %>
   $('#uploader').find('.modal-body').prepend("<%= j(render 'shared/uploader', op: @op, side: @side)%>")
   $(document).trigger('set.uploader')

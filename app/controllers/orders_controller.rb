@@ -1,11 +1,15 @@
 class OrdersController < ApplicationController
   
-  before_filter :authenticate_approved!
+  before_filter :authenticate_approved!, except: [:create]
 
   def create
     @errors = validate_order(params[:order][:details])
-    @order = current_active.open_order || current_active.new_order(request.remote_ip)
-    if @order && !@errors.any?    
+    @validate = validate_logged_in();
+    Rails.logger.warn "#{@validate}"
+    if !@validate.any?
+      @order = current_active.open_order || current_active.new_order(request.remote_ip)
+    end
+    if @order && !@errors.any? && !@validate.any?
       op = @order.create_new_ordered_product(params[:order], session[:current_rate])
       if op.save
         detail = op.create_details(params[:order][:product_type], params[:order][:details])
@@ -129,6 +133,8 @@ class OrdersController < ApplicationController
     end
 
     def validate_invoice  
+
+
       if current_active && !current_active.has_order?(params[:id]) 
         flash[:notice] = "This is not your order!"
         return redirect_to root_path()
@@ -162,5 +168,18 @@ class OrdersController < ApplicationController
       end
 
       return errors
+    end
+
+    def validate_logged_in
+      a = []
+      if !current_active
+        a << "Not Signed In"
+      end
+
+      if current_active && !current_active.approved?
+        a << "Not Approved"
+      end
+
+      return a
     end
 end
