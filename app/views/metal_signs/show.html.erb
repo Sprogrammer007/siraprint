@@ -51,6 +51,14 @@
       Cost Per Print:
       <span class="per-placeholder"></span>
     </div>
+    <%- if current_active.is_a?(Broker) %>
+      <div class="bd-box">
+        Broker Discount:
+        <span class="bd-placeholder">
+          <%= "#{@large_format.broker_discount}%" %>
+        </span>
+      </div>
+    <% end %>
     <div class="total-price-box">
       Total Cost:
       <span class="total-placeholder"></span>
