@@ -1,5 +1,5 @@
 ready = ->
-  console.log("test it's trigger ")
+
   $fileDone = 0
   $maxFileNum = $('#fileupload').data('side')
   $uploadedFile = 0
@@ -34,8 +34,8 @@ ready = ->
         data.context.find('.bar-number').html(progress + '%')
 
     done: (e, data) ->
+      $fileDone++
       if $fileDone < $maxFileNum
-        $fileDone++
         return
 
       file = data.originalFiles[0]

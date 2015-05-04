@@ -209,7 +209,7 @@ ActiveRecord::Schema.define(version: 20150501030853) do
   end
 
   create_table "slider_images", force: :cascade do |t|
-    t.string   "slide_image_file_name"
+    t.string   "slide_imagestring"
     t.string   "product_type"
     t.datetime "created_at"
     t.datetime "updated_at"
