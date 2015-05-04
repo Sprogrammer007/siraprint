@@ -6,10 +6,10 @@
     $('.col-main').prepend("<%= j(render 'shared/order_errors', errors: @errors)%>")
   }
 <% else %>
-<%- Rails.logger.warn "yes" %>
+
   $('#uploader').find('.modal-body').prepend("<%= j(render 'shared/uploader', op: @op, side: @side)%>")
   $(document).trigger('set.uploader')
-  Rails.logger.warn "triigered"
+  <%- Rails.logger.warn "yes" %>
   $('#uploader').modal({
     backdrop: false,
     show: true

@@ -15,7 +15,6 @@ class OrdersController < ApplicationController
       end
       @order.update_price
       @op = op
-      Rails.logger.warn "#{op.details.side}"
       @side = (op.details.side || 1)
     end
     session[:current_rate] = nil
