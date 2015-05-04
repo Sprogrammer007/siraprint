@@ -4,7 +4,7 @@ class CreateLargeFormats < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.integer :sides
-      t.attachment :display_image
+      t.string :display_image_file_name
       t.string :status
       
       t.timestamps

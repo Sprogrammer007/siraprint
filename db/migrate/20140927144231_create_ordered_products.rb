@@ -5,8 +5,8 @@ class CreateOrderedProducts < ActiveRecord::Migration
       t.integer :quantity
       t.decimal :unit_price
       t.decimal :price
-      t.attachment :print_pdf
-      t.attachment :print_pdf_2
+      t.string :print_pdf_file_name
+      t.string :print_pdf_2_file_name
       t.string :product_type
       t.integer :product_detail_id
       t.integer :product_id

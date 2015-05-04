@@ -3,7 +3,7 @@ class CreateMetalSigns < ActiveRecord::Migration
     create_table :metal_signs do |t|
     	t.string :name
     	t.text :description
-    	t.attachment :display_image
+    	t.string :display_image_file_name
     	t.string :status
 
       t.timestamps

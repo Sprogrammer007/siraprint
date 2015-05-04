@@ -6,7 +6,7 @@ class CreatePosts < ActiveRecord::Migration
       t.text :content
       t.string :author
       t.string :category
-      t.attachment :featured_image
+      t.string :featured_image_file_name
       t.timestamps
     end
   end
