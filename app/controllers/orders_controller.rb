@@ -19,7 +19,7 @@ class OrdersController < ApplicationController
       end
       @order.update_price
       @op = op
-      @side = (op.details.side || 1)
+      @side = (params[:order][:product_type] == "large_format") ? op.details.side : 1
     end
     session[:current_rate] = nil
     respond_to do |format|
