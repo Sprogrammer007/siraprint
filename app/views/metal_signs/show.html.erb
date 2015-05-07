@@ -16,7 +16,7 @@
 </div>
 
 <div class="col-side order_form">
-    <%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "metal-signs-form", multipart: true do %>
+    <%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "metal-signs-form", multipart: true, remote: true do %>
     <div id="product-options" data-price-url="<%=  get_price_metal_sign_path(@metal_sign) %>"  data-u-type="<%=  current_active.class.name %>" data-b-disc="<%=  @metal_sign.broker_discount %>"></div>
     <%= hidden_field_tag '[order]product_type', 'metal_sign' %>
     <%= hidden_field_tag '[order]product_id', @metal_sign.id %>
