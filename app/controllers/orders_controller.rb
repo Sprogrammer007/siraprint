@@ -3,7 +3,7 @@ class OrdersController < ApplicationController
   before_filter :authenticate_approved!, except: [:create]
 
   def create
-    @errors = validate_order(params[:order][:details])
+    @errors = validate_order(params[:order][:details], params[:order][:product_type])
     @validate = validate_logged_in();
     Rails.logger.warn "#{@validate}"
     if !@validate.any?
@@ -155,17 +155,24 @@ class OrdersController < ApplicationController
         :billing_address, :billing_city, :billing_prov, :billing_postal)
     end
 
-    def validate_order(p)
+    def validate_order(p, type)
       errors = []
-      if p[:width].empty?
-        errors << "Please enter width";
+      if type == "large_format"
+        if p[:width].empty?
+          errors << "Please enter width";
+        end
+        if p[:length].empty?
+          errors << "Please enter length";
+        end
+        if p[:thickness_id].empty?
+          errors << "Please select a thickness";
+        end 
+      else
+        if p[:size_id].empty?
+          errors << "Please select a size";
+        end 
       end
-      if p[:length].empty?
-        errors << "Please enter length";
-      end
-      if p[:thickness_id].empty?
-        errors << "Please select a thickness";
-      end
+
 
       return errors
     end
