@@ -3,7 +3,7 @@ ready = ->
   $fileDone = 0
   $maxFileNum = $('#fileupload').data('side')
   $uploadedFile = 0
-  $files = [];
+  $fileNames = [];
 
   $('#fileupload').fileupload
     dataType: 'json',
@@ -38,6 +38,7 @@ ready = ->
       $fileDone++
       $fileNames[fileDone] = data.originalFiles[0].name
       console.log($fileNames)
+      console.log(data.originalFiles)
       if $fileDone < $maxFileNum
         return
 
