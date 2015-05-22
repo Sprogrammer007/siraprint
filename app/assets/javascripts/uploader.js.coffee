@@ -37,10 +37,8 @@ ready = ->
         data.context.find('.bar-number').html(progress + '%')
 
     done: (e, data) ->
+      $fileNames[$fileDone] = data.originalFiles[$fileDone].name
       $fileDone++
-      $fileNames[$fileDone] = data.originalFiles[0].name
-      console.log($fileNames)
-      console.log(data.originalFiles)
       if $fileDone < $maxFileNum
         return
 
@@ -49,11 +47,11 @@ ready = ->
       content['data']= {}
 
       domain = $('#fileupload').attr('action')
-      path = $('#fileupload input[name=key]').val().replace('${filename}', $fileNames[1])
+      path = $('#fileupload input[name=key]').val().replace('${filename}', $fileNames[0])
       data['print_pdf'] = (domain + path)
 
-      if $fileNames[2] != undefined
-        path2 = $('#fileupload input[name=key]').val().replace('${filename}', $fileNames[2])
+      if $fileNames[0] != undefined
+        path2 = $('#fileupload input[name=key]').val().replace('${filename}', $fileNames[1])
         data['print_pdf_2'] = (domain + path2)
 
       to = $('#fileupload').data('patch')
