@@ -3,6 +3,7 @@ ready = ->
   $fileDone = 0
   $maxFileNum = $('#fileupload').data('side')
   $uploadedFile = 0
+  $files = [];
 
   $('#fileupload').fileupload
     dataType: 'json',
@@ -35,22 +36,21 @@ ready = ->
 
     done: (e, data) ->
       $fileDone++
-      console.log(data)
+      $fileNames[fileDone] = data.originalFiles[0].name
+      console.log($fileNames)
       if $fileDone < $maxFileNum
         return
 
-      file = data.originalFiles[0]
-      file2 = data.originalFiles[1]
       content = {}
       data = {}
       content['data']= {}
 
       domain = $('#fileupload').attr('action')
-      path = $('#fileupload input[name=key]').val().replace('${filename}', file.name)
+      path = $('#fileupload input[name=key]').val().replace('${filename}', $fileNames[1])
       data['print_pdf'] = (domain + path)
 
-      if file2 != undefined
-        path2 = $('#fileupload input[name=key]').val().replace('${filename}', file2.name)
+      if fileNames[2] != undefined
+        path2 = $('#fileupload input[name=key]').val().replace('${filename}', $fileNames[2])
         data['print_pdf_2'] = (domain + path2)
 
       to = $('#fileupload').data('patch')
@@ -58,6 +58,7 @@ ready = ->
       content['method'] = "PATCH" 
       content['success'] = (data, status) ->
         $('#fileupload').replaceWith($(tmpl("template-done", file)))
+        $fileNames = []
         $fileDone = 0
         $uploadedFile = 0
 
@@ -69,6 +70,7 @@ ready = ->
     fail: (e, data) ->
       alert("#{data.files[0].name} failed to upload.")
       console.log("Upload failed:")
+      $fileNames = [];
       $fileDone = $fileDone--
       $uploadedFile = $uploadedFile--
 
