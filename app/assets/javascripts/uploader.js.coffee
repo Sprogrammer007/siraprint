@@ -12,7 +12,7 @@ ready = ->
       $uploadedFile++
 
       if $uploadedFile > $maxFileNum || data.originalFiles.length > $maxFileNum
-        $('#fileupload').find('.alerts')html("One too many file, try uploading " + $maxFileNum + " or less." ) 
+        $('#fileupload').find('.alerts').html("One too many file, try uploading " + $maxFileNum + " or less." ) 
         return
 
       types = /(\.|\/)(gif|jpe?g|png|pdf)$/i
@@ -40,7 +40,7 @@ ready = ->
         $fileNames[$fileDone] = data.originalFiles[$fileDone].name
       else
         $fileNames[$fileDone] = data.originalFiles[0].name
-        
+
       $fileDone++
       if $fileDone < $maxFileNum
         return
