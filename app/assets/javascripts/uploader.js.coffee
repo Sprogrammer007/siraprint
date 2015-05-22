@@ -4,6 +4,7 @@ ready = ->
   $maxFileNum = 0
   $uploadedFile = 0
   $fileNames = []
+  $alerted = false
 
   $('#fileupload').fileupload
     dataType: 'json',
@@ -13,6 +14,8 @@ ready = ->
       console.log($uploadedFile)
       
       if $uploadedFile > $maxFileNum || data.originalFiles.length > $maxFileNum
+        if $alerted return;
+        $alerted = true;  
         alert("One too many file, try uploading " + $maxFileNum + " or less." ) 
         return
 
@@ -50,7 +53,7 @@ ready = ->
       path = $('#fileupload input[name=key]').val().replace('${filename}', $fileNames[0])
       data['print_pdf'] = (domain + path)
 
-      if $fileNames[0] != undefined
+      if $fileNames[1] != undefined
         path2 = $('#fileupload input[name=key]').val().replace('${filename}', $fileNames[1])
         data['print_pdf_2'] = (domain + path2)
 
