@@ -36,7 +36,7 @@ ready = ->
 
     done: (e, data) ->
       $fileDone++
-      $fileNames[fileDone] = data.originalFiles[0].name
+      $fileNames[$fileDone] = data.originalFiles[0].name
       console.log($fileNames)
       console.log(data.originalFiles)
       if $fileDone < $maxFileNum
