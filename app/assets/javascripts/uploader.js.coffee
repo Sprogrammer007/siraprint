@@ -9,9 +9,8 @@ ready = ->
     dataType: 'json',
     add: (e, data) ->
       $maxFileNum = $('#fileupload').data('side')
-      console.log(data.originalFiles.length)
+      $uploadedFile++
       console.log($uploadedFile)
-      $uploadedFile = $uploadedFile + data.originalFiles.length
       
       if $uploadedFile > $maxFileNum || data.originalFiles.length > $maxFileNum
         alert("One too many file, try uploading " + $maxFileNum + " or less." ) 
