@@ -35,9 +35,10 @@ ready = ->
 
     done: (e, data) ->
       $fileDone++
+      console.log(data)
       if $fileDone < $maxFileNum
         return
-      console.log(data.originalFiles)
+
       file = data.originalFiles[0]
       file2 = data.originalFiles[1]
       content = {}
