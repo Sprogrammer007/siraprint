@@ -14,10 +14,12 @@ ready = ->
       console.log($uploadedFile)
       
       if $uploadedFile > $maxFileNum || data.originalFiles.length > $maxFileNum
-        if $alerted return;
-        $alerted = true;  
-        alert("One too many file, try uploading " + $maxFileNum + " or less." ) 
-        return
+        if $alerted 
+          return
+        else
+          $alerted = true;  
+          alert("One too many file, try uploading " + $maxFileNum + " or less." ) 
+          return
 
       types = /(\.|\/)(gif|jpe?g|png|pdf)$/i
       file = data.files[0]
