@@ -5,7 +5,6 @@ class OrdersController < ApplicationController
   def create
     @errors = validate_order(params[:order][:details], params[:order][:product_type])
     @validate = validate_logged_in();
-    Rails.logger.warn "#{@validate}"
     if !@validate.any?
       @order = current_active.open_order || current_active.new_order(request.remote_ip)
     end
