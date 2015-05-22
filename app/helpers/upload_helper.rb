@@ -49,7 +49,7 @@ module UploadHelper
     end
 
     def key
-      @key ||= "uploads/#{SecureRandom.hex}/${filename}"
+      @key ||= "uploads/#{Date.today}/${filename}"
     end
 
     def url
