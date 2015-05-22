@@ -14,12 +14,8 @@ ready = ->
       console.log($uploadedFile)
       
       if $uploadedFile > $maxFileNum || data.originalFiles.length > $maxFileNum
-        if $alerted 
-          return
-        else
-          $alerted = true;  
-          alert("One too many file, try uploading " + $maxFileNum + " or less." ) 
-          return
+        $('#fileupload').find('.alerts')html("One too many file, try uploading " + $maxFileNum + " or less." ) 
+        return
 
       types = /(\.|\/)(gif|jpe?g|png|pdf)$/i
       file = data.files[0]
@@ -42,7 +38,10 @@ ready = ->
         data.context.find('.bar-number').html(progress + '%')
 
     done: (e, data) ->
-      $fileNames[$fileDone] = data.originalFiles[$fileDone].name
+      if data.originalFiles.length == 2
+        $fileNames[$fileDone] = data.originalFiles[$fileDone].name
+      else
+        $fileNames[$fileDone] = data.originalFiles[0].name
       $fileDone++
       if $fileDone < $maxFileNum
         return
