@@ -38,7 +38,7 @@
         %td
           - if !p.print_pdf.nil?
             = link_to File.basename(p.print_pdf), p.print_pdf
-          - elsif !p.print_pdf_2.nil?
+          - if !p.print_pdf_2.nil?
             = link_to File.basename(p.print_pdf_2), p.print_pdf_2
 
         %td
