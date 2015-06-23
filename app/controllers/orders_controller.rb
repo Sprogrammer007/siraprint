@@ -75,6 +75,11 @@ class OrdersController < ApplicationController
 
   def pay
     @order = current_active.open_order
+    unless @order 
+      flash[:notice] = "You have no order to pay for..."
+      redirect_to root_path
+      return
+    end
     @order.final = true
     if @order.update(safe_order_cc)
       if @order.purchase
