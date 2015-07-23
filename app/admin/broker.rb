@@ -54,7 +54,7 @@ ActiveAdmin.register Broker do
       f.input :status, :as => :select, :collection => options_for_select(['Registered', 'Approved', "Disapproved"], f.object.status)
       f.input :company_name
       f.input :company_address
-      f.input :company_province, :as => :select, :collection => options_for_select(User.provinces, f.object.company_province)
+      f.input :company_province, :as => :select, :collection => options_for_select(Broker.provinces, f.object.company_province)
       f.input :company_city
       f.input :company_postal
       f.input :company_phone
@@ -65,19 +65,19 @@ ActiveAdmin.register Broker do
 
   #Actions
   member_action :approve, method: :get do
-    @user = Broker.find(params[:id])
-    if @user.approvable?
-      UserMailer.user_approved(@user).deliver
-      @user.update(status: "Approved")
+    @broker = Broker.find(params[:id])
+    if @broker.approvable?
+      UserMailer.user_approved(@broker).deliver_now
+      @broker.update(status: "Approved")
     else
-      @user.update(status: "Disapproved")
+      @broker.update(status: "Disapproved")
     end
     redirect_to :back
   end
 
   member_action :disapprove, method: :get do
-    @user = Broker.find(params[:id])
-    @user.update(status: "Disapproved")
+    @broker = Broker.find(params[:id])
+    @broker.update(status: "Disapproved")
  
     redirect_to :back
   end
