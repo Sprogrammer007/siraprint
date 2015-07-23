@@ -85,6 +85,14 @@
   </div>
   <div class="item-checkout product-box">
     <div class="divider"></div>
+    <%- if current_active.is_a?(Broker) %>
+      <div class="per-price-box">
+        Cost Per Print (Before Disount):
+        <span class="before-per-placeholder">
+          $0
+        </span>
+      </div>
+    <% end %>
     <div class="per-price-box">
       Cost Per Print:
       <span class="per-placeholder">
@@ -92,7 +100,7 @@
       </span>
     </div>
     <div class="finishing-price-box">
-      Finishing(Per Print):
+      Finishing (Per Print):
       <span class="finishing-placeholder">
         $0
       </span>
@@ -111,10 +119,10 @@
         $0
       </span>
     </div>
-    <div class="divider"></div>
+
   
   </div>
   <div class="submit-order">
-    <%= button_tag "Place My Order", class: "btn btn-place-order" %>
+    <%= button_tag "Add to Cart", class: "btn btn-place-order" %>
   </div>
 <% end %>

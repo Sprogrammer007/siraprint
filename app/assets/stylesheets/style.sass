@@ -917,8 +917,8 @@ span.status_completed
 .finishing-price-box, 
 .bd-box
   text-align: left
-  font-size: 1.2em
-  margin-bottom: 2px
+  font-size: 14px
+  margin-bottom: 5px
 
 .total-price-box
   font-size: 1.5em
@@ -930,10 +930,19 @@ span.status_completed
 
 .total-price-box
   font-weight: 900
+.total-price-box:before
+  content: ''
+  display: block
+  width: 100%
+  border-top: 1px solid #D3D3D3
+  height: 1px
+  margin: 15px auto
+
 .per-placeholder, 
 .finishing-placeholder, 
 .total-placeholder,
-.bd-placeholder
+.bd-placeholder,
+.before-per-placeholder
   float: right
 
 

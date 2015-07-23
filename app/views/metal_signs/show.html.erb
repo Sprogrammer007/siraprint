@@ -46,6 +46,14 @@
       <%= text_area_tag '[order]comment', "", class: "form-control", style: "height: 80px;" %>
     </div>
     <div class="divider"></div>
+    <%- if current_active.is_a?(Broker) %>
+      <div class="per-price-box">
+        Cost Per Print (Before Disount):
+        <span class="before-per-placeholder">
+          $0
+        </span>
+      </div>
+    <% end %>
     <div class="per-price-box">
       Cost Per Print:
       <span class="per-placeholder"></span>
@@ -62,10 +70,10 @@
       Total Cost:
       <span class="total-placeholder"></span>
     </div>
-    <div class="divider"></div>
+ 
 
     <div class="submit-order">
-      <%= button_tag "Place My Order", class: "btn btn-place-order" %>
+      <%= button_tag "Add to Cart", class: "btn btn-place-order" %>
     </div>
     <% end %> 
 </div>

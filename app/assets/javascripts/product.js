@@ -37,6 +37,7 @@ ready = function() {
     rate: 0,
     fin_price: 0,
     unit_price: 0,
+    before_discount_unit_price: 0,
     total_price: 0,
     resetFinishingPrice: function() {
       this.l_price = 0;
@@ -93,6 +94,11 @@ ready = function() {
   set_per_unit_price = function(price) {
     currentItem.unit_price = parseFloat(round_numb(price));
     return $('.per-placeholder').html("$" + currentItem.unit_price);
+  };  
+  set_before_discount_per_unit_price = function(price) {
+    if ($userType != "Broker") {return};
+    currentItem.before_discount_unit_price = parseFloat(round_numb(price));
+    return $('.before-per-placeholder').html("$" + currentItem.before_discount_unit_price);
   };
   set_finish_price = function(price) {
     currentItem.fin_price = parseFloat(round_numb(price));
@@ -119,6 +125,7 @@ ready = function() {
         if (side === 2) {
           price = price * 2;
         }
+        set_before_discount_per_unit_price(price);
         if ($userType === "Broker" && $brokerDiscount !== 0) {
           price = (price - ((price * $brokerDiscount) / 100.0));
         }
@@ -128,9 +135,9 @@ ready = function() {
     });
   };
   change_price_calc = function(quantity, side) {
-    var fin_price, price, total_price;
+    var fin_price, price, before_discount_price, total_price;
     price = currentItem.unit_price;
-
+    before_discount_price = currentItem.before_discount_unit_price;
     //apply discount
     if ($userType === "Broker" && $brokerDiscount !== 0) {
       price = (price - ((price * $brokerDiscount) / 100.0));
@@ -140,14 +147,16 @@ ready = function() {
     if (currentItem.l_price !== 0 || currentItem.g_price !== 0 || currentItem.dc_price !== 0 || currentItem.sf_price !== 0) {
       fin_price = currentItem.l_price + currentItem.g_price + currentItem.dc_price + currentItem.sf_price;
       price = price + fin_price;
+      before_discount_price += fin_price;
     }
     if (side === 2) {
       price = price * 2;
+      before_discount_price = before_discount_price * 2;
       if (fin_price !== 0) {
         fin_price = fin_price * 2;
       }
     }
-
+    set_before_discount_per_unit_price(before_discount_price);
     set_per_unit_price(price);
     set_finish_price(fin_price);
     if (quantity !== 0) {
@@ -180,11 +189,13 @@ ready = function() {
         } else {
           currentItem.rate = data.price;
           price = calc_price(calc_sqft(w, l), data.price);
+          set_before_discount_per_unit_price(price);
           set_per_unit_price(price);
           return change_price_calc(quantity, side);
         }
       });
     } else {
+      set_before_discount_per_unit_price(price);
       set_per_unit_price(price);
       return change_price_calc(quantity, side);
     }
@@ -473,15 +484,18 @@ ready = function() {
         var price;
         if (data === null) {
           alert("no signed found");
+          set_before_discount_per_unit_price(0);
           set_per_unit_price(0);
           return set_total_price(0);
         } else {
           price = parseFloat(data.price) * parseFloat($quantityOption.val());
+          set_before_discount_per_unit_price(price);
           set_per_unit_price(price);
           return set_total_price(price);
         }
       });
     } else {
+      set_before_discount_per_unit_price(0);
       set_per_unit_price(0);
       return set_total_price(0);
     }
