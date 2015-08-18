@@ -1,5 +1,6 @@
 ready = ->
-
+  
+  $uploading = 'not started';
   $fileDone = 0
   $maxFileNum = 0
   $uploadedFile = 0
@@ -10,7 +11,6 @@ ready = ->
     add: (e, data) ->
       $maxFileNum = $('#fileupload').data('side')
       $uploadedFile++
-
       if $uploadedFile > $maxFileNum || data.originalFiles.length > $maxFileNum
         $('#fileupload').find('.alerts').html("One too many file, try uploading " + $maxFileNum + " or less." ) 
         return
@@ -23,6 +23,7 @@ ready = ->
 
         data.submit()
         #Once File Upload begins the dialog cannot be closed
+        $uploading = 'started'
         $('#uploader').find('.close').remove()
         $('#uploader').find('.notice').html("Uploading your designs... this could take a while thank you for your patience.")
       else
@@ -45,6 +46,8 @@ ready = ->
       if $fileDone < $maxFileNum
         return
 
+      $uploading = 'updating db'
+      orderProductID = $()
       content = {}
       data = {}
       content['data']= {}
@@ -61,10 +64,21 @@ ready = ->
       content['dataType'] = 'json'
       content['method'] = "PATCH" 
       content['success'] = (data, status) ->
-        $('#fileupload').replaceWith($(tmpl("template-done", file)))
+        if ($('.order-cart').length == 1)
+          id =  $('#fileupload').data('oid')
+          link1 = "<a href='" + domain + path + "'>" + $fileNames[0] + "</a>";
+          link2 = '';
+          if $fileNames[1] != undefined
+            link2 = "<a href='" + domain + path2 + "'>" + $fileNames[1] + "</a>";
+          console.log(id)
+          $('.upload-' + id ).replaceWith(link1 + link2);
+          $('#uploader').modal('hide')
+        else 
+          $('#fileupload').replaceWith($(tmpl("template-done", file)))
         $fileNames = []
         $fileDone = 0
         $uploadedFile = 0
+        $uploading = 'completed'
 
       content['data'][$('#fileupload').data('as')] =  data
       $.ajax(to, content)
@@ -73,12 +87,14 @@ ready = ->
    
     fail: (e, data) ->
       alert("#{data.files[0].name} failed to upload.")
-      console.log("Upload failed:")
       $fileNames = [];
       $fileDone = $fileDone--
       $uploadedFile = $uploadedFile--
+      $uploading = 'failed'
 
   $('#uploader').on 'hidden.bs.modal', (e) ->
+    if ($('.order-cart').length == 1) 
+      return
     to = $('#fileupload').data('destroy')
     success = (data, status) ->
       location.reload()

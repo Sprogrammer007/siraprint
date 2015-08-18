@@ -8,7 +8,7 @@ class Broker < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :timeoutable
+         :recoverable, :rememberable, :trackable, :validatable, :timeoutable, :timeout_in => 30.days
 
   validates :company_name, :company_province, :company_address,:company_postal,
   :company_phone, :company_hst, :company_city, presence: true

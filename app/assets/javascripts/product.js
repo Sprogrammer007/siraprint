@@ -32,6 +32,7 @@ ready = function() {
   currentItem = {
     l_price: 0,
     g_price: 0,
+    s_price: 0,
     dc_price: 0,
     sf_price: 0,
     rate: 0,
@@ -52,6 +53,11 @@ ready = function() {
   }), function() {
     $(this).removeClass("show");
   });
+
+  error = function(e, t) {
+    e.tooltip({container: 'body', trigger: 'manual'})
+    e.attr('title', t).tooltip('fixTitle').tooltip('show')
+  }
   convert_to_feet = function(x) {
     return parseFloat(Math.ceil((x * 0.083333) * 100) / 100).toFixed(2);
   };
@@ -144,8 +150,8 @@ ready = function() {
     }
     
     fin_price = 0;
-    if (currentItem.l_price !== 0 || currentItem.g_price !== 0 || currentItem.dc_price !== 0 || currentItem.sf_price !== 0) {
-      fin_price = currentItem.l_price + currentItem.g_price + currentItem.dc_price + currentItem.sf_price;
+    if (currentItem.l_price !== 0 || currentItem.g_price !== 0 || currentItem.dc_price !== 0 || currentItem.sf_price !== 0 || currentItem.s_price !== 0) {
+      fin_price = currentItem.l_price + currentItem.g_price + currentItem.dc_price + currentItem.sf_price + currentItem.s_price;
       price = price + fin_price;
       before_discount_price += fin_price;
     }
@@ -215,31 +221,31 @@ ready = function() {
     if ($(that).hasClass('product-width')) {
       if (u === "inch") {
         if (l !== "" && l > $max_l && w > $max_w) {
-          alert("There is a maximum of 52 inch for either length or width");
+          error(that, "maximum of 52 inch for either length or width");
           return false;
         }
       } else {
         if (l !== "" && l > max_l_f && w > max_w_f) {
-          alert("There is a maximum of 4.34 feet for either length or width");
+          error(that, "maximum of 4.34 feet for either length or width");
           return false;
         }
       }
     } else {
       if (u === "inch") {
         if (w !== "" && w > $max_w && l > $max_l) {
-          alert("There is a maximum of 52 inch for either length or width");
+          error(that, "maximum of 52 inch for either length or width");
           return false;
         }
       } else {
         if (w !== "" && w > max_w_f && l > max_l_f) {
-          alert("There is a maximum of 4.34 feet for either length or width");
+          error(that, "maximum of 4.34 feet for either length or width");
           return false;
         }
       }
     }
     return true;
   };
-  check_max_size_cb = function(w, l, u) {
+  check_max_size_cb = function(w, l, u, that) {
     var max_l_f, max_w_f, min_size, min_size_f;
     max_l_f = parseFloat(convert_to_feet($max_l));
     max_w_f = parseFloat(convert_to_feet($max_w));
@@ -251,14 +257,15 @@ ready = function() {
       } else {
         min_size = $max_w;
       }
+   
       if ((w !== "" && w === $max_w && l > $max_l) || (w !== "" && w === $max_l && l > $max_w)) {
-        alert("There is a maximum of " + $max_w + " x " + $max_l + " inch");
+        error(that, "maximum of " + $max_w + " x " + $max_l + " inch");
         return false;
       } else if ((l !== "" && l === $max_w && w > $max_l) || (l !== "" && l === $max_l && w > $max_w)) {
-        alert("There is a maximum of " + $max_w + " x " + $max_l + " inch");
+        error(that, "maximum of " + $max_w + " x " + $max_l + " inch");
         return false;
       } else if ((w !== "" && w > min_size && l > min_size) || (l !== "" && l > min_size && w > min_size)) {
-        alert("One of your side must be lesser or equal to " + min_size + " inch");
+        error(that, "One of your side must be lesser or equal to " + min_size + " inch");
         return false;
       }
     } else {
@@ -270,18 +277,20 @@ ready = function() {
         min_size_f = max_w_f;
       }
       if ((w !== "" && w === max_w_f && l > max_l_f) || (w !== "" && w === max_l_f && l > max_w_f)) {
-        alert("There is a maximum of " + max_w_f + " x " + max_l_f + " feet");
+        error(that, "maximum of " + max_w_f + " x " + max_l_f + " feet");
         return false;
       } else if ((l !== "" && l === max_w_f && w > max_l_f) || (l !== "" && l === max_l_f && w > max_w_f)) {
-        alert("There is a maximum of " + max_w_f + " x " + max_l_f + " feet");
+        error(that, "maximum of " + max_w_f + " x " + max_l_f + " feet");
         return false;
       } else if ((w !== "" && w > min_size_f && l > min_size_f) || (l !== "" && l > min_size_f && w > min_size_f)) {
-        alert("One of your side must be lesser or equal to " + min_size_f + " feet");
+        error(that, "One of your side must be lesser or equal to " + min_size_f + " feet");
         return false;
       }
     }
     return true;
   };
+
+
   $form.on('change', '.product-width, .product-length', function(e) {
     var length, t_id, unit, width;
     unit = $unitOption.find(':selected').val();
@@ -290,19 +299,22 @@ ready = function() {
     t_id = $thicknessOption.find(':selected').val();
     if ($(this).val() <= 0) {
       $(this).val('');
-      return alert("width or length cannot be 0");
+      error($(this), "Cannot be 0.")
+      return
     }
+
     if ($max_l === 52 && $max_w === 52) {
-      if (!check_max_size(width, length, unit, this)) {
+      if (!check_max_size(width, length, unit, $(this))) {
         $(this).val('');
         return;
       }
     } else {
-      if (!check_max_size_cb(width, length, unit)) {
+      if (!check_max_size_cb(width, length, unit, $(this))) {
         $(this).val('');
         return;
       }
     }
+    $(this).tooltip('hide');
     if (currentItem.rate !== 0 && t_id !== void 0 && t_id !== '') {
       return change_price(t_id);
     }
@@ -311,7 +323,7 @@ ready = function() {
     var thickness;
     thickness = $thicknessOption.find(':selected').val();
     if (currentItem.rate !== 0 && thickness !== void 0 && thickness === '') {
-      alert("Please select a thickness");
+      error($thicknessOption, "Please select a thickness");
       $(this).blur();
       return false;
     }
@@ -335,10 +347,14 @@ ready = function() {
     width = $widthOption.val();
     length = $lengthOption.val();
     sqft = calc_sqft(width, length);
-    if (width === "" || length === "") {
+    if (width === "") {
       $(this).prop('selectedIndex', 0);
-      return alert("You must enter a length & width");
+      return error($widthOption , "You must enter a width");
+    } else if (length === "") {
+      $(this).prop('selectedIndex', 0);
+      return error($lengthOption, "You must enter a length");
     }
+    $(this).tooltip('hide');
     if (currentItem.rate !== 0) {
       return change_price(id);
     } else {
@@ -355,7 +371,10 @@ ready = function() {
       });
       currentItem.resetFinishingPrice();
       $('.grommets-box').addClass('hidden');
-      return $('.grommets-field').val(0);
+      $('.grommets-field').val(0);   
+      $('.stick-box').addClass('hidden');
+      $('.stick-field').val(0);
+      return 
     }
   };
   grommets_change = function(checked) {
@@ -365,6 +384,15 @@ ready = function() {
       $('.grommets-box').addClass('hidden');
       currentItem.g_price = 0;
       return $('.grommets-field').val(0);
+    }
+  };  
+  stick_change = function(checked) {
+    if (checked) {
+      return $('.stick-box').removeClass('hidden');
+    } else {
+      $('.stick-box').addClass('hidden');
+      currentItem.g_price = 0;
+      return $('.stick-field').val(0);
     }
   };
   lamination_change = function(checked, w, l) {
@@ -394,17 +422,21 @@ ready = function() {
       return currentItem.sf_price = 0;
     }
   };
+
   $form.on('change', '.finish-select', function() {
     var l, number_of_checked, option, w;
     w = $widthOption.val();
     l = $lengthOption.val();
     number_of_checked = $('.finish-select:checked').length;
-    if (w === "" || l === "") {
+    if (w === "") {
       $(this).prop('checked', false);
-      return alert("You must enter a length & width");
+      return error($widthOption , "You must enter a width");
+    } else if (l === "") {
+      $(this).prop('selectedIndex', 0);
+      return error($lengthOption, "You must enter a length");
     } else if (currentItem.rate === 0) {
       $(this).prop('checked', false);
-      return alert("You must enter a select a thickness");
+      return error($thicknessOption ,"You must enter a select a thickness");
     }
     option = $(this).val();
     if (this.checked && option !== 'None') {
@@ -412,8 +444,11 @@ ready = function() {
     } else if (!this.checked && number_of_checked === 0) {
       $('#finishing_none').prop('checked', true);
     }
+
     if (option === "Grommets") {
       grommets_change(this.checked);
+    } else if (option === "Step Sticks") {
+      stick_change(this.checked);
     } else if (option === "Gloss lamination") {
       if ($("#finishing_4").is(':checked')) {
         $("#finishing_4").prop('checked', false);
@@ -433,17 +468,32 @@ ready = function() {
     }
     return change_price();
   });
+
   $form.on('change', '.grommets-field', function() {
-    var gq;
-    gq = $(this).val();
+    var gq = $(this).val();
     if (gq < 1) {
       $(this).val(1);
       gq = 1;
-      alert("Number of prints must be atleast 1");
+      error($(this), "Atleast One");
     }
+    $(this).tooltip('hide');
     currentItem.g_price = parseInt(gq);
     return change_price();
   });
+
+  $form.on('change', '.stick-field', function() {
+
+    var s = $(this).val();
+    if (s < 1) {
+      $(this).val(1);
+      s = 1;
+      error($(this), "Atleast One");
+    }
+    $(this).tooltip('hide');
+    currentItem.s_price = parseFloat(s * 0.80);
+    return change_price();
+  });
+
 
   $form.on('change', '.quantity-field', function(e) {
     var price, quantity, t_id;
@@ -454,14 +504,17 @@ ready = function() {
       return $(this).val(1);
     } else if (quantity < 1) {
       $(this).val(1);
-      return alert("Number of prints must be atleast 1");
+      return error($(this), "Atleast One");
     } else if (t_id !== void 0) {
+      $(this).tooltip('hide');
       return change_price(t_id);
     } else if ($('#_orderproduct_type').val() === "metal_sign") {
+      $(this).tooltip('hide');
       price = price * quantity;
       return set_total_price(price);
     }
   });
+
   $('.qty-update-button').click(function(e) {
     var quantity, url;
     e.preventDefault();
@@ -501,7 +554,45 @@ ready = function() {
     }
   });
 
+  $form.find('form').submit(function(e) {
+    e.preventDefault();
+    var e = false;
+    if ($(this).hasClass('large-formats-form')) {
+      if ($widthOption.val() === '') {
+        error($widthOption, "Enter width");
+        e = true;
+      } else if ($lengthOption.val() === '') {
+        error($widthOption, "Enter length");
+        e = true;
+      } else if ($thicknessOption.val() === '') {
+        error($thicknessOption, 'Select Thickness')
+        e = true;
+      } else if ($('input[value="Grommets"]').is(':checked') && $('.grommets-field').val() === '')  {
+        error($('.grommets-field'), 'Enter # Grommets');
+        e = true;
+      } else if ($('input[value="Step Sticks"]').is(':checked') && $('.stick-field').val() === '')  {
+        error($('.stick-field'), 'Enter # Step Sticks');
+        e = true;
+      };
+    };
 
+    if (e) { return };
+    var data = $(this).serialize();
+    var url = $(this).attr('action');
+    $.post(url, data, null, 'script' );
+  });
+
+  $('.xaupload').on('click', function(e) {
+    $('.delivery-btn').tooltip('hide')
+  });
+
+  $('.delivery-btn').click(function(e) {
+    if ($('.xaupload').length > 0 ) {
+      e.preventDefault();
+      $(this).tooltip({container: 'body', trigger: 'manual', title: 'Some orders still requires design uploads.'});
+      $(this).tooltip('show')
+    }
+  });
 };
 
 $(document).ready(ready);

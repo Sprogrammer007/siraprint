@@ -7,9 +7,9 @@
  
       .checkout-buttons.group.mgl.pull-right
         - if @order.delivery_method()
-          = link_to "Update Delivery Method", delivery_info_path(), class: "btn btn-primary"
+          = link_to "Update Delivery Method", delivery_info_path(), class: "btn btn-primary delivery-btn"
         - else
-          = link_to "Select Delivery Method", delivery_info_path(), class: "btn btn-primary"
+          = link_to "Select Delivery Method", delivery_info_path(), class: "btn btn-primary delivery-btn"
           
       -# - if @order.delivery_method()
       -#   .express-checkout-button.group.mgl.pull-right

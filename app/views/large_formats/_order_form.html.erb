@@ -1,4 +1,4 @@
-<%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "large-formats-form", multipart: true, remote: true do %>
+<%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "large-formats-form" do %>
   <div id="product-options" data-price-url="<%=  get_price_large_format_path(@large_format) %>"  data-max-w="<%=  @large_format.max_width() %>" data-max-l="<%=  @large_format.max_length() %>" data-u-type="<%=  current_active.class.name %>" data-b-disc="<%=  @large_format.broker_discount %>"></div>
   <%= hidden_field_tag '[order]product_type', 'large_format' %>
   <%= hidden_field_tag '[order]product_id', @large_format.id %>
@@ -30,7 +30,7 @@
 
   <div class="item-thickness product-box">
     <h3>Thickness</h3>
-    <%= select("order", "[details]thickness_id", @large_format.large_format_thicknesses.collect {|t| [ "#{t.thickness}#{t.unit}", t.id ] }, {include_blank: 'Please select your thickness'}, class: "thickness-selection form-control") %>
+    <%= select("order", "[details]thickness_id", @large_format.large_format_thicknesses.collect {|t| [ "#{t.thickness}#{t.unit}", t.id ] }, {include_blank: 'Please select your thickness'}, class: "thickness-selection form-control", data: {toggle: 'tooltip', title: 'Select Thickness'}) %>
   </div>
 
   <div class="item-finishing-options product-box">
@@ -59,7 +59,18 @@
           <%= label_tag '[details]grommets_quantity', "# of Grommets Per Print" %>
         </div>
         <div class="col-lg-4">
-          <%= text_field_tag '[order][details]grommets_quantity', nil, class: "grommets-field form-control"%>
+          <%= text_field_tag '[order][details]grommets_quantity', nil, class: "grommets-field form-control", data: {toggle: 'tooltip', title: 'Enter Grommets Amount'}%>
+        </div>
+      </div>
+    </div>
+
+    <div class="stick-box mtl hidden">
+      <div class="row">
+        <div class="col-lg-8">
+          <%= label_tag '[details]sticks_quantity', "# of Step Sticks Per Print" %>
+        </div>
+        <div class="col-lg-4">
+          <%= text_field_tag '[order][details]sticks_quantity', nil, class: "stick-field form-control", data: {toggle: 'tooltip', title: 'Enter Step Sticks Amount'}%>
         </div>
       </div>
     </div>

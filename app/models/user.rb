@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :timeoutable
+         :recoverable, :rememberable, :trackable, :validatable, :timeoutable, :timeout_in => 30.days
   validates :email, format: { with: Broker::VALID_EMAIL_REGEX }
 
   has_many :delivery_addresses, dependent: :destroy

@@ -1,0 +1,6 @@
+$('#uploader').find('.modal-body').html("<%= j(render 'shared/uploader', op: @op, side: @side)%>")
+$(document).trigger('set.uploader')
+$('#uploader').modal({
+  backdrop: false,
+  show: true
+});

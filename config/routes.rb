@@ -17,7 +17,11 @@ Rails.application.routes.draw do
   resources :slider_images
   resources :posts
 
-  resources :ordered_products, :only => ['update', 'destroy']
+  resources :ordered_products, :only => ['update', 'destroy'] do 
+    member do
+      post 'upload'
+    end
+  end
   
   resources :large_formats do
     member do

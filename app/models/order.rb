@@ -265,6 +265,11 @@ class Order < ActiveRecord::Base
           f_price += details[:grommets_quantity].to_i
         end  
 
+        if details[:finishing].include?('Step Sticks')
+          Rails.logger.warn(details[:sticks_quantity].to_i)
+          f_price += (details[:sticks_quantity].to_i * 0.80)
+        end  
+
         if details[:finishing].include?('Die Cutting')
           f_price += sqft * 5
         end  

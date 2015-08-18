@@ -155,6 +155,9 @@ ActiveAdmin.register Order do
             end
             column "Gromments #" do |p|
               "#{p.details.grommets_quantity || 0}" 
+            end        
+            column "Step Sticks #" do |p|
+              "#{p.details.sticks_quantity || 0}" 
             end
             column :unit_price
             column :price

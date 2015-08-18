@@ -11,9 +11,17 @@ class OrderedProductsController < ApplicationController
       format.html 
       format.json { render :json => { success: true} }
     end
-
   end
 
+  def upload
+    @op = OrderedProduct.find(params[:id])
+    @side = (params[:side].to_i || 1)
+    respond_to do |format|
+      format.html 
+      format.js
+    end
+  end
+  
   def destroy
     OrderedProduct.find(params[:id]).destroy
     respond_to do |format|
