@@ -12,12 +12,9 @@ module UploadHelper
     def initialize(options)
       @options = options.reverse_merge(
         id: "fileupload",
-        # aws_access_key_id:  ENV['AWS_ACCESS_KEY_ID'],
-        # aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
-        # bucket: ENV['AWS_BUCKET'], 
-        aws_access_key_id: 'AKIAJTYZYQB3U6BYRE4Q',
-        aws_secret_access_key: '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',
-        bucket: 'siraprintuploads',
+        aws_access_key_id:  ENV['AWS_ACCESS_KEY_ID'],
+        aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
+        bucket: ENV['AWS_BUCKET'], 
         acl: "public-read",
         expiration: 1.hours.from_now,
         max_file_size: 100.megabytes,
