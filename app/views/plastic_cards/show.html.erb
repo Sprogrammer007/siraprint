@@ -1,0 +1,99 @@
+<div class="col-main">
+  <h2><%= @plastic_card.name %></h2>
+  <div class="galleria" id="galleria" style="height: 518px">
+    <%- if SliderImage.where(product_type: @plastic_card.name_for_db).any? %>
+      <%- SliderImage.where(product_type: @plastic_card.name_for_db).each do |image| %>
+        <%= image_tag(image.slide_image_file_name.url())  %>
+      <%- end %>
+    <%- end %>
+  </div>
+  <div class="item-description">
+    <h3>Item Description</h3>
+    <p>
+      <%= @plastic_card.description.html_safe() %>
+    </p>
+  </div>
+</div>
+
+<div class="col-side order_form">
+    <%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "metal-signs-form" do %>
+    <div id="product-options" data-price-url="<%=  get_price_plastic_card_path(@plastic_card) %>"  data-u-type="<%=  current_active.class.name %>" data-b-disc="<%=  @plastic_card.broker_discount %>"></div>
+    <%= hidden_field_tag '[order]product_type', 'plastic_card' %>
+    <%= hidden_field_tag '[order]product_id', @plastic_card.id %>
+
+    <div class="item-final product-box">
+      <h3>Quantity</h3>
+      <span style="position: relative; font-size: 10px; left: 0; top: -5px;">*Enter number of prints</span>
+      <div class="quantity-box">
+        <div class="row mgl">
+          <div class="col-lg-6">
+            <%= label_tag '[order]quantity', "Number of Prints" %>
+          </div>
+          <div class="col-lg-6">
+            <%= number_field_tag '[order]quantity', 1, class: "quantity-field form-control", in: 1...10000 %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="product-box">
+      <h3>Additional Comments</h3>
+      <%= text_area_tag '[order]comment', "", class: "form-control", style: "height: 80px;" %>
+    </div>
+    <div class="divider"></div>
+    <%- if current_active.is_a?(Broker) %>
+      <div class="per-price-box">
+        Cost Per Print (Before Disount):
+        <span class="before-per-placeholder">
+          <%= "$#{@price.rate.round(2)}" %>
+        </span>
+      </div>
+    <% end %>
+    <div class="per-price-box">
+      Cost Per Print:
+      <span class="per-placeholder">
+      <%- if (@plastic_card.broker_discount != 0) %>
+        <%= "$#{(@price.rate - (@price.rate * @plastic_card.broker_discount)/100).round(2)}" %>
+      <% else  %>
+        <%= "$#{@price.rate.round(2)}" %>
+      <% end %>
+      </span>
+    </div>
+    <%- if current_active.is_a?(Broker) %>
+      <div class="bd-box">
+        Broker Discount:
+        <span class="bd-placeholder">
+          <%= "#{@plastic_card.broker_discount}%" %>
+        </span>
+      </div>
+    <% end %>
+    <div class="total-price-box">
+      Total Cost: 
+      <span class="total-placeholder"><%= "$#{@price.rate.round(2)}" %></span>
+    </div>
+ 
+
+    <div class="submit-order">
+      <%= button_tag "Add to Cart", class: "btn btn-place-order" %>
+    </div>
+    <% end %> 
+</div>
+        
+<script>
+  gallery_setup = function() {
+    Galleria.loadTheme("<%=  asset_path('galleria.classic.js') %>");
+    
+    Galleria.configure({
+      height: 458, 
+      width: 580, 
+      responsive: true, 
+      lightbox: false, 
+      autoplay: true,
+      transition: 'fade',
+      showInfo: false
+    });
+
+    Galleria.run('#galleria');
+  } 
+  $(document).ready(gallery_setup);
+  $(document).on('page:load', gallery_setup);
+</script>

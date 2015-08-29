@@ -34,6 +34,12 @@ Rails.application.routes.draw do
     member do
       post 'get_price'
     end
+  end  
+
+  resources :plastic_cards do
+    member do
+      post 'get_price'
+    end
   end
 
   resources :orders, :except => ['show'] do

@@ -10,7 +10,7 @@ class OrdersController < ApplicationController
     end
     if @order && !@errors.any? && !@validate.any?
       op = @order.create_new_ordered_product(params[:order], session[:current_rate])
-      if op.save
+      if op.save && params[:order][:product_type] != 'plastic_card'
         detail = op.create_details(params[:order][:product_type], params[:order][:details])
         if detail.save
           op.update(:product_detail_id => detail.id)
@@ -40,9 +40,17 @@ class OrdersController < ApplicationController
 
   def update_item
     item = OrderedProduct.find(params[:id])
+    if item.product_type == 'plastic_card'
+      plastic_card = PlasticCard.find(item.product_id);
+      new_unite_price = plastic_card.update_unite_price(params[:quantity].to_i, current_active)
+      new_price = (new_unite_price * params[:quantity].to_i) 
+      item.update(:quantity => params[:quantity], unit_price: new_unite_price, price: new_price)
+    else
     new_price = (item.unit_price * params[:quantity].to_i) 
     item.update(:quantity => params[:quantity], price: new_price)
+    end
     render :js => "window.location = '#{cart_path()}'"
+
   end
 
   def cancel
@@ -174,13 +182,11 @@ class OrdersController < ApplicationController
         if p[:thickness_id].empty?
           errors << "Please select a thickness";
         end 
-      else
+      elsif type == 'metal_sign'
         if p[:size_id].empty?
           errors << "Please select a size";
         end 
       end
-
-
       return errors
     end
 

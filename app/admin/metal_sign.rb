@@ -16,8 +16,8 @@ ActiveAdmin.register MetalSign do
 
   index :title => "Metal Signs" do
     column :name
-    column :broker_discount do |l|
-      "#{l.broker_discount}%"
+    column :broker_discount do |m|
+      "#{m.broker_discount}%"
     end
     column :description do |m|
       m.description.html_safe() if m.description
@@ -84,7 +84,7 @@ ActiveAdmin.register MetalSign do
         column :price
         column "" do |size|
           [
-            link_to("Edit", edit_admin_metal_sign_path(size, metal_sign_id: metal_sign.id)),
+            link_to("Edit", edit_admin_metal_sign_size_path(size, metal_sign_id: metal_sign.id)),
             link_to("Remove", admin_metal_sign_path(size), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
           ].join(" | ").html_safe
         end

@@ -81,6 +81,8 @@ class Order < ActiveRecord::Base
     
     unit_price = if params[:product_type] == 'large_format'
       calc_unit_price(params[:details], rate, params[:quantity].to_i, params[:product_id])
+    elsif params[:product_type] == 'plastic_card'
+      plastic_card_unit_price(rate, params[:product_id], params[:quantity].to_i)
     else
       metal_sign_unit_price(rate, params[:details][:size_id], params[:product_id]) 
     end
@@ -266,7 +268,6 @@ class Order < ActiveRecord::Base
         end  
 
         if details[:finishing].include?('Step Sticks')
-          Rails.logger.warn(details[:sticks_quantity].to_i)
           f_price += (details[:sticks_quantity].to_i * 0.80)
         end  
 
@@ -294,6 +295,16 @@ class Order < ActiveRecord::Base
         price = (price - ((price * brokerDiscount) / 100.0));
       end
       price || MetalSignSize.find_by_id(size).price           
+    end    
+
+    def plastic_card_unit_price(rate, id, q)
+      plastic_card = PlasticCard.find(id);
+      rate = rate || plastic_card.plastic_card_prices.rate(q).first.rate
+      brokerDiscount = (plastic_card.broker_discount).to_f
+      if self.user!.is_a?(Broker) && brokerDiscount != 0
+        rate = (rate - ((rate * brokerDiscount) / 100.0));
+      end
+      rate  
     end
 
 end

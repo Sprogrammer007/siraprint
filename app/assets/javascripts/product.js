@@ -494,24 +494,53 @@ ready = function() {
     return change_price();
   });
 
+  function plastic_card_price(q) {
+    var id = $('#_orderproduct_id').val();
+    if (q < 1) { return }
+
+    $.post($url, {id: id, q: q}, 0, "json").done(function(data) { 
+      var price;
+      if (data === null) {
+        alert("no price found");
+        set_before_discount_per_unit_price(0);
+        set_per_unit_price(0);
+        set_total_price(0);
+      } else {
+
+        price = parseFloat(data.rate) * parseFloat(q);
+        set_before_discount_per_unit_price(price);
+        if ($userType === "Broker" && $brokerDiscount !== 0) {
+          price = (price - ((price * $brokerDiscount) / 100.0));
+        }
+        set_per_unit_price(price);
+        set_total_price(price);
+      }
+    });
+  };
 
   $form.on('change', '.quantity-field', function(e) {
-    var price, quantity, t_id;
+    var price, quantity, t_id, type;
     quantity = parseInt($(this).val());
     price = currentItem.unit_price;
+    type = $('#_orderproduct_type').val();
     t_id = $thicknessOption.find(':selected').val();
-    if (price === 0) {
+    if (price === 0 && type !== 'plastic_card') {
       return $(this).val(1);
     } else if (quantity < 1) {
       $(this).val(1);
       return error($(this), "Atleast One");
-    } else if (t_id !== void 0) {
+           
+    } else if (t_id && t_id !== 0) {
       $(this).tooltip('hide');
       return change_price(t_id);
-    } else if ($('#_orderproduct_type').val() === "metal_sign") {
+    } else if (type === "metal_sign") {
       $(this).tooltip('hide');
       price = price * quantity;
       return set_total_price(price);
+    } else if (type === "plastic_card") {
+      $(this).tooltip('hide');
+      plastic_card_price(quantity);
+      return 
     }
   });
 
@@ -522,7 +551,7 @@ ready = function() {
     url = $(this).attr('data-url');
     return $.post(url, {
       quantity: quantity
-    }, void 0, "script");
+    }, 0, "script");
   });
 
   $('.sign-item-size').on('change', 'select', function() {
@@ -533,7 +562,7 @@ ready = function() {
     if (index !== 0) {
       return $.post($url, {
         s_id: s_id
-      }, void 0, "json").done(function(data) {
+      }, 0, "json").done(function(data) {
         var price;
         if (data === null) {
           alert("no signed found");
@@ -543,6 +572,9 @@ ready = function() {
         } else {
           price = parseFloat(data.price) * parseFloat($quantityOption.val());
           set_before_discount_per_unit_price(price);
+          if ($userType === "Broker" && $brokerDiscount !== 0) {
+            price = (price - ((price * $brokerDiscount) / 100.0));
+          }
           set_per_unit_price(price);
           return set_total_price(price);
         }

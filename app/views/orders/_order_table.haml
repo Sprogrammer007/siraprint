@@ -35,7 +35,8 @@
             %br
             = link_to "remove", remove_item_order_path(p), class: "remove-ordered-product", :method => :post
         %td
-          = p.details.size()
+          - if p.product_type == 'metal_sign'
+            = p.details.size()
         %td.quantity
           - if step == "pay"
             = "#{p.quantity}"
@@ -45,7 +46,7 @@
               = link_to "update", "#", class: "qty-update-button edit", data: { url: update_item_order_path(p.id)}
         %td
           - if p.print_pdf.nil?
-            = link_to(upload_ordered_product_path({id: p.id, side: (p.details.side || 1)}), class: "upload-#{p.id} xaupload", method: 'post', remote: true) do
+            = link_to(upload_ordered_product_path({id: p.id, side: ((p.product_type == 'plastic_card') ? 1 : (p.details.side || 1))}), class: "upload-#{p.id} xaupload", method: 'post', remote: true) do
               %i.glyphicon.glyphicon-upload 
               Upload
           - else

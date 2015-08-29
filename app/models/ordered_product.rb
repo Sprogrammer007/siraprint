@@ -4,6 +4,7 @@ class OrderedProduct < ActiveRecord::Base
 
   scope :large_format, -> { where(product_type: "large_format") }
   scope :metal_sign, -> { where(product_type: "metal_sign") }
+  scope :plastic_card, -> { where(product_type: "plastic_card") }
   
   before_destroy :remove_details
   def details

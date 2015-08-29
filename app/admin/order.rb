@@ -114,7 +114,7 @@ ActiveAdmin.register Order do
             #   image_tag p.product.display_image.url()
             # end
             column "Material Name" do |p|
-              link_to p.product.name, admin_large_format_path(p.product)
+              link_to p.product.name, admin_large_format_path(p.product_id)
             end
             column "Side" do |p|
               "#{p.details.side}"
@@ -174,10 +174,35 @@ ActiveAdmin.register Order do
             #   image_tag p.product.display_image.url()
             # end
             column "Product Name" do |p|
-              link_to p.product.name, admin_metal_sign_path(p)
+              link_to p.product.name, admin_metal_sign_path(p.product_id)
             end
             column "Size" do |p|
               "#{p.details.size}"
+            end
+            column :quantity
+            column "User Design" do |p|
+              if !p.print_pdf.nil?
+                link_to File.basename(p.print_pdf), p.print_pdf
+              else
+                "Ask to Upload"
+              end
+            end
+            column :unit_price
+            column :price
+            column :comment
+            column "" do |p|
+              link_to("Remove", admin_ordered_product_path(p), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
+            end
+          end
+        end
+        if order.ordered_products.plastic_card.any?
+         h2 "Plastic Cards"
+          table_for order.ordered_products.plastic_card do
+            # column "Product" do |p|
+            #   image_tag p.product.display_image.url()
+            # end
+            column "Product Name" do |p|
+              link_to p.product.name, admin_plastic_card_path(p.product_id)
             end
             column :quantity
             column "User Design" do |p|

@@ -1,0 +1,9 @@
+.product-item  
+  = link_to(plastic_card_path(plastic_card)) do
+    .product-image
+      .overlay
+        %span View Details
+      = image_tag plastic_card.display_image_file_name.url()
+
+  .product-item-details
+    = plastic_card.name
