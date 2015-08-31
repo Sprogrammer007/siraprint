@@ -29,7 +29,9 @@ class OrderedProduct < ActiveRecord::Base
   end
 
   def remove_details
-    self.details.destroy
+    unless (self.product_type == 'plastic_card') 
+      self.details.destroy
+    end
   end
 
 end

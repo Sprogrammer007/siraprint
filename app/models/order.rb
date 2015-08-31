@@ -299,7 +299,7 @@ class Order < ActiveRecord::Base
 
     def plastic_card_unit_price(rate, id, q)
       plastic_card = PlasticCard.find(id);
-      rate = rate || plastic_card.plastic_card_prices.rate(q).first.rate
+      rate = (rate || plastic_card.plastic_card_prices.rate(q).first.rate).to_f
       brokerDiscount = (plastic_card.broker_discount).to_f
       if self.user!.is_a?(Broker) && brokerDiscount != 0
         rate = (rate - ((rate * brokerDiscount) / 100.0));
