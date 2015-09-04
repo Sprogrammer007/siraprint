@@ -587,6 +587,7 @@ ready = function() {
   });
 
   $form.find('form').submit(function(e) {
+    if ($('#fileupload').length > 0) { e.preventDefault(); return }
     e.preventDefault();
     var e = false;
     if ($(this).hasClass('large-formats-form')) {

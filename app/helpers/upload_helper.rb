@@ -14,10 +14,10 @@ module UploadHelper
         id: "fileupload",
         aws_access_key_id:  ENV['AWS_ACCESS_KEY_ID'],
         aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
-        bucket: ENV['AWS_BUCKET'], 
+        bucket: ENV['AWS_BUCKET_EAST'],
         acl: "public-read",
-        expiration: 1.hours.from_now,
-        max_file_size: 100.megabytes,
+        expiration: 2.hours.from_now,
+        max_file_size: 200.megabytes,
         as: "file"
       )
     end
@@ -50,7 +50,7 @@ module UploadHelper
     end
 
     def key
-      @key ||= "uploads/#{Date.today}/${filename}"
+      @key ||= "uploads/#{Date.today}/#{@options[:oid]}/${filename}"
     end
 
     def url
