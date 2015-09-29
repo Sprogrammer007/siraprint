@@ -134,7 +134,7 @@ ActiveAdmin.register Order do
             column :quantity
             column "User Design" do |p|
               if !p.print_pdf.nil?
-                link_to File.basename(p.print_pdf), p.print_pdf[-1].replace(CGI.escape(File.basename(p.print_pdf)))
+                link_to File.basename(p.print_pdf), p.print_pdf.splice('/').pop().push(CGI.escape(File.basename(p.print_pdf))).join("/")
               else
                 "Ask to Upload"
               end
