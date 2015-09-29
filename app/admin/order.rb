@@ -134,14 +134,14 @@ ActiveAdmin.register Order do
             column :quantity
             column "User Design" do |p|
               if !p.print_pdf.nil?
-                link_to File.basename(p.print_pdf), p.print_pdf
+                link_to File.basename(p.print_pdf), p.print_pdf.gsub(' ', '+%').gsub('#', '23')
               else
                 "Ask to Upload"
               end
             end
             column "User Design 2" do |p|
               if !p.print_pdf_2.nil?
-                link_to File.basename(p.print_pdf_2), p.print_pdf_2
+                link_to File.basename(p.print_pdf_2), p.print_pdf_2.gsub(' ', '+%').gsub('#', '23')
               else
                 "None"
               end
