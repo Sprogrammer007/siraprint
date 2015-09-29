@@ -1,5 +1,5 @@
 class OrderedProduct < ActiveRecord::Base
-  
+ 
   belongs_to :order
 
   scope :large_format, -> { where(product_type: "large_format") }
@@ -26,6 +26,18 @@ class OrderedProduct < ActiveRecord::Base
 
   def price_in_cents
     (self.unit_price*100).round()
+  end
+
+  def print_pdf_url 
+    urlA =  self.print_pdf.split('/')
+    urlA[-1] = CGI.escape( File.basename(self.print_pdf))
+    return urlA.join('/')
+  end
+
+  def print_pdf_2_url 
+    urlA =  self.print_pdf_2.split('/')
+    urlA[-1] = CGI.escape( File.basename(self.print_pdf_2))
+    return urlA.join('/')
   end
 
   def remove_details
