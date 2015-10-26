@@ -137,9 +137,10 @@ class OrdersController < ApplicationController
       if broker_signed_in?
         authenticate_broker!
       end
-      unless current_active
+
+      if current_active.nil?
         flash[:alert] = "Please login"
-        redirect_to root_path()
+        return redirect_to root_path()
       end
       unless current_active.approved?
         flash[:alert] = "You account is not yet approved"

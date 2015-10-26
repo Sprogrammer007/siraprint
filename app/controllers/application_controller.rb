@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   def current_active
     active_user = current_broker || current_user
-    return active_user
+    return nil
   end
 
   def active_signed_in?
