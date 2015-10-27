@@ -191,6 +191,7 @@ class OrdersController < ApplicationController
 
     def validate_logged_in
       a = []
+
       if current_active.nil?
         a << "Not Signed In"
       end

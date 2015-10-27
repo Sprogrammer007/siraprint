@@ -5,6 +5,7 @@ ready = ->
   $maxFileNum = 0
   $uploadedFile = 0
   $fileNames = []
+  $removing = false;
 
   $('#fileupload').fileupload
     dataType: 'json',
@@ -91,16 +92,21 @@ ready = ->
       $fileDone = $fileDone--
       $uploadedFile = $uploadedFile--
       $uploading = 'failed'
+      $('#fileupload').remove()
+      $('#uploader').modal('hide')
+
 
   $('#uploader').on 'hidden.bs.modal', (e) ->
-    if ($('.order-cart').length == 1) 
+    if ($removing)
       return
+    $removing = true
     to = $('#fileupload').data('destroy')
-    success = (data, status) ->
-      location.reload()
-
-    $.ajax(to, dataType: 'json', method: 'DELETE')
-    $('#fileupload').remove()
+    if (to)
+      $.ajax(to, dataType: 'json', method: 'DELETE').done () ->
+        $removing = false;
+    
+      $('#fileupload').remove()
+      
 
 $(document).on('set.uploader', ready)
 
