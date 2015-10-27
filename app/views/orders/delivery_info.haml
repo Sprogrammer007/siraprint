@@ -86,7 +86,7 @@
             .panel-body
               %fieldset.mbs
                 = f.label :billing_address, "Address", class: "form-label"
-                = f.text_field :billing_address, class: "form-input #{ @errors.has_key?(:billing_address)? 'has-error': ''}"
+                = f.text_field :billing_address, class: "form-input #{(@errors &&  @errors.has_key?(:billing_address))? 'has-error': ''}"
                 -if @errors && @errors.has_key?(:billing_address)
                   %span.alert-text
                     = @errors[:billing_address].first()
