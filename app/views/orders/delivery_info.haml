@@ -97,13 +97,13 @@
                   = f.select(:billing_prov, options_for_select(Broker.provinces), {}, class: "form-control")
                 .col-lg-4
                   = f.label :billing_city, "City", class: "form-label"
-                  = f.text_field :billing_city, class: "form-input #{ @errors.has_key?(:billing_city)? 'has-error': ''}"
+                  = f.text_field :billing_city, class: "form-input #{(@errors && @errors.has_key?(:billing_city))? 'has-error': ''}"
                   -if @errors && @errors.has_key?(:billing_city)
                     %span.alert-text
                       = @errors[:billing_city].first()   
                 .col-lg-3
                   = f.label :billing_postal, "Postal Code", class: "form-label"
-                  = f.text_field :billing_postal, class: "form-input #{ @errors.has_key?(:billing_postal)? 'has-error': ''}", :maxlength => 6
+                  = f.text_field :billing_postal, class: "form-input #{(@errors && @errors.has_key?(:billing_postal))? 'has-error': ''}", :maxlength => 6
                   -if @errors && @errors.has_key?(:billing_postal)
                     %span.alert-text
                       = @errors[:billing_postal].first()  
@@ -113,7 +113,7 @@
             .panel-body
               .fieldset.mbs
                 = f.label :name_on_card, class: "form-label"
-                = f.text_field :name_on_card, class: "form-input #{ @errors.has_key?(:name_on_card)? 'has-error': ''}"
+                = f.text_field :name_on_card, class: "form-input #{(@errors && @errors.has_key?(:name_on_card))? 'has-error': ''}"
                 -if @errors && @errors.has_key?(:name_on_card)
                   %span.alert-text
                     = @errors[:name_on_card].first()  
@@ -131,12 +131,12 @@
                     = f.label :card_verification, "CVV", class: "form-label"
                 .row
                   .col-lg-8.col-md-8.col-sm-8.col-xs-8
-                    = f.text_field :card_number, class: "form-input  #{ @errors.has_key?(:number)? 'has-error': ''}"
+                    = f.text_field :card_number, class: "form-input  #{(@errors && @errors.has_key?(:number))? 'has-error': ''}"
                     -if @errors && @errors.has_key?(:number)
                       %span.alert-text
                         = @errors[:number].first()   
                   .col-lg-4.col-md-4.col-sm-4.col-xs-4
-                    = f.text_field :card_verification, class: "form-input #{ @errors.has_key?(:verification_value)? 'has-error': ''}"
+                    = f.text_field :card_verification, class: "form-input #{(@errors && @errors.has_key?(:verification_value))? 'has-error': ''}"
                     -if @errors && @errors.has_key?(:verification_value)
                       %span.alert-text
                         = @errors[:verification_value].first()  
