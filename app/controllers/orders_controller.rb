@@ -46,8 +46,8 @@ class OrdersController < ApplicationController
       new_price = (new_unite_price * params[:quantity].to_i) 
       item.update(:quantity => params[:quantity], unit_price: new_unite_price, price: new_price)
     else
-    new_price = (item.unit_price * params[:quantity].to_i) 
-    item.update(:quantity => params[:quantity], price: new_price)
+      new_price = (item.unit_price * params[:quantity].to_i) 
+      item.update(:quantity => params[:quantity], price: new_price)
     end
     render :js => "window.location = '#{cart_path()}'"
 
@@ -85,8 +85,7 @@ class OrdersController < ApplicationController
     @order = current_active.open_order
     unless @order 
       flash[:notice] = "You have no order to pay for..."
-      redirect_to root_path
-      return
+      return redirect_to root_path
     end
     @order.final = true
     if @order.update(safe_order_cc)
@@ -142,15 +141,14 @@ class OrdersController < ApplicationController
         flash[:alert] = "Please login"
         return redirect_to root_path()
       end
+
       unless current_active.approved?
         flash[:alert] = "You account is not yet approved"
-        redirect_to root_path()
+        return redirect_to root_path()
       end
     end
 
     def validate_invoice  
-
-
       if current_active && !current_active.has_order?(params[:id]) 
         flash[:notice] = "This is not your order!"
         return redirect_to root_path()
@@ -193,7 +191,7 @@ class OrdersController < ApplicationController
 
     def validate_logged_in
       a = []
-      if !current_active
+      if current_active.nil?
         a << "Not Signed In"
       end
 
