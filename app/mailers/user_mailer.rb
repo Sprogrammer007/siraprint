@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "siraprint.ca"
+  default from: "help@siraprint.ca"
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:

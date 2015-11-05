@@ -1,5 +1,5 @@
 class OrderMailer < ActionMailer::Base
-  default from: "siraprint.ca"
+  default from: "help@siraprint.ca"
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
@@ -9,7 +9,7 @@ class OrderMailer < ActionMailer::Base
   def notify_order_placed(user, order)
     @user = user
     @order = order
-    mail to: "info@siraprint.ca", subject: "New Order from #{user.email}"
+    mail to: "info@siraprint.ca", subject: "New Order"
   end
 
   def thank_you_for_order(user, order)
