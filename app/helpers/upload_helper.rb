@@ -14,7 +14,7 @@ module UploadHelper
         id: "fileupload",
         aws_access_key_id:  ENV['AWS_ACCESS_KEY_ID'],
         aws_secret_access_key: ENV['AWS_SECRET_ACCESS_KEY'],
-        bucket: ENV['AWS_BUCKET_EAST'],
+        bucket: ENV['AWS_BUCKET_EAST'],        
         acl: "public-read",
         expiration: 2.hours.from_now,
         max_file_size: 200.megabytes,
@@ -54,7 +54,8 @@ module UploadHelper
     end
 
     def url
-      "https://#{@options[:bucket]}.s3.amazonaws.com/"
+      # "https://#{@options[:bucket]}.s3.amazonaws.com/"
+      "https://dj6kqp5fwtqnd.cloudfront.net/"
     end
 
     def policy
