@@ -18,5 +18,11 @@ class OrderMailer < ActionMailer::Base
     mail to: user.email, subject: "Thank You For Purchasing"
   end
 
+  def order_completed(user, order)
+    @user = user
+    @order = order
+    mail to: user.email, subject: "Your Order Has Been Completed"
+  end
+
 
 end

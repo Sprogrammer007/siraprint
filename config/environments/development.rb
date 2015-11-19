@@ -23,8 +23,8 @@ Rails.application.configure do
     domain: "siraprint.com",
     authentication: "plain",
     enable_starttls_auto: true,
-    user_name: "steve00006@gmail.com",
-    password: "guybrush"
+    user_name: "orders@siraprint.ca",
+    password: "hello316"
   }
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
