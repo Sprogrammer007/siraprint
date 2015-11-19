@@ -16,6 +16,9 @@ ActiveAdmin.register Order do
   filter :updated_at
   
   index :title => "Orders" do
+    column "Order #" do |o|
+      o.order_id
+    end    
     column "User Email" do |o|
       if o.user!
         o.user!.email
@@ -64,10 +67,13 @@ ActiveAdmin.register Order do
     end
   end
 
-  show do
+  show :title => "Order" do
     div class: "group" do
       div class: "order-main" do
         attributes_table do
+          row "Order #{}" do |o|
+            o.order_id
+          end   
           row "User Email" do |o|
             o.user!.email
           end
@@ -224,9 +230,11 @@ ActiveAdmin.register Order do
     end
   end
 
+
   #Actions
   member_action :complete, method: :get do
     order = Order.find(params[:id])
+    Rails.logger.warn(current_active)
     user = nil
     if (order.broker_id)
       user = Broker.find(order.broker_id)
