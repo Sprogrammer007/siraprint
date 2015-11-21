@@ -68,6 +68,7 @@ Rails.application.routes.draw do
 
   match '/help',              to: 'static_pages#help',          via: 'get'
   match '/about',             to: 'static_pages#about',         via: 'get'
+  match '/portfolio',         to: 'static_pages#portfolio',     via: 'get'
   match '/contact',           to: 'static_pages#contact',       via: 'get'
   match '/contact_submit',    to: 'static_pages#contact_submit',via: 'post'
   match '/terms_of_use',      to: 'static_pages#terms',         via: 'get'

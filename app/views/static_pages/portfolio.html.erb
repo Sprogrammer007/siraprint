@@ -1,0 +1,16 @@
+<div class='portfolio'>
+
+  <div class='row'>
+    <%- SliderImage.portfolio.each_with_index do |image, i| %>    
+      <!-- <li></li> -->
+      <div class='col-md-4'>
+        <div class='portfolio-item'>
+          <%= image_tag(image.slide_image_file_name.url())  %>        
+        </div>
+    
+      </div>        
+    <%- end %>
+  </div> 
+
+
+</div>

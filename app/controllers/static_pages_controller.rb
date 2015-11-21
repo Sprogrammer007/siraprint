@@ -12,6 +12,10 @@ class StaticPagesController < ApplicationController
     @posts = Post.all()
   end
 
+  def portfolio
+    
+  end
+
   def contact
   end
 

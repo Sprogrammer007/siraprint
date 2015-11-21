@@ -13,11 +13,9 @@
         = link_to root_path() do
           %span.glyphicon.glyphicon-home{"aria-hidden" => "true"}   
       %li
-        = link_to "About", root_path
+        = link_to "Portfolio", portfolio_path
       %li
-        = link_to "Help Center", help_path
-      %li
-        = link_to "Contact Us", contact_path
+        = link_to "Contact", contact_path
       - if active_signed_in?
         %li
         %li.dropdown

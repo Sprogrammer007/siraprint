@@ -24,5 +24,20 @@ $(function () {
     html: true,
     trigger: 'focus',
     placement: 'bottom'
+  });
+
+  $('.light-box').on('click', '.overlay, .close', function() {
+    $('.light-box').removeClass('active');
   })
+
+  if ($('.portfolio').length > 0) {
+
+    $('.portfolio').on('click', '.portfolio-item', function(e) {
+
+      var image = $(this).find('img').attr('src');
+      $('.light-box').find('.the-image img').attr('src', image);
+      $('.light-box').addClass('active');
+    })
+  }
 })
+

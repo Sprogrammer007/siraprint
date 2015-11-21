@@ -1341,3 +1341,53 @@ span.status_completed
 
 .error_messages
   padding: 1.5em 2.5em
+
+// Portfolio
+
+.portfolio .portfolio-item img
+  width: 100%
+
+.portfolio .portfolio-item
+  cursor: pointer
+  transition: all .2s ease-in-out
+  
+.portfolio-item:hover
+  transform: scale(1.1)
+
+
+.light-box
+  position: absolute
+  display: none
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  z-index: 10
+
+.light-box.active
+  display: block
+
+.light-box .overlay
+  top: 0
+  left: 0
+  background-color: rgba(0,0,0,0.5)
+  width: 100%
+  height: 100%
+
+.light-box .light-content
+  position: absolute
+  top: 50%
+  left: 50%
+  -moz-transform: translate(-50%, -50%)
+  -webkit-transform: translate(-50%, -50%)
+  transform: translate(-50%, -50%)
+  text-align: center
+  padding: 10px
+  background-color: #fff
+  border-radius: 3px
+  -moz-border-radius: 3px
+  -webkit-border-radius: 3px
+
+.light-box .close
+  position: relative
+  top: -5px
