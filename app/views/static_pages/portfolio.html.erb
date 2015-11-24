@@ -1,16 +1,34 @@
 <div class='portfolio'>
 
-  <div class='row'>
-    <%- SliderImage.portfolio.each_with_index do |image, i| %>    
-      <!-- <li></li> -->
-      <div class='col-md-4'>
-        <div class='portfolio-item'>
-          <%= image_tag(image.slide_image_file_name.url())  %>        
-        </div>
-    
-      </div>        
+
+
+  <div class="galleria" id="galleria" style="height: 518px">
+    <%- if SliderImage.portfolio.any? %>
+      <%- SliderImage.portfolio.each_with_index  do |image, i| %>
+        <%= image_tag(image.slide_image_file_name.url()) %>
+      <%- end %>
     <%- end %>
-  </div> 
+  </div>
 
 
 </div>
+<script>
+gallery_setup = function() {
+
+  Galleria.loadTheme("<%=  asset_path('galleria.classic.js') %>");
+  
+  Galleria.configure({
+    height: 458, 
+    width: 580, 
+    responsive: true, 
+    lightbox: false, 
+    autoplay: true,
+    transition: 'fade',
+    showInfo: false
+  });
+
+  Galleria.run('#galleria');
+};
+$(document).ready(gallery_setup);
+$(document).on('page:load', gallery_setup);
+</script>

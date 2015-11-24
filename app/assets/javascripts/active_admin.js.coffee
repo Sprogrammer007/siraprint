@@ -8,6 +8,8 @@ $(document).ready ->
     mode: 'textareas'
     theme: 'modern'
     editor_selector: 'tinymce'
+    toolbar: "undo redo | styleselect | bold italic link image | bullist numlist indent outdent | alignleft aligncenter alignright"
+    plugins: "link image"
   $('form').on 'click', '.remove_tier_fields, .remove_thickness_fields', (event) ->
     $(this).prev('input[type=hidden]').val '1'
     $(this).closest('fieldset').hide()
