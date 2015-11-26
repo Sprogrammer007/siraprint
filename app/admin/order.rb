@@ -234,14 +234,13 @@ ActiveAdmin.register Order do
   #Actions
   member_action :complete, method: :get do
     order = Order.find(params[:id])
-    Rails.logger.warn(current_active)
     user = nil
     if (order.broker_id)
       user = Broker.find(order.broker_id)
     else 
-      user = user.find(order.user_id)
+      user = User.find(order.user_id)
     end
-    Rails.logger.warn(user.email)
+
     if (user)
       OrderMailer.order_completed(user, order).deliver_now
     end
