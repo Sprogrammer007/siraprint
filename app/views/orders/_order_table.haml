@@ -15,7 +15,7 @@
         %td
           %strong
             = p.product.name
-          - if p.product_type == "large_format"
+          - if (p.product_type == "large_format" || p.product_type == "lcd")
             %br
             Thickness: 
             = "#{p.details.thickness.thickness}#{p.details.thickness.unit}"
@@ -35,7 +35,7 @@
             %br
             = link_to "remove", remove_item_order_path(p), class: "remove-ordered-product", :method => :post
         %td
-          - if p.product_type == 'metal_sign'
+          - if p.product_type != 'plastic_card'
             = p.details.size()
         %td.quantity
           - if step == "pay"

@@ -1,0 +1,24 @@
+<%= form_tag url_for(:controller => 'admin/lcd_finishing_options', :action => 'create') do -%>
+<%= hidden_field_tag "lcd_id", params[:id] %>
+  <fieldset>
+    <%= link_to "Select None", "#",  class: "select_none link_button"  %>
+      <%= link_to "Select All", "#",  class: "select_all link_button"  %>
+    <div class="finishing_select group">
+      <!-- Chrome Fix checkbox won't be checked if nested under table -->
+      <% finishings.each_with_index do |f, i| %>
+
+      <%= check_box_tag "finishings_ids[]", f.id, selected.include?(f.id), id: "lcd_finishing_#{f.id}" %>
+      <label for="<%= "lcd_finishing_#{f.id}" %>" class="finsihing-select
+        ">
+          <%= f.name %>
+        </label>
+      <% end %>
+
+    </div>
+    <div class="group" style="padding: 0 10px;">
+      <%= submit_tag "Update finishing Options", class: "link_button" , data: {confirm: I18n.t('active_admin.are_you_sure') } %>
+      <%= link_to "Add New Finishing Option", new_admin_lcd_finishing_path(lcd_id: params[:id]),  class: "link_button"  %>
+    </div>
+  </fieldset>
+
+<% end %>

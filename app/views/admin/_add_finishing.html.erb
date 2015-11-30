@@ -16,7 +16,7 @@
 
     </div>
     <div class="group" style="padding: 0 10px;">
-      <%= submit_tag "Update finishing Options", data: {confirm: I18n.t('active_admin.are_you_sure')} %>
+      <%= submit_tag "Update finishing Options", class: "link_button", data: {confirm: I18n.t('active_admin.are_you_sure')} %>
       <%= link_to "Add New Finishing Option", new_admin_large_format_finishing_path(large_format_id: params[:id]),  class: "link_button"  %>
     </div>
   </fieldset>

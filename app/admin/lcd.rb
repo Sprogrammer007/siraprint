@@ -1,18 +1,17 @@
-ActiveAdmin.register LargeFormat do
+ActiveAdmin.register Lcd do
   
   menu :parent => "Products"
 
-  permit_params :name, :description, :broker_discount, :display_image_file_name, :has_two_side, :sides, :status, :max_width, :max_length,
-    :large_format_thicknesses_attributes => [:id, :thickness, :unit, :_destroy, :_destroy => true,
-    :large_format_tiers_attributes => [:id, :level, :min_sqft, :max_sqft, :price, :_destroy => true ] ] 
+  permit_params :name, :description, :broker_discount, :display_image_file_name, :has_two_side, :status, :max_width, :max_length,
+    :lcd_thicknesses_attributes => [:id, :thickness, :unit, :_destroy, :_destroy => true,
+    :lcd_tiers_attributes => [:id, :level, :min_sqft, :max_sqft, :price, :_destroy => true ] ] 
   
   # action_item :add_finishing, :only => :show do
-  #   link_to("Add Finishing Options", add_finishing_admin_large_format_path(large_format))
+  #   link_to("Add Finishing Options", add_finishing_admin_lcd_path(lcd))
   # end
 
   #Filters
   filter :name
-  filter :sides
   filter :status
 
   #Scopes
@@ -20,7 +19,7 @@ ActiveAdmin.register LargeFormat do
   scope :active
   scope :deactive
 
-  index :title => "Large Formats" do
+  index :title => "LCD" do
     column "Material Name" do |l|
       l.name
     end
@@ -49,12 +48,12 @@ ActiveAdmin.register LargeFormat do
     column :created_at
     column :updated_at
     actions defaults: false, dropdown: true, dropdown_name: "Options" do |l|
-      item("Manage", admin_large_format_path(l))
-      item("Edit", edit_admin_large_format_path(l))
-      item("Duplicate", copy_admin_large_format_path(l))
-      item("Remove", admin_large_format_path(l), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
-      item("Active/Deactive", status_update_admin_large_format_path(l))
-      # item("Select Finishing Options", add_finishing_admin_large_format_path(l))
+      item("Manage", admin_lcd_path(l))
+      item("Edit", edit_admin_lcd_path(l))
+      item("Duplicate", copy_admin_lcd_path(l))
+      item("Remove", admin_lcd_path(l), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
+      item("Active/Deactive", status_update_admin_lcd_path(l))
+      # item("Select Finishing Options", add_finishing_admin_lcd_path(l))
     end
   end
 
@@ -84,8 +83,8 @@ ActiveAdmin.register LargeFormat do
             end
           end
           row "Finishing Options" do |l|
-            if l.large_format_finishings.any?
-              [l.large_format_finishings.map { |f| f.name } ].join(" | ")
+            if l.lcd_finishings.any?
+              [l.lcd_finishings.map { |f| f.name } ].join(" | ")
             end
           end
           row "status" do |l|
@@ -100,53 +99,53 @@ ActiveAdmin.register LargeFormat do
       div class: "large-format-right" do 
         panel "Slider Images", class: "group" do
           div class: "slides" do
-            if SliderImage.where(product_type: large_format.name_for_db).any?
-              SliderImage.where(product_type: large_format.name_for_db).each do |image|
+            if SliderImage.where(product_type: lcd.name_for_db).any?
+              SliderImage.where(product_type: lcd.name_for_db).each do |image|
                 render "slider_images/slider_image", slider_image: image
               end
             end
           end
-          render "admin/upload_slider", type: large_format.name_for_db
+          render "admin/upload_slider", type: lcd.name_for_db
 
         end
 
         panel "Finishing Options", class: "group" do
-          render "admin/add_finishing", finishings: LargeFormatFinishing.all, selected: large_format.large_format_finishings.pluck(:id)
+          render "admin/add_lcd_finishing", finishings: LcdFinishing.all, selected: lcd.lcd_finishings.pluck(:id)
       
         end
       
       end
     end
     panel "Thicknesses", class: "group" do
-      large_format.large_format_thicknesses.each do |t|
+      lcd.lcd_thicknesses.each do |t|
         div class: "thickness-set" do
           attributes_table_for t do
             row :thickness
             row :unit
             row " " do |thickness|
               [
-                link_to("Edit", edit_admin_large_format_thickness_path(thickness, large_format_id: large_format.id)),
-                link_to("Remove", admin_large_format_thickness_path(thickness), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
+                link_to("Edit", edit_admin_lcd_thickness_path(thickness, lcd_id: lcd.id)),
+                link_to("Remove", admin_lcd_thickness_path(thickness), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
               ].join(" | ").html_safe
             end
           end
 
-          table_for t.large_format_tiers do
+          table_for t.lcd_tiers do
             column :level
             column :min_sqft
             column :max_sqft
             column :price
             column "" do |tier|
               [
-                link_to("Edit", edit_admin_large_format_tier_path(tier,large_format_id: large_format.id, large_format_thickness_id: tier.large_format_thickness_id )),
-                link_to("Remove", admin_large_format_tier_path(tier), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
+                link_to("Edit", edit_admin_lcd_tier_path(tier,lcd_id: lcd.id, lcd_thickness_id: tier.lcd_thickness_id )),
+                link_to("Remove", admin_lcd_tier_path(tier), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
               ].join(" | ").html_safe
             end
           end
-          text_node link_to "Add Tier", new_admin_large_format_tier_path(large_format_id: large_format.id, large_format_thickness_id: t.id), class: "link_button right"
+          text_node link_to "Add Tier", new_admin_lcd_tier_path(lcd_id: lcd.id, lcd_thickness_id: t.id), class: "link_button right"
         end
       end
-      text_node link_to "Add Thickness", new_admin_large_format_thickness_path(large_format_id: large_format.id), class: "link_button add-thickness"
+      text_node link_to "Add Thickness", new_admin_lcd_thickness_path(lcd_id: lcd.id), class: "link_button add-thickness"
     end
   end
 
@@ -162,11 +161,11 @@ ActiveAdmin.register LargeFormat do
       f.input :status, :as => :select, :collection => options_for_select(['Active', 'Deactive'], f.object.status)
     end
 
-    f.has_many :large_format_thicknesses, :allow_destroy => true, :heading => false, :new_record => true do |t|
+    f.has_many :lcd_thicknesses, :allow_destroy => true, :heading => false, :new_record => true do |t|
       t.input :thickness
       t.input :unit, :as => :select, :collection => options_for_select(['cm', 'mm', 'pt', 'mil', 'inch'], t.object.unit)
     
-      t.has_many :large_format_tiers, :allow_destroy => true, :heading => false, :new_record => true, class: "tier-sets group" do |tier|
+      t.has_many :lcd_tiers, :allow_destroy => true, :heading => false, :new_record => true, class: "tier-sets group" do |tier|
         tier.input :level
         tier.input :min_sqft
         tier.input :max_sqft
@@ -180,18 +179,18 @@ ActiveAdmin.register LargeFormat do
 
   #Actions
   member_action :status_update, method: :get do
-    lf = LargeFormat.find(params[:id])
-    if lf.active?
-      lf.update(status: "Deactive")
+    lcd = Lcd.find(params[:id])
+    if lcd.active?
+      lcd.update(status: "Deactive")
     else
-      lf.update(status: "Active")
+      lcd.update(status: "Active")
     end
     redirect_to :back
   end
 
   member_action :copy, method: :get do
-    lf = LargeFormat.find(params[:id])
-    lf.clone_with_associations
+    lcd = Lcd.find(params[:id])
+    lcd.clone_with_associations
     redirect_to :back
   end
 
@@ -199,12 +198,12 @@ ActiveAdmin.register LargeFormat do
   #   @page_title = "Select Regions For #{params[:name]}"
   #   lg = LargeFormat.find(params[:id])
   #   @finishings = LargeFormatFinishing.all
-  #   @selected_finishings = lg.large_format_finishings.pluck(:id)
+  #   @selected_finishings = lg.lcd_finishings.pluck(:id)
   #   render template: "admin/add_finishing"
   # end
 
   member_action :remove_finishing, method: :delete do
-    FinishingOption.where("large_format_id = ? AND large_format_finishing_id = ?", params[:id], params[:large_format_finishing_id]).delete_all
+    LcdFinishingOption.where("lcd_id = ? AND lcd_finishing_id = ?", params[:id], params[:lcd_finishing_id]).delete_all
 
     flash[:notice] = "Finishing option was successfully removed!"
     redirect_to :back

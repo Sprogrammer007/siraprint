@@ -28,6 +28,13 @@ Rails.application.routes.draw do
       post 'get_price'
       post 'change_side'
     end
+  end  
+  
+  resources :lcds do
+    member do
+      post 'get_price'
+      post 'change_side'
+    end
   end
 
   resources :metal_signs do

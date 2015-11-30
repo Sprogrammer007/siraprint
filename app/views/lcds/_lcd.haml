@@ -1,0 +1,10 @@
+.product-item  
+  = link_to(lcd_path(lcd)) do
+    .product-image
+      .overlay
+        %span View Details
+      = image_tag lcd.display_image_file_name.url()
+
+  .product-item-details
+    = lcd.name
+    

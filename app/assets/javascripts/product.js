@@ -587,6 +587,7 @@ ready = function() {
   });
 
   $form.find('form').submit(function(e) {
+    console.log('Testse')
     if ($('#fileupload').length > 0) { e.preventDefault(); return }
     e.preventDefault();
     var e = false;

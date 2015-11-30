@@ -79,8 +79,8 @@ class Order < ActiveRecord::Base
       return errors.add(:size, 'please select metal sign size')
     end
     
-    unit_price = if params[:product_type] == 'large_format'
-      calc_unit_price(params[:details], rate, params[:quantity].to_i, params[:product_id])
+    unit_price = if (params[:product_type] == 'large_format' || params[:product_type] == 'lcd')
+      calc_unit_price(params[:details], rate, params[:quantity].to_i, params[:product_id], params[:product_type])
     elsif params[:product_type] == 'plastic_card'
       plastic_card_unit_price(rate, params[:product_id], params[:quantity].to_i)
     else
@@ -159,7 +159,7 @@ class Order < ActiveRecord::Base
   end
 
   def get_description(p)
-    if p.product_type == "large_format"
+    if (p.product_type == "large_format" || p.product_type == 'lcd')
       "Material: #{p.product.name} <br/>
       Thickness: #{p.details.thickness.thickness}#{p.details.thickness.unit} <br/>
       Size: #{p.details.size}".html_safe()
@@ -226,7 +226,7 @@ class Order < ActiveRecord::Base
       (unit == "inch") ? ((w * l) / 144) : (w * l)
     end
 
-    def get_rate(id, s, side, quantity)
+    def get_rate(id, s, side, quantity,type)
       sqft = s
       quantity = quantity.to_i
       if side == 2
@@ -236,20 +236,28 @@ class Order < ActiveRecord::Base
       if quantity
         sqft = sqft * quantity
       end
-
-      thickness = LargeFormatThickness.find_by_id(id)
-      rate = thickness.large_format_tiers.sqft_eq(sqft)
+      if type == 'large_format'
+        thickness = LargeFormatThickness.find_by_id(id)
+        rate = thickness.large_format_tiers.sqft_eq(sqft)
+      else
+        thickness = LcdThickness.find_by_id(id)
+        rate = thickness.lcd_tiers.sqft_eq(sqft)
+      end
       return rate.first.price
     end
 
-    def calc_unit_price(details, rate, quantity, id)
+    def calc_unit_price(details, rate, quantity, id, type)
       width = details[:width].to_f
       length = details[:length].to_f
-      brokerDiscount = (LargeFormat.find(id).broker_discount).to_f
+      if type == 'large_format'
+        brokerDiscount = (LargeFormat.find(id).broker_discount).to_f
+      else
+        brokerDiscount = (Lcd.find(id).broker_discount).to_f
+      end
       unit = details [:unit]
       side = details[:side].to_i
       sqft = calc_sqft(width, length, unit).to_f
-      rate = (rate || get_rate(details[:thickness_id], sqft, side, quantity)) 
+      rate = (rate || get_rate(details[:thickness_id], sqft, side, quantity, type)) 
 
       unit_price = (sqft * rate.to_f)
       if self.user!.is_a?(Broker) && brokerDiscount != 0

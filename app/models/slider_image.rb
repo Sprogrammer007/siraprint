@@ -2,6 +2,7 @@ class SliderImage < ActiveRecord::Base
 
   scope :large_format, -> { where(product_type: "large_format") }
   scope :metal_sign, -> { where(product_type: "metal_sign") }
+  scope :lcd, -> { where(product_type: "metal_sign") }
   scope :home, -> { where(product_type: "home") }
   scope :portfolio, -> { where(product_type: "portfolio") }
 

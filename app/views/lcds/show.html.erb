@@ -1,10 +1,10 @@
 
 <div class="col-main">
 
-  <h2><%= "Large Format - #{@large_format.name}" %></h2>
+  <h2><%= "LCD - #{@lcd.name}" %></h2>
   <div class="galleria" id="galleria" style="height: 518px">
-    <%- if SliderImage.where(product_type: @large_format.name_for_db).any? %>
-      <%- SliderImage.where(product_type: @large_format.name_for_db).each do |image| %>
+    <%- if SliderImage.where(product_type: @lcd.name_for_db).any? %>
+      <%- SliderImage.where(product_type: @lcd.name_for_db).each do |image| %>
         <%= image_tag(image.slide_image_file_name.url()) %>
       <%- end %>
     <%- end %>
@@ -15,9 +15,9 @@
     <strong>
       Material: 
     </strong>
-    <%= @large_format.name %>
+    <%= @lcd.name %>
     <br/>
-    <p><%= @large_format.description.html_safe() %></p>
+    <p><%= @lcd.description.html_safe() %></p>
   </div>
 </div>
 
@@ -47,4 +47,3 @@
   $(document).ready(gallery_setup);
   $(document).on('page:load', gallery_setup);
 </script>
-

@@ -156,11 +156,14 @@
   border-radius: 4px;
 }
 
-.large_format_tiers a.has_many_add {
+.large_format_tiers a.has_many_add,
+.lcd_tiers a.has_many_add {
   display: block !important;
   width: 150px;
 }
-
+#lcd_lcd_thicknesses_attributes_0__destroy_input label {
+  padding-left: 0;
+}
 .add-thickness {
   display: block !important;
   width: 90px;

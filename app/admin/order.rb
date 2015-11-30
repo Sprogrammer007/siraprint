@@ -112,8 +112,7 @@ ActiveAdmin.register Order do
     end
     div class: "item-list" do
       panel("Items", class: "group") do
-        if order.ordered_products.large_format  
-          .any?
+        if order.ordered_products.large_format.any?
           h2 "Large Formats"
           table_for order.ordered_products.large_format do
             # column "Product" do |p|
@@ -165,6 +164,59 @@ ActiveAdmin.register Order do
             column "Step Sticks #" do |p|
               "#{p.details.sticks_quantity || 0}" 
             end
+            column :unit_price
+            column :price
+            column :comment
+            column "" do |p|
+              link_to("Remove", admin_ordered_product_path(p), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
+            end
+          end
+        end
+        if order.ordered_products.lcd.any?
+          h2 "LCDs"
+          table_for order.ordered_products.lcd do
+
+            column "Material Name" do |p|
+              link_to p.product.name, admin_lcd_path(p.product_id)
+            end
+            column "Side" do |p|
+              "#{p.details.side}"
+            end
+            column "Thickness" do |p|
+              "#{p.details.thickness.thickness}#{p.details.thickness.unit}"
+            end
+            column "Width" do |p|
+              "#{p.details.width}#{p.details.unit}"
+            end
+            column "Length" do |p|
+              "#{p.details.length}#{p.details.unit}"
+            end
+            column "Sqft" do |p|
+              "#{p.details.size}"
+            end
+            column :quantity
+            column "User Design" do |p|
+              if !p.print_pdf.nil?
+                link_to File.basename(p.print_pdf), p.print_pdf_url
+              else
+                "Ask to Upload"
+              end
+            end
+            column "User Design 2" do |p|
+              if !p.print_pdf_2.nil?
+                link_to File.basename(p.print_pdf_2), p.print_pdf_2_url
+              else
+                "None"
+              end
+            end
+            column "Finishing" do |p|
+              if !p.details.finishing
+                "None"
+              else
+                p.details.finishing.join(' | ')
+              end
+            end
+  
             column :unit_price
             column :price
             column :comment

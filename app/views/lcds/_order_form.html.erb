@@ -1,7 +1,7 @@
-<%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "large-formats-form" do %>
-  <div id="product-options" data-price-url="<%=  get_price_large_format_path(@large_format) %>"  data-max-w="<%=  @large_format.max_width() %>" data-max-l="<%=  @large_format.max_length() %>" data-u-type="<%=  current_active.class.name %>" data-b-disc="<%=  @large_format.broker_discount %>"></div>
-  <%= hidden_field_tag '[order]product_type', 'large_format' %>
-  <%= hidden_field_tag '[order]product_id', @large_format.id %>
+<%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "lcds-form" do %>
+<div id="product-options" data-price-url="<%=  get_price_lcd_path(@lcd) %>"  data-max-w="<%=  @lcd.max_width() %>" data-max-l="<%=  @lcd.max_length() %>" data-u-type="<%=  current_active.class.name %>" data-b-disc="<%=  @lcd.broker_discount %>"></div>
+  <%= hidden_field_tag '[order]product_type', 'lcd' %>
+  <%= hidden_field_tag '[order]product_id', @lcd.id %>
   
   <div class="item-size product-box group">
     <h3>Size</h3>
@@ -19,10 +19,10 @@
     </div>
   </div>
 
-  <% if @large_format.has_two_side %>
+  <% if @lcd.has_two_side %>
     <div class="item-side product-box">
     <h3>Side</h3>
-    <%= select("order", "[details]side", options_for_select(@large_format.side_options), {}, class: "side-selection form-control", data: {name: "#{@large_format.name}"}) %>
+    <%= select("order", "[details]side", options_for_select(@lcd.side_options), {}, class: "side-selection form-control", data: {name: "#{@lcd.name}"}) %>
     </div>
   <% else %>
     <%= hidden_field_tag '[order][details]side', 1 %>  
@@ -30,7 +30,7 @@
 
   <div class="item-thickness product-box">
     <h3>Thickness</h3>
-    <%= select("order", "[details]thickness_id", @large_format.large_format_thicknesses.collect {|t| [ "#{t.thickness}#{t.unit}", t.id ] }, {include_blank: 'Please select your thickness'}, class: "thickness-selection form-control", data: {toggle: 'tooltip', title: 'Select Thickness'}) %>
+    <%= select("order", "[details]thickness_id", @lcd.lcd_thicknesses.collect {|t| [ "#{t.thickness}#{t.unit}", t.id ] }, {include_blank: 'Please select your thickness'}, class: "thickness-selection form-control", data: {toggle: 'tooltip', title: 'Select Thickness'}) %>
   </div>
 
   <div class="item-finishing-options product-box">
@@ -43,7 +43,7 @@
         <label for="finishing_none" class="finsihing-select">None</label>
       <% end %>
 
-      <% @large_format.large_format_finishings.each_with_index do |f, i| %>
+      <% @lcd.lcd_finishings.each_with_index do |f, i| %>
         <% next if f.name == "None" %>
         <%= check_box_tag "[order][details]finishing[]", f.name, false, id: "finishing_#{f.id}", class: "finish-select" %>
         <label for="<%= "finishing_#{f.id}" %>" class="finsihing-select">
@@ -53,29 +53,7 @@
 
     </div>
  
-    <div class="grommets-box mtl hidden">
-      <div class="row">
-        <div class="col-lg-8">
-          <%= label_tag '[details]grommets_quantity', "# of Grommets Per Print" %>
-        </div>
-        <div class="col-lg-4">
-          <%= text_field_tag '[order][details]grommets_quantity', nil, class: "grommets-field form-control", data: {toggle: 'tooltip', title: 'Enter Grommets Amount'}%>
-        </div>
-      </div>
-    </div>
-
-    <div class="stick-box mtl hidden">
-      <div class="row">
-        <div class="col-lg-8">
-          <%= label_tag '[details]sticks_quantity', "# of Step Sticks Per Print" %>
-        </div>
-        <div class="col-lg-4">
-          <%= text_field_tag '[order][details]sticks_quantity', nil, class: "stick-field form-control", data: {toggle: 'tooltip', title: 'Enter Step Sticks Amount'}%>
-        </div>
-      </div>
-    </div>
   </div>
-
   <div class="item-quantity product-box">
     <h3>Quantity</h3>
     <div class="quantity-box">
@@ -120,7 +98,7 @@
       <div class="bd-box">
         Broker Discount:
         <span class="bd-placeholder">
-          <%= "#{@large_format.broker_discount}%" %>
+          <%= "#{@lcd.broker_discount}%" %>
         </span>
       </div>
     <% end %>

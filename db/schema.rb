@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151120230812) do
+ActiveRecord::Schema.define(version: 20151130233401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,7 +103,6 @@ ActiveRecord::Schema.define(version: 20151120230812) do
   create_table "large_formats", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
-    t.integer  "sides"
     t.string   "display_image_file_name"
     t.string   "status"
     t.datetime "created_at"
@@ -112,6 +111,45 @@ ActiveRecord::Schema.define(version: 20151120230812) do
     t.decimal  "max_width"
     t.decimal  "max_length"
     t.integer  "broker_discount",         default: 0
+  end
+
+  create_table "lcd_finishing_options", id: false, force: :cascade do |t|
+    t.integer "lcd_id"
+    t.integer "lcd_finishing_id"
+  end
+
+  add_index "lcd_finishing_options", ["lcd_finishing_id"], name: "index_lcd_finishing_options_on_lcd_finishing_id", using: :btree
+  add_index "lcd_finishing_options", ["lcd_id"], name: "index_lcd_finishing_options_on_lcd_id", using: :btree
+
+  create_table "lcd_finishings", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "lcd_thicknesses", force: :cascade do |t|
+    t.integer "lcd_id"
+    t.decimal "thickness"
+    t.string  "unit"
+  end
+
+  create_table "lcd_tiers", force: :cascade do |t|
+    t.integer "lcd_thickness_id"
+    t.string  "level"
+    t.integer "min_sqft"
+    t.integer "max_sqft"
+    t.decimal "price"
+  end
+
+  create_table "lcds", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.decimal  "max_width"
+    t.decimal  "max_length"
+    t.integer  "broker_discount"
+    t.boolean  "has_two_side"
+    t.string   "display_image_file_name"
+    t.string   "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "metal_sign_sizes", force: :cascade do |t|
@@ -153,6 +191,15 @@ ActiveRecord::Schema.define(version: 20151120230812) do
     t.integer "grommets_quantity"
     t.string  "unit"
     t.integer "sticks_quantity",   default: 0
+  end
+
+  create_table "ordered_lcd_details", force: :cascade do |t|
+    t.integer "length"
+    t.integer "width"
+    t.integer "side"
+    t.integer "thickness_id"
+    t.string  "finishing"
+    t.string  "unit"
   end
 
   create_table "ordered_metal_sign_details", force: :cascade do |t|

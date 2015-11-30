@@ -10,7 +10,7 @@ ActiveAdmin.register FinishingOption do
         FinishingOption.create(ids) do |f|
           f.large_format_id = params[:large_format_id]
         end
-        flash[:notice] = "Successfully updated regions!"
+        flash[:notice] = "Successfully updated finishing options!"
       end
       redirect_to admin_large_format_path(params[:large_format_id])
     end
