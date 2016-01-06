@@ -1,4 +1,4 @@
-ActiveAdmin.register LcdThickness do
+ActiveAdmin.register LcdThickness, as: "Led Thickness" do
 
   menu false
 
@@ -12,27 +12,35 @@ ActiveAdmin.register LcdThickness do
       f.input :lcd_id, :as => :hidden, :input_html => { value: "#{params[:lcd_id] }"}
     end
     
-    f.has_many :lcd_tiers, :allow_destroy => true, :heading => 'Tiers' do |tf|
+		f.has_many :lcd_tiers, :allow_destroy => true, :heading => 'Led Tiers' do |tf|
       tf.input :level  
       tf.input :min_sqft
       tf.input :max_sqft
       tf.input :price
     end
-    
-    f.actions
+   	if f.object.new_record?
+			f.actions do
+				f.action(:submit, :label => "Create Led Thickness")
+			end
+		else 
+			f.actions do
+				f.action(:submit, :label => "Update Led Thickness")
+			end
+		end
+		
   end
 
    controller do
     def create
       super do |format|
-        redirect_to admin_lcd_path(params[:lcd_thickness][:lcd_id])
+				redirect_to admin_led_path(params[:lcd_thickness][:lcd_id])
         return
       end
     end
 
     def update 
       super do |format|
-        redirect_to admin_lcd_path(params[:lcd_thickness][:lcd_id])
+				redirect_to admin_led_path(params[:lcd_thickness][:lcd_id])
         return
       end
     end

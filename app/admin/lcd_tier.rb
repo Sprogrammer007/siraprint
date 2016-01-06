@@ -1,4 +1,4 @@
-ActiveAdmin.register LcdTier do
+ActiveAdmin.register LcdTier, as: "Led Tier" do
 
   menu false
 
@@ -20,14 +20,14 @@ ActiveAdmin.register LcdTier do
     def create
 
       super do |format|
-        redirect_to admin_lcd_path(params[:lcd_tier][:lcd_id])
+				redirect_to admin_led_path(params[:lcd_tier][:lcd_id])
         return
       end
     end
 
     def update 
       super do |format|
-        redirect_to admin_lcd_path(params[:lcd_tier][:lcd_id])
+				redirect_to admin_led_path(params[:lcd_tier][:lcd_id])
         return
       end
     end

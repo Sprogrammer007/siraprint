@@ -12,7 +12,7 @@ ActiveAdmin.register LcdFinishingOption do
         end
         flash[:notice] = "Successfully updated finishing options!"
       end
-      redirect_to admin_lcd_path(params[:lcd_id])
+			redirect_to admin_led_path(params[:lcd_id])
     end
 
   end

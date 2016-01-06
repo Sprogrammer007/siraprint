@@ -1,7 +1,7 @@
-ActiveAdmin.register Lcd do
+ActiveAdmin.register Lcd, as: 'LED' do
   
-  menu :parent => "Products"
-
+	menu :parent => "Products", :label => "LED Panels"
+	
   permit_params :name, :description, :broker_discount, :display_image_file_name, :has_two_side, :status, :max_width, :max_length,
     :lcd_thicknesses_attributes => [:id, :thickness, :unit, :_destroy, :_destroy => true,
     :lcd_tiers_attributes => [:id, :level, :min_sqft, :max_sqft, :price, :_destroy => true ] ] 
@@ -19,7 +19,7 @@ ActiveAdmin.register Lcd do
   scope :active
   scope :deactive
 
-  index :title => "LCD" do
+  index :title => "LED Displays & LGP" do
     column "Material Name" do |l|
       l.name
     end
@@ -48,11 +48,11 @@ ActiveAdmin.register Lcd do
     column :created_at
     column :updated_at
     actions defaults: false, dropdown: true, dropdown_name: "Options" do |l|
-      item("Manage", admin_lcd_path(l))
-      item("Edit", edit_admin_lcd_path(l))
-      item("Duplicate", copy_admin_lcd_path(l))
-      item("Remove", admin_lcd_path(l), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
-      item("Active/Deactive", status_update_admin_lcd_path(l))
+			item("Manage", admin_led_path(l))
+      item("Edit", edit_admin_led_path(l))
+      item("Duplicate", copy_admin_led_path(l))
+      item("Remove", admin_led_path(l), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
+			item("Active/Deactive", status_update_admin_led_path(l))
       # item("Select Finishing Options", add_finishing_admin_lcd_path(l))
     end
   end
@@ -99,33 +99,33 @@ ActiveAdmin.register Lcd do
       div class: "large-format-right" do 
         panel "Slider Images", class: "group" do
           div class: "slides" do
-            if SliderImage.where(product_type: lcd.name_for_db).any?
-              SliderImage.where(product_type: lcd.name_for_db).each do |image|
+            if SliderImage.where(product_type: led.name_for_db).any?
+              SliderImage.where(product_type: led.name_for_db).each do |image|
                 render "slider_images/slider_image", slider_image: image
               end
             end
           end
-          render "admin/upload_slider", type: lcd.name_for_db
+          render "admin/upload_slider", type: led.name_for_db
 
         end
 
         panel "Finishing Options", class: "group" do
-          render "admin/add_lcd_finishing", finishings: LcdFinishing.all, selected: lcd.lcd_finishings.pluck(:id)
+					render "admin/add_lcd_finishing", finishings: LcdFinishing.all, selected: led.lcd_finishings.pluck(:id)
       
         end
       
       end
     end
     panel "Thicknesses", class: "group" do
-      lcd.lcd_thicknesses.each do |t|
+      led.lcd_thicknesses.each do |t|
         div class: "thickness-set" do
           attributes_table_for t do
             row :thickness
             row :unit
             row " " do |thickness|
               [
-                link_to("Edit", edit_admin_lcd_thickness_path(thickness, lcd_id: lcd.id)),
-                link_to("Remove", admin_lcd_thickness_path(thickness), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
+								link_to("Edit", edit_admin_led_thickness_path(thickness, lcd_id: led.id)),
+								link_to("Remove", admin_led_thickness_path(thickness), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
               ].join(" | ").html_safe
             end
           end
@@ -137,15 +137,15 @@ ActiveAdmin.register Lcd do
             column :price
             column "" do |tier|
               [
-                link_to("Edit", edit_admin_lcd_tier_path(tier,lcd_id: lcd.id, lcd_thickness_id: tier.lcd_thickness_id )),
-                link_to("Remove", admin_lcd_tier_path(tier), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
+								link_to("Edit", edit_admin_led_tier_path(tier,lcd_id: led.id, lcd_thickness_id: tier.lcd_thickness_id )),
+								link_to("Remove", admin_led_tier_path(tier), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
               ].join(" | ").html_safe
             end
           end
-          text_node link_to "Add Tier", new_admin_lcd_tier_path(lcd_id: lcd.id, lcd_thickness_id: t.id), class: "link_button right"
+					text_node link_to "Add Tier", new_admin_led_tier_path(lcd_id: led.id, lcd_thickness_id: t.id), class: "link_button right"
         end
       end
-      text_node link_to "Add Thickness", new_admin_lcd_thickness_path(lcd_id: lcd.id), class: "link_button add-thickness"
+			text_node link_to "Add Thickness", new_admin_led_thickness_path(lcd_id: led.id), class: "link_button add-thickness"
     end
   end
 
@@ -173,8 +173,15 @@ ActiveAdmin.register Lcd do
       end
       
     end
-   
-    f.actions
+  	if f.object.new_record?
+			f.actions do
+				f.action(:submit, :label => "Create Led")
+			end
+		else 
+			f.actions do
+				f.action(:submit, :label => "Update Led")
+			end
+		end
   end
 
   #Actions

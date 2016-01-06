@@ -249,7 +249,7 @@ ActiveRecord::Schema.define(version: 20151130233401) do
     t.integer "plastic_card_id"
     t.integer "min"
     t.integer "max"
-    t.decimal "rate"
+    t.decimal "rate",            precision: 30, scale: 2
   end
 
   create_table "plastic_cards", force: :cascade do |t|

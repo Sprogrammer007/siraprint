@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-ruby '2.1.6'
+ruby '2.1.7'
 #ruby-gemset=sira
 
 gem 'inherited_resources', github: 'josevalim/inherited_resources', branch: 'master'
