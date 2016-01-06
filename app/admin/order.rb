@@ -173,11 +173,11 @@ ActiveAdmin.register Order do
           end
         end
         if order.ordered_products.lcd.any?
-          h2 "LCDs"
+          h2 "LEDs"
           table_for order.ordered_products.lcd do
 
             column "Material Name" do |p|
-              link_to p.product.name, admin_lcd_path(p.product_id)
+							link_to p.product.name, admin_led_path(p.product_id)
             end
             column "Side" do |p|
               "#{p.details.side}"
