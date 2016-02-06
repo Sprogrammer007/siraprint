@@ -310,12 +310,13 @@ ActiveAdmin.register Order do
 	member_action :invoice, method: :get do
 	
     order = Order.find(params[:id])
+		
 		respond_to do |format|
 			format.html
 			format.pdf do
-					Rails.logger.warn "test222es"
+
 				pdf = OrderPdf.new(order, view_context)
-				send_data pdf.render, filename: "order_#{@order.order_id}#{Date.today}.pdf",
+				send_data pdf.render, filename: "order_#{order.order_id}#{Date.today}.pdf",
 															type: "application/pdf",
 															disposition: "inline"
 			end
