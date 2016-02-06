@@ -48,6 +48,11 @@ ActiveAdmin.register Order do
     column "Items" do |o|
       o.ordered_products.map { |p| "#{p.quantity}x #{p.product.name}"}.join(", ")
     end
+		column "Invoice" do |o|
+			if (o.status == 'payed' || o.status == 'completed')
+				link_to("Invoice", invoice_admin_order_path(o, format: 'pdf'))
+			end
+    end
 
     column "Status" do |o|
       case o.status
@@ -300,6 +305,21 @@ ActiveAdmin.register Order do
       order.update(status: "completed")
     end
     redirect_to :back
+  end
+	
+	member_action :invoice, method: :get do
+	
+    order = Order.find(params[:id])
+		respond_to do |format|
+			format.html
+			format.pdf do
+					Rails.logger.warn "test222es"
+				pdf = OrderPdf.new(order, view_context)
+				send_data pdf.render, filename: "order_#{@order.order_id}#{Date.today}.pdf",
+															type: "application/pdf",
+															disposition: "inline"
+			end
+		end
   end
 
 end

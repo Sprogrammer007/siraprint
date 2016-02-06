@@ -18,7 +18,7 @@ class OrderPdf < Prawn::Document
           info@siraprint.ca 
           416.648.9265"
     move_down 20
-    text "Order #: #{@order.order_id}", size: 15, style: :bold, align: :right
+    text "Order #: #{order.order_id}", size: 15, style: :bold, align: :right
   end
 
   def questions
