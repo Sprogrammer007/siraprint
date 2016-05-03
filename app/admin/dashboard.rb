@@ -51,7 +51,7 @@ ActiveAdmin.register_page "Dashboard" do
         panel "New Orders" do
           table_for Order.recent(5) do
             column "User Email" do |o|
-              o.user!.email
+							o.user.email if o.user
             end
 
             column "Delivery Address" do |o|
