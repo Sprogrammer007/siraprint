@@ -7,6 +7,7 @@ class LcdsController < ApplicationController
   end
 
   def show
+
     @lcd = Lcd.find(params[:id])
     @none = @lcd.lcd_finishings.has_none.any?
   end

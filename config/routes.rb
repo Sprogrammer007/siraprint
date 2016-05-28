@@ -23,31 +23,32 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :large_formats do
+  resources :large_formats, :except => ['show'] do
     member do
       post 'get_price'
       post 'change_side'
     end
   end  
-  
-  resources :lcds do
+	get 'large_format' => 'large_formats#show', :as => 'show_large_format' 
+	resources :lcds, :except => ['show'] do
     member do
       post 'get_price'
       post 'change_side'
     end
   end
-
-  resources :metal_signs do
+	get 'lcd' => 'lcds#show', :as => 'show_lcd' 
+  resources :metal_signs, :except => ['show'] do
     member do
       post 'get_price'
     end
   end  
-
-  resources :plastic_cards do
+	get 'metal_sign' => 'metal_signs#show', :as => 'show_metal_sign' 
+  resources :plastic_cards, :except => ['show'] do
     member do
       post 'get_price'
     end
   end
+	get 'plastic_card' => 'plastic_cards#show', :as => 'show_plastic_card' 
 
   resources :orders, :except => ['show'] do
     member do

@@ -1,5 +1,5 @@
 .product-item  
-  = link_to(large_format_path(large_format)) do
+  = link_to(show_large_format_path(:id => large_format.id)) do
     .product-image
       .overlay
         %span View Details
