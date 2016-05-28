@@ -1,5 +1,5 @@
 .product-item  
-  = link_to(show_metal_sign_path(:id => metal_sign.id)) do
+  = link_to(show_metal_sign_path(:name => metal_sign.name.downcase.tr(' ', '_'), :id => metal_sign.id)) do
     .product-image
       .overlay
         %span View Details

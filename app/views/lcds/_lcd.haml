@@ -1,5 +1,5 @@
 .product-item  
-  = link_to(show_lcd_path(:id => lcd.id)) do
+  = link_to(show_lcd_path(:name => lcd.name.downcase.tr(' ', '_'), :id => lcd.id)) do
     .product-image
       .overlay
         %span View Details

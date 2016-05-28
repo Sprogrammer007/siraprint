@@ -1,5 +1,5 @@
 .product-item  
-  = link_to(show_plastic_card_path(:id => plastic_card.id)) do
+  = link_to(show_plastic_card_path(:name => plastic_card.name.downcase.tr(' ', '_'), :id => plastic_card.id)) do
     .product-image
       .overlay
         %span View Details
