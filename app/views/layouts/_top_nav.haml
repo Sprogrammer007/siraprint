@@ -8,14 +8,10 @@
       %span.icon-bar
 
   .collapse.navbar-collapse
-    %ul.nav.navbar-nav.navbar-right
-      %li
-        = link_to root_path() do
-          %span.glyphicon.glyphicon-home{"aria-hidden" => "true"}   
+    %ul.nav.navbar-nav
+   
       %li
         = link_to "About", about_path      
-      %li
-        = link_to "Portfolio", portfolio_path
       %li
         = link_to "Contact", contact_path
       - if active_signed_in?
@@ -40,9 +36,9 @@
 
 
         %li
-          = link_to "Signin as Broker", new_broker_session_path, class: "btn btn-top-nav btn-signin"
+          = link_to "Signin as Broker", new_broker_session_path, class: "btn-top-nav btn-signin"
         %li
-          = link_to "Signin", new_user_session_path, class: "btn btn-top-nav btn-signin"
+          = link_to "Signin", new_user_session_path, class: "btn-top-nav btn-signin"
 
      
 

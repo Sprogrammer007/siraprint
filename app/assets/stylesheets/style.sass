@@ -47,7 +47,7 @@ h1, h2, h3, h4
   margin-bottom: 0.3125em
   margin-top: 0
 
-.main-content, #footer
+.main-content
   margin-left: 201px
   padding-left: 25px
 
@@ -181,11 +181,10 @@ span.alert-text
 // Header
 
 .navbar
-  float: right
+  border-color: #FFF
+  background-color: #FFF
   border-radius: 0px
-  margin: 10px 0
-  
-.navbar
+  margin: 10px 0 30px 0
   padding: 5px 10px
 
 .navbar-collapse
@@ -196,6 +195,13 @@ span.alert-text
   background: #ffffff
   border: #E9E9E9
 
+.navbar .navbar-nav
+  width: 100%
+  float: none
+  text-align: center
+  li 
+    float: none
+    display: inline-block
 .navbar .navbar-nav > li > a,
 .navbar-nav > li > button
   color: #191919
@@ -228,21 +234,24 @@ span.alert-text
   text-transform: uppercase
 
 .btn-signup
-  background-color: #30A4E9
-  color: #ffffff !important
+  //background-color: #30A4E9
+  //color: #ffffff !important
+  background-color: #FFF
 
 .btn-signin
-  background-color: #E6E6E6
+//  background-color: #E6E6E6
 
 .btn-signup:hover,
 .navbar-default .navbar-nav > li > .btn_signup:focus
-  background-color: #147BB9 !important
+//  background-color: #147BB9 !important
 
 .btn-signin:hover
-  background-color: #A0A0A0 !important
+//  background-color: #A0A0A0 !important
 
 .navbar-nav > li > a 
   padding: 10px 10px 
+  font-size: 85% !important
+  text-transform: uppercase
   line-height: 20px
 
 .navbar-nav > li > button 
@@ -398,6 +407,14 @@ span.alert-text
   text-transform: uppercase
   width: 100%
 
+  
+.home-top 
+  text-align: center
+  h2
+    font-size: 24px
+    margin-bottom: 10px
+  p
+    font-size: 15px
 #featured-box 
   .feature-wrapper 
     text-align: center
