@@ -159,7 +159,7 @@ ready = function() {
       price = price * 2;
       before_discount_price = before_discount_price * 2;
       if (fin_price !== 0) {
-        fin_price = fin_price * 2;
+        fin_price = (fin_price * 2) - + currentItem.s_price;
       }
     }
     set_before_discount_per_unit_price(before_discount_price);
@@ -439,7 +439,8 @@ ready = function() {
       grommets_change(this.checked);
     } else if (option === "Step Sticks") {
       if (this.checked) {
-        currentItem.s_price = parseFloat(currentItem.quantity * 0.80)
+        quantity = parseInt($('.quantity-field').val());
+        currentItem.s_price = parseFloat(quantity * 0.80)
       } else {
         currentItem.s_price = 0
       } 
