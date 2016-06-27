@@ -37,12 +37,12 @@ Rails.application.routes.draw do
     end
   end
 	get 'lcd/:name' => 'lcds#show', :as => 'show_lcd' 
-  resources :metal_signs, :except => ['show'] do
+  resources :metal_signs, :path => "directional_sign", :except => ['show'] do
     member do
       post 'get_price'
     end
   end  
-	get 'metal_sign/:name' => 'metal_signs#show', :as => 'show_metal_sign' 
+  get 'directional_sign/:name' => 'metal_signs#show', :as => 'show_metal_sign' 
   resources :plastic_cards, :except => ['show'] do
     member do
       post 'get_price'

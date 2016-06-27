@@ -29,13 +29,11 @@
 
     <div class="item-final product-box">
       <h3>Quantity</h3>
-      <span style="position: relative; font-size: 10px; left: 0; top: -5px;">*Enter number of prints</span>
+     
       <div class="quantity-box">
         <div class="row mgl">
-          <div class="col-lg-6">
-            <%= label_tag '[order]quantity', "Number of Prints" %>
-          </div>
-          <div class="col-lg-6">
+      
+          <div class="col-lg-12">
             <%= number_field_tag '[order]quantity', 1, class: "quantity-field form-control", in: 1...10000 %>
           </div>
         </div>

@@ -4,6 +4,7 @@ class MetalSignsController < ApplicationController
 
   def index
     @metal_signs = MetalSign.all
+
   end
 
   def show

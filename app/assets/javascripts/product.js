@@ -372,8 +372,6 @@ ready = function() {
       currentItem.resetFinishingPrice();
       $('.grommets-box').addClass('hidden');
       $('.grommets-field').val(0);   
-      $('.stick-box').addClass('hidden');
-      $('.stick-field').val(0);
       return 
     }
   };
@@ -386,15 +384,7 @@ ready = function() {
       return $('.grommets-field').val(0);
     }
   };  
-  stick_change = function(checked) {
-    if (checked) {
-      return $('.stick-box').removeClass('hidden');
-    } else {
-      $('.stick-box').addClass('hidden');
-      currentItem.g_price = 0;
-      return $('.stick-field').val(0);
-    }
-  };
+
   lamination_change = function(checked, w, l) {
     var sqft;
     sqft = calc_sqft(w, l);
@@ -448,7 +438,13 @@ ready = function() {
     if (option === "Grommets") {
       grommets_change(this.checked);
     } else if (option === "Step Sticks") {
-      stick_change(this.checked);
+      if (this.checked) {
+        currentItem.s_price = parseFloat(currentItem.quantity * 0.80)
+      } else {
+        currentItem.s_price = 0
+      } 
+        
+     
     } else if (option === "Gloss lamination") {
       if ($("#finishing_4").is(':checked')) {
         $("#finishing_4").prop('checked', false);
@@ -481,18 +477,6 @@ ready = function() {
     return change_price();
   });
 
-  $form.on('change', '.stick-field', function() {
-
-    var s = $(this).val();
-    if (s < 1) {
-      $(this).val(1);
-      s = 1;
-      error($(this), "Atleast One");
-    }
-    $(this).tooltip('hide');
-    currentItem.s_price = parseFloat(s * 0.80);
-    return change_price();
-  });
 
   function plastic_card_price(q) {
     var id = $('#_orderproduct_id').val();
@@ -532,7 +516,11 @@ ready = function() {
            
     } else if (t_id && t_id !== 0) {
       $(this).tooltip('hide');
+      if (currentItem.s_price !== 0) {
+          currentItem.s_price = parseFloat(quantity * 0.80)
+      }
       return change_price(t_id);
+      
     } else if (type === "metal_sign") {
       $(this).tooltip('hide');
       price = price * quantity;
