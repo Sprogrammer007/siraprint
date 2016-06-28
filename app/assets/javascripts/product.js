@@ -416,7 +416,7 @@ ready = function() {
     }
   };
 
-  $form.on('change', '.finish-select', function() {
+  $form.on('change', '.finish-select', function(e) {
     var l, number_of_checked, option, w;
     w = $widthOption.val();
     l = $lengthOption.val();
@@ -466,6 +466,7 @@ ready = function() {
     } else if (option === "None") {
       reset_finish_options(this.checked);
     }
+    e.preventDefault();
     return change_price();
   });
 
