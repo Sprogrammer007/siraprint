@@ -23,14 +23,15 @@
             - if p.details.finishing
               Finishing: 
               = p.details.finishing.join(", ")
+              
+              - if p.express
+                Express Service: 
               %br
               - if p.details.finishing.include?('Grommets')
                 Grommnets: 
                 = p.details.grommets_quantity
-              %br
-              - if p.details.finishing.include?('Step Sticks')
-                Step Sticks: 
-                = p.details.sticks_quantity
+             
+               
           - unless step == "pay"
             %br
             = link_to "remove", remove_item_order_path(p), class: "remove-ordered-product", :method => :post

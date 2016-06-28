@@ -8,7 +8,7 @@ class OrdersController < ApplicationController
     if !@validate.any?
       @order = current_active.open_order || current_active.new_order(request.remote_ip)
     end
-    Rails.logger.warn(@validate)
+   
     if @order && !@errors.any? && !@validate.any?
       op = @order.create_new_ordered_product(params[:order], session[:current_rate])
       if op.save && params[:order][:product_type] != 'plastic_card'

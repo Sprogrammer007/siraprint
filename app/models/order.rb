@@ -103,7 +103,8 @@ class Order < ActiveRecord::Base
       product_id: params[:product_id], 
       comment: params[:comment], 
       unit_price: unit_price,
-      price: total_price
+      price: total_price,
+      express: params[:express]
     )
     return op
   end
