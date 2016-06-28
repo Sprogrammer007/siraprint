@@ -1,8 +1,14 @@
 
-<div class="col-lg-offset-1 col-lg-7 mgtb-l">
+<div class="col-lg-5 col-md-5 col-sm-5 col-lg-offset-2">
 
-  <div class="align-center">
-    <h2>Sign In</h2>
+
+  <h2>Log In</h2>
+  <div>
+    <%= link_to "Login as Broker", new_broker_session_path(), class: "btn btn-login" %>
+  </div>
+  <div class="or-divider">
+    <span>Or</span>
+    
   </div>
 
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
@@ -21,17 +27,21 @@
       <% if devise_mapping.rememberable? -%>
         <%= f.check_box :remember_me %> <%= f.label :remember_me %>
       <% end -%>
+      <div class='pull-right'>
+            <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+          <%= link_to "Forgot your password?", new_password_path(resource_name) %>
+        <% end -%>
+      </div>
+    
     </fieldset>
 
-    <div class="mts mbs align-center">
+    <div class="mts mbs align-center ">
       <%= f.submit "Log in", class: "btn btn-submit" %>
       <p class="mtt tcg ts-m">
         Don't have an account?
-        <%= link_to "Create a Account", new_user_registration_path  %> | <%= link_to "Create a Broker Account", new_broker_registration_path  %> 
+        <%= link_to "Create a Account", create_account_path  %> 
         <br/> 
-         <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-          <%= link_to "Forgot your password?", new_password_path(resource_name) %>
-        <% end -%>
+     
       </p>
     </div>
   <% end %>

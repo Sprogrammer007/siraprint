@@ -1,0 +1,66 @@
+
+<div class="col-lg-5 col-md-5 col-sm-5 col-lg-offset-2">
+
+
+    <h2>Log In</h2>
+
+
+  <%= form_for("user", as: "user", url: "/users/sign_in", id: "userForm") do |f| %>
+
+    <fieldset class="form-field mbs">
+      <%= f.label :email, class: "form-label" %>
+      <%= f.email_field :email, autofocus: true, class: "form-input" %>
+    </fieldset>
+
+    <fieldset class="form-field mbs-m">
+      <%= f.label :password %>
+      <%= f.password_field :password, autocomplete: "off", class: "form-input login" %>
+    </fieldset>
+
+    <fieldset class="form-field mbs-m">
+    
+      <%= f.check_box :remember_me %> <%= f.label :remember_me %>
+      <div class="pull-right"><%= link_to "Forgot your password?", new_password_path("user") %></div>
+    </fieldset>
+
+    <div class="mts mbs align-center">
+      <%= f.submit "Log in", class: "btn btn-submit" %>
+      <p class="mtt tcg ts-m">
+        Don't have an account?
+ 
+       <%= link_to "Create a Account", create_account_path  %>
+ 
+       
+      </p>
+    </div>
+  <% end %>
+  <%= form_for("broker", as: "broker", url: "/brokers/sign_in", id: "brokerForm") do |f| %>
+
+    <fieldset class="form-field mbs">
+      <%= f.label :email, class: "form-label" %>
+      <%= f.email_field :email, autofocus: true, class: "form-input" %>
+    </fieldset>
+
+    <fieldset class="form-field mbs-m">
+      <%= f.label :password %>
+      <%= f.password_field :password, autocomplete: "off", class: "form-input login" %>
+    </fieldset>
+
+    <fieldset class="form-field mbs-m">
+    
+      <%= f.check_box :remember_me %> <%= f.label :remember_me %>
+      <div class="pull-right"><%= link_to "Forgot your password?", new_password_path("broker") %></div>
+    </fieldset>
+
+    <div class="mts mbs align-center">
+      <%= f.submit "Log in", class: "btn btn-submit" %>
+      <p class="mtt tcg ts-m">
+        Don't have an account?
+ 
+        <%= link_to "Create a Account", create_account_path  %>
+ 
+       
+      </p>
+    </div>
+  <% end %>
+</div>

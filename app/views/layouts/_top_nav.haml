@@ -34,13 +34,10 @@
               = link_to raw("<span class='glyphicon glyphicon-shopping-cart'></span><span class='badge'>#{badge_number}</span>"), cart_path(), class: "btn-cart"
         - else
           %li
-            %button.btn.btn-top-nav.btn-signup(type="button" data-container="body" data-toggle="popover" data-content="#{link_to('I\'m a Broker', new_broker_registration_path, class: 'btn btn-signup')} #{link_to('I\'m Not a Broker', new_user_registration_path, class: 'btn btn-signin')}") Create an Account
-
-
+            = link_to "Create Account", new_user_registration_path(), class: "btn btn-signup"
           %li
-            = link_to "Signin as Broker", new_broker_session_path, class: "btn-top-nav btn-signin"
-          %li
-            = link_to "Signin", new_user_session_path, class: "btn-top-nav btn-signin"
+            = link_to "Login", new_user_session_path(), class: "btn-top-nav btn-signin"
+
 
 
 

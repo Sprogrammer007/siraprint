@@ -500,6 +500,9 @@ ready = function() {
         if ($userType === "Broker" && $brokerDiscount !== 0) {
           price = (price - ((price * $brokerDiscount) / 100.0));
         }
+        if ($('#_orderexpress').is(':checked')) {
+          price = price * 1.75
+        }
         set_per_unit_price(price);
         set_total_price(price);
       }
@@ -535,13 +538,27 @@ ready = function() {
       return 
     }
   });
-  $form.on('change', '#_orderexpress', function(e) {
+  $form.on('change', '.quantity-field', function(e) {
+    quantity = parseInt($(this).val());
     t_id = $thicknessOption.find(':selected').val();
-    if (t_id && t_id !== 0) {
-      return change_price(t_id);
-    } else {
+    price = currentItem.unit_price;
+    type = $('#_orderproduct_type').val();
+    if (price === 0 && type !== 'plastic_card') {
       $(this).attr('checked', false)
+    } else if (t_id && t_id !== 0) {
+      $(this).tooltip('hide');
+       return change_price(t_id);
+ 
+    } else if (type === "metal_sign") {
+     
+      price = price * 1.75;
+      return set_total_price(price);
+    } else if (type === "plastic_card") {
+     
+      plastic_card_price(quantity);
+      return 
     }
+    
   });
   $('.qty-update-button').click(function(e) {
     var quantity, url;

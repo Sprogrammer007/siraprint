@@ -103,6 +103,28 @@ span.alert-text
 .uppercase
   text-transform: uppercase
 
+.or-divider
+  display: block
+  padding: 15px 0
+  position: relative
+  &:before, &:after
+    content: ''
+    height: 1px
+    vertical-align: middle
+    border-top: 1px solid #ccc
+    display: inline-block
+    position: relative
+    width: calc(50% - 20px)
+  span 
+    font-size: 14px
+  
+    font-weight: 600
+    text-align: center
+    background: transparent
+    color: #696969
+    position: relative
+    width: 30px
+    display: inline-block
 // Helpers
 .divider
   display: block
@@ -235,10 +257,10 @@ span.alert-text
   font-size: 85% !important
   text-transform: uppercase
 
-.btn-signup
-  //background-color: #30A4E9
-  //color: #ffffff !important
-  background-color: #FFF
+.btn-login
+  background-color: #30A4E9
+  color: #ffffff !important
+  width: 100%
 
 .btn-signin
 //  background-color: #E6E6E6
@@ -350,7 +372,7 @@ span.alert-text
 #footer 
   min-height: 100px
   font-size: 18px
-  padding: 5px 20px
+  padding: 15px 20px
   border-top: 1px solid #EFEFEF
   margin-top: 20px
 
@@ -488,8 +510,6 @@ span.alert-text
 .signup-form, .signup-sidebar
   display: inline-block
 
-.form-field
-  padding-left: 20px
 
 .signup-form .form-field
   padding-left: 0

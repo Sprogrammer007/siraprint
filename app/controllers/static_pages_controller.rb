@@ -8,6 +8,7 @@ class StaticPagesController < ApplicationController
 
   end
 
+
   def help
     @posts = Post.all()
   end

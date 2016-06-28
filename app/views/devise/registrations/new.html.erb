@@ -1,7 +1,15 @@
-<div class="signup-page">
-  <div class="signup-form col-main">
+
+<div class="col-lg-6 col-md-6 col-sm-6 col-lg-offset-2">
+
 
     <h2>Create an Free Account</h2>
+      <div>
+        <%= link_to "Register as Broker", new_broker_registration_path(), class: "btn btn-login" %>
+  </div>
+  <div class="or-divider">
+    <span>Or</span>
+    
+  </div>
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
       <%- if(resource_name == :broker ) %>
@@ -61,21 +69,10 @@
 
         </fieldset>
       <% end %>  
-      <div class="pull-right">
+      <div class='pull-right'>
         <%= f.submit "Sign up", class: "btn btn-submit" %>
       </div>
     <% end %>
-  </div> <!-- End Form-->
-
-  <div class="signup-sidebar col-side">
-<!--     <h2>Sira Print</h2>
-    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.</p>
-
-    <ul>
-      <li>Benefit #1</li>
-      <li>Benefit #2</li>
-      <li>Benefit #3</li>
-    </ul> -->
-  </div> <!-- End Sidebar-->
+ 
 
 </div>
