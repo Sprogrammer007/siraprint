@@ -538,7 +538,7 @@ ready = function() {
       return 
     }
   });
-  $form.on('change', '.quantity-field', function(e) {
+  $form.on('change', '#_orderexpress', function(e) {
     quantity = parseInt($(this).val());
     t_id = $thicknessOption.find(':selected').val();
     price = currentItem.unit_price;
