@@ -160,7 +160,7 @@ ActiveAdmin.register Order do
               end
             end
             column "Express" do |p|
-              if o.express
+              if p.express
                 status_tag "Yes", :ok
               else
                 status_tag "No", :ok
