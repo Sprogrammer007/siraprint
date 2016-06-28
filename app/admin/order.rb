@@ -32,6 +32,13 @@ ActiveAdmin.register Order do
     column "Delivery Address" do |o|
       o.delivery_address.html_safe() if o.delivery_address
     end
+    column "Express" do |o|
+      if o.express
+        status_tag "Yes", :ok
+      else
+        status_tag "No", :ok
+      end
+    end
     column "Order Sub-Total" do |o|
       if o.sub_total
         "$#{o.sub_total}"
@@ -87,6 +94,13 @@ ActiveAdmin.register Order do
           end
           row "Delivery Address" do |o|
             o.delivery_address.html_safe() if o.delivery_address
+          end
+          row "Express" do |o|
+            if o.express
+              status_tag "Yes", :ok
+            else
+              status_tag "No", :ok
+            end
           end
           row "Order Sub-Total" do |o|
             if o.sub_total

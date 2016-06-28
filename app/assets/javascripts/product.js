@@ -623,7 +623,7 @@ ready = function() {
         e = true;
       };
     };
-    console.log(e)
+  
     if (e) { return };
     var data = $(this).serialize();
     var url = $(this).attr('action');
