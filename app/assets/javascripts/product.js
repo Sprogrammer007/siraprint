@@ -15,8 +15,9 @@ ready = function() {
       $('.modal:visible').each(centerModal);
   });
   
-  var $finishingOption, $form, $userType, $brokerDiscount, $lengthOption, $max_l, $max_w, $productOptions, $quantityOption, $thicknessOption, $unitOption, $url, $widthOption, calc_price, calc_sqft, change_price, change_price_calc, check_max_size, check_max_size_cb, convert_to_feet, convert_to_inch, currentItem, diecut_change, grommets_change, lamination_change, reset_finish_options, reset_values, round_numb, set_finish_price, set_per_unit_price, set_price, set_total_price, stretch_change, update_unit;
+  var $finishingOption, $form, $userType, $brokerDiscount, $lengthOption, $max_l, $max_w, $express_price, $productOptions, $quantityOption, $thicknessOption, $unitOption, $url, $widthOption, calc_price, calc_sqft, change_price, change_price_calc, check_max_size, check_max_size_cb, convert_to_feet, convert_to_inch, currentItem, diecut_change, grommets_change, lamination_change, reset_finish_options, reset_values, round_numb, set_finish_price, set_per_unit_price, set_price, set_total_price, stretch_change, update_unit;
   $form = $('.order_form');
+  $express_price = 1.75;
   $widthOption = $('.product-width');
   $lengthOption = $('.product-length');
   $unitOption = $('.product-unit');
@@ -35,6 +36,7 @@ ready = function() {
     s_price: 0,
     dc_price: 0,
     sf_price: 0,
+    express_price: 0,
     rate: 0,
     fin_price: 0,
     unit_price: 0,
@@ -169,7 +171,7 @@ ready = function() {
       total_price = price * quantity;
     }
     if ($('#_orderexpress').is(':checked')) {
-      total_price = total_price * 1.75
+      total_price = total_price * $express_price
     }
     return set_total_price(total_price);
   };
@@ -441,13 +443,7 @@ ready = function() {
     if (option === "Grommets") {
       grommets_change(this.checked);
     } else if (option === "Step Sticks") {
-      if (this.checked) {
-        quantity = parseInt($('.quantity-field').val());
-        currentItem.s_price = parseFloat(quantity * 0.80)
-      } else {
-        currentItem.s_price = 0
-      } 
-        
+
      
     } else if (option === "Gloss lamination") {
       if ($("#finishing_4").is(':checked')) {
@@ -502,7 +498,7 @@ ready = function() {
           price = (price - ((price * $brokerDiscount) / 100.0));
         }
         if ($('#_orderexpress').is(':checked')) {
-          price = price * 1.75
+          price = price * $express_price
         }
         set_per_unit_price(price);
         set_total_price(price);
@@ -511,7 +507,7 @@ ready = function() {
   };
 
   $form.on('change', '.quantity-field', function(e) {
-    var price, quantity, t_id, type;
+    var price, quantity, t_id, type, express;
     quantity = parseInt($(this).val());
     price = currentItem.unit_price;
     type = $('#_orderproduct_type').val();
@@ -532,28 +528,38 @@ ready = function() {
     } else if (type === "metal_sign") {
       $(this).tooltip('hide');
       price = price * quantity;
-      return set_total_price(price);
+      express = currentItem.express_price * quantity
+      return set_total_price(price + express);
     } else if (type === "plastic_card") {
       $(this).tooltip('hide');
       plastic_card_price(quantity);
       return 
     }
   });
+  
   $form.on('change', '#_orderexpress', function(e) {
-    quantity = parseInt($(this).val());
+    var price, quantity, t_id, type, checked, express;
+    quantity = parseInt($('.quantity-field').val());
+    checked = $(this).is(':checked')
     t_id = $thicknessOption.find(':selected').val();
     price = currentItem.unit_price;
     type = $('#_orderproduct_type').val();
+
     if (price === 0 && type !== 'plastic_card') {
       $(this).attr('checked', false)
     } else if (t_id && t_id !== 0) {
-      $(this).tooltip('hide');
-       return change_price(t_id);
+
+      
+      return change_price(t_id);
  
     } else if (type === "metal_sign") {
-     
-      price = price * 1.75;
-      return set_total_price(price);
+      price = price * quantity;
+      if (checked) {
+        express = ((currentItem.unit_price * $express_price) -  currentItem.unit_price) * quantity
+      } else {
+        express = 0
+      }
+      return set_total_price(price + express);
     } else if (type === "plastic_card") {
      
       plastic_card_price(quantity);
