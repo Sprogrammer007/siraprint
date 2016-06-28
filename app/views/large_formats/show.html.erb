@@ -1,5 +1,5 @@
 
-<div class="col-lg-6 col-md-6 col-sm-6">
+<div class="col-lg-7 col-md-7 col-sm-7">
 
   <h2><%= "Large Format - #{@large_format.name}" %></h2>
   <div class="galleria" id="galleria" style="height: 518px">
@@ -27,7 +27,7 @@
     <p><%= @large_format.description.html_safe() %></p>
   </div>
 </div>
-<div class="col-lg-4 col-md-4 col-sm-4">
+<div class="col-lg-3 col-md-3 col-sm-3">
 <div class="order_form">
     <%= render 'order_form' %>
    
@@ -40,8 +40,8 @@
     Galleria.loadTheme("<%=  asset_path('galleria.classic.js') %>");
     
     Galleria.configure({
-      height: 458, 
-      width: 580, 
+      height: 400, 
+      width: 600, 
       responsive: true, 
       lightbox: false, 
       autoplay: true,
