@@ -278,7 +278,7 @@ class Order < ActiveRecord::Base
         end  
 
         if details[:finishing].include?('Step Sticks')
-          s_ price = (quantity * 0.80)
+          s_price = (quantity * 0.80)
           f_price += s_price
         end  
 
