@@ -603,7 +603,7 @@ ready = function() {
   });
 
   $form.find('form').submit(function(e) {
-    console.log('Testse')
+
     if ($('#fileupload').length > 0) { e.preventDefault(); return }
     e.preventDefault();
     var e = false;
@@ -619,9 +619,6 @@ ready = function() {
         e = true;
       } else if ($('input[value="Grommets"]').is(':checked') && $('.grommets-field').val() === '')  {
         error($('.grommets-field'), 'Enter # Grommets');
-        e = true;
-      } else if ($('input[value="Step Sticks"]').is(':checked') && $('.stick-field').val() === '')  {
-        error($('.stick-field'), 'Enter # Step Sticks');
         e = true;
       };
     };
