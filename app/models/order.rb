@@ -89,9 +89,9 @@ class Order < ActiveRecord::Base
 
     unit_price = round(unit_price.to_f)
     total_price = (unit_price.to_f * params[:quantity].to_i)
-    if (params[:express]) {
+    if (params[:express]) 
       total_price = (total_price * 1.75)
-    }
+    end
     # cover to 2 decimal places 
     total_price = ('%.2f' % total_price)
  
