@@ -168,6 +168,9 @@ ready = function() {
     if (quantity !== 0) {
       total_price = price * quantity;
     }
+    if ($('#_orderexpress').is(':checked')) {
+      total_price = total_price * 1.75
+    }
     return set_total_price(total_price);
   };
   change_price = function(t_id) {
@@ -532,7 +535,14 @@ ready = function() {
       return 
     }
   });
-
+  $form.on('change', '#_orderexpress', function(e) {
+    t_id = $thicknessOption.find(':selected').val();
+    if (t_id && t_id !== 0) {
+      return change_price(t_id);
+    } else {
+      $(this).attr('checked', false)
+    }
+  });
   $('.qty-update-button').click(function(e) {
     var quantity, url;
     e.preventDefault();

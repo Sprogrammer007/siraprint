@@ -67,7 +67,11 @@
       </div>
     </div>
   </div>
-  
+  <div class="express product-box">
+      <h3>Express Printing</h3>
+      <%= check_box_tag('[order]express', "child") %>
+      <%= label_tag('[order]express', "Get It In 24 Hours") %>
+  </div>
   <div class="product-box">
     <h3>Additional Comments</h3>
     <%= text_area_tag '[order]comment', "", class: "form-control", style: "height: 80px;" %>
