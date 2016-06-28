@@ -1,4 +1,5 @@
-<div class="col-main">
+
+<div class="col-lg-6 col-md-6 col-sm-6">
   <h2><%= @metal_sign.name %></h2>
   <div class="galleria" id="galleria" style="height: 518px">
     <%- if SliderImage.where(product_type: @metal_sign.name_for_db).any? %>
@@ -7,6 +8,15 @@
       <%- end %>
     <%- end %>
   </div>
+    
+  <%- if @metal_sign.has_video? %>
+    <div class='item-video'>
+      <h3>Product Video</h3>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= @metal_sign.video %>" frameborder="0" allowfullscreen=""></iframe>
+      
+    </div>
+    <hr/>
+   <%- end %>
   <div class="item-description">
     <h3>Item Description</h3>
     <p>
@@ -14,8 +24,8 @@
     </p>
   </div>
 </div>
-
-<div class="col-side order_form">
+<div class="col-lg-4 col-md-4 col-sm-4">
+<div class="order_form">
     <%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "metal-signs-form" do %>
     <div id="product-options" data-price-url="<%=  get_price_metal_sign_path(@metal_sign) %>"  data-u-type="<%=  current_active.class.name %>" data-b-disc="<%=  @metal_sign.broker_discount %>"></div>
     <%= hidden_field_tag '[order]product_type', 'metal_sign' %>
@@ -75,7 +85,7 @@
     </div>
     <% end %> 
 </div>
-        
+</div>    
 <script>
   gallery_setup = function() {
     Galleria.loadTheme("<%=  asset_path('galleria.classic.js') %>");

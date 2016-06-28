@@ -16,7 +16,10 @@ class PlasticCard < ActiveRecord::Base
       self.name.downcase.split(" ").join("_")
     end
   end
-
+  def has_video?
+    
+    !self.video.nil?
+  end
   def update_unite_price(q, user)
     rate = self.plastic_card_prices.rate(q).first.rate
     brokerDiscount = (self.broker_discount).to_f

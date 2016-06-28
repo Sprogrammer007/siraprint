@@ -1,4 +1,4 @@
-<div >
+<div class='col-lg-10 col-sm-10 col-md-10' >
   <div class='home-top'>
     <h2>What we do?</h2>
     <p>We are a printing company capable of printing on any flat surface up to 1.9" thick
@@ -36,13 +36,7 @@ Die-Cut/Contour Cut/Laser Cut any material</p>
 
 
     <div class="carousel-inner" role="listbox">
-      <%- if SliderImage.home.any? %>
-        <%- SliderImage.home.each_with_index do |image, i| %>
-          <div class='item <%= (i == 0) ? "active" : "" %>'>
-            <%= image_tag(image.slide_image_file_name.url())  %>
-          </div>
-        <%- end %>
-      <%- end %>
+
     </div>
 
     <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
@@ -59,7 +53,7 @@ Die-Cut/Contour Cut/Laser Cut any material</p>
   <div id="featured-box">
    
     <div class="large_format_featured">
-     	<div class='col-lg-4'>
+     	<div class='col-lg-4 col-md-4 col-sm-4'>
 				<div class='feature-wrapper'>
 					 <%= image_tag("1497128.jpg")  %>
             <strong>Print, Signs & Banners</strong>
@@ -68,16 +62,16 @@ Die-Cut/Contour Cut/Laser Cut any material</p>
 				</div>
 				
 			</div>
-     	<div class='col-lg-4'>
+     	<div class='col-lg-4 col-md-4 col-sm-4'>
         	<div class='feature-wrapper'>
             <%= image_tag("9319534.jpeg")  %>
-            <strong>Trafic & Sign holders</strong>
+            <strong>Trafic & Sign Holders</strong>
           <p>Sign holder and frames vary depending on your objective & vision Explore & Learn </p>
            <%= link_to 'Shop Now', metal_signs_path(), class: 'btn-shop'%>
         </div>
 				 
 			</div>
-     	<div class='col-lg-4'>
+     	<div class='col-lg-4 col-md-4 col-sm-4'>
         	<div class='feature-wrapper'>
 					 <%= image_tag("4471447.jpg")  %>
             <strong>LED & LGP sign </strong>

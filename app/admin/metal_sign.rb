@@ -54,6 +54,11 @@ ActiveAdmin.register MetalSign do
           row :description do |l|
             l.description.html_safe() if l.description
           end
+          row "Video" do |l|
+            if l.has_video?
+              render "admin/video", video: l.video
+            end
+          end
           row "status" do |l|
             if l.active?
               status_tag "Active", :ok
@@ -96,6 +101,7 @@ ActiveAdmin.register MetalSign do
     f.inputs do 
       f.input :name
       f.input :description, input_html: { class: "tinymce" }
+      f.input :video, label: "Youtube Video"
       f.input :broker_discount, label: "Broker Discount(in %)"
       f.input :display_image_file_name, :as => :file
       f.input :status, :as => :select, :collection => options_for_select(['Active', 'Deactive'], f.object.status)

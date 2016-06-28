@@ -1,44 +1,46 @@
 %nav.navbar.navbar-default
+  .container
 
-  .navbar-header
-    = button_tag "#", class: "navbar-toggle", data: {toggle: "collapse", target: "#32a"} do
-      %span.sr-only
-      %span.icon-bar
-      %span.icon-bar
-      %span.icon-bar
+    .navbar-header
+      = button_tag "#", class: "navbar-toggle", data: {toggle: "collapse", target: "#32a"} do
+        %span.sr-only
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
 
-  .collapse.navbar-collapse
-    %ul.nav.navbar-nav
-   
-      %li
-        = link_to "About", about_path      
-      %li
-        = link_to "Contact", contact_path
-      - if active_signed_in?
-        %li
-        %li.dropdown
-          = link_to "#", class: "dropdown-toggle", data: {toggle: "dropdown"} do
-            = "#{current_active.email}"
-            %span.caret
-          %ul.dropdown-menu
-            %li
-              = link_to "Profile", profile_path(current_active)
-            %li
-              = link_to "My Orders", my_orders_path()
-            %li.divider
-            %li
-              = link_to "Logout", destroy_session_path(current_active), method: "delete"
-          %li.shopping-cart
-            = link_to raw("<span class='glyphicon glyphicon-shopping-cart'></span><span class='badge'>#{badge_number}</span>"), cart_path(), class: "btn-cart"
-      - else
-        %li
-          %button.btn.btn-top-nav.btn-signup(type="button" data-container="body" data-toggle="popover" data-content="#{link_to('I\'m a Broker', new_broker_registration_path, class: 'btn btn-signup')} #{link_to('I\'m Not a Broker', new_user_registration_path, class: 'btn btn-signin')}") Create an Account
-
+      = link_to image_tag('sira_print_logo.png'),root_path ,  class: "navbar-brand"
+    .collapse.navbar-collapse
+      %ul.nav.navbar-nav
 
         %li
-          = link_to "Signin as Broker", new_broker_session_path, class: "btn-top-nav btn-signin"
+          = link_to "About", about_path      
         %li
-          = link_to "Signin", new_user_session_path, class: "btn-top-nav btn-signin"
+          = link_to "Contact", contact_path
+        - if active_signed_in?
+          %li
+          %li.dropdown
+            = link_to "#", class: "dropdown-toggle", data: {toggle: "dropdown"} do
+              = "#{current_active.email}"
+              %span.caret
+            %ul.dropdown-menu
+              %li
+                = link_to "Profile", profile_path(current_active)
+              %li
+                = link_to "My Orders", my_orders_path()
+              %li.divider
+              %li
+                = link_to "Logout", destroy_session_path(current_active), method: "delete"
+            %li.shopping-cart
+              = link_to raw("<span class='glyphicon glyphicon-shopping-cart'></span><span class='badge'>#{badge_number}</span>"), cart_path(), class: "btn-cart"
+        - else
+          %li
+            %button.btn.btn-top-nav.btn-signup(type="button" data-container="body" data-toggle="popover" data-content="#{link_to('I\'m a Broker', new_broker_registration_path, class: 'btn btn-signup')} #{link_to('I\'m Not a Broker', new_user_registration_path, class: 'btn btn-signin')}") Create an Account
 
-     
+
+          %li
+            = link_to "Signin as Broker", new_broker_session_path, class: "btn-top-nav btn-signin"
+          %li
+            = link_to "Signin", new_user_session_path, class: "btn-top-nav btn-signin"
+
+
 

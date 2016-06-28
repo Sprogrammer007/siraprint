@@ -2,7 +2,7 @@ ActiveAdmin.register Lcd, as: 'LED' do
   
 	menu :parent => "Products", :label => "LED Panels"
 	
-  permit_params :name, :description, :broker_discount, :display_image_file_name, :has_two_side, :status, :max_width, :max_length,
+  permit_params :name, :description, :video, :broker_discount, :display_image_file_name, :has_two_side, :status, :max_width, :max_length,
     :lcd_thicknesses_attributes => [:id, :thickness, :unit, :_destroy, :_destroy => true,
     :lcd_tiers_attributes => [:id, :level, :min_sqft, :max_sqft, :price, :_destroy => true ] ] 
   
@@ -82,6 +82,11 @@ ActiveAdmin.register Lcd, as: 'LED' do
               status_tag "No", :ok
             end
           end
+          row "Video" do |l|
+            if l.has_video?
+              render "admin/video",video: l.video
+            end
+          end
           row "Finishing Options" do |l|
             if l.lcd_finishings.any?
               [l.lcd_finishings.map { |f| f.name } ].join(" | ")
@@ -154,6 +159,7 @@ ActiveAdmin.register Lcd, as: 'LED' do
       f.input :name, label: "Material Name"
       f.input :description, input_html: { class: "tinymce" }
       f.input :display_image_file_name, :as => :file
+      f.input :video, label: "Youtube Video"
       f.input :broker_discount, label: "Broker Discount(in %)"
       f.input :max_width, label: "Max Width(Inchs)"
       f.input :max_length, label: "Max Length(Inchs)"

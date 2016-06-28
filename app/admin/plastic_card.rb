@@ -55,6 +55,11 @@ ActiveAdmin.register PlasticCard do
           row :description do |p|
             p.description.html_safe() if p.description
           end
+          row "Video" do |l|
+            if l.has_video?
+              render "admin/video", video: l.video
+            end
+          end
           row "status" do |p|
             if p.active?
               status_tag "Active", :ok
@@ -96,6 +101,7 @@ ActiveAdmin.register PlasticCard do
     f.inputs do 
       f.input :name
       f.input :description, input_html: { class: "tinymce" }
+      f.input :video, label: "Youtube Video"
       f.input :broker_discount, label: "Broker Discount(in %)"
       f.input :display_image_file_name, :as => :file
       f.input :status, :as => :select, :collection => options_for_select(['Active', 'Deactive'], f.object.status)

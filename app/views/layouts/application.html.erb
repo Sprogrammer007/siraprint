@@ -38,19 +38,28 @@
   </head>
 
   <body>
-    
-    <div class="clearfix fmb"></div>
-    <%= render 'shared/flash_notice'%>
-    <%= render 'layouts/side_nav' %>
-
-
-    <div class="row main-content" >
-      <head>
+      <header>
       <%= render 'layouts/top_nav' %>
-    </head>
-      <div class="col-lg-12">
-        <%= yield %>
+    </header>
+    <%= render 'shared/flash_notice'%>
+  
+
+
+    <div class="main-content" >
+      <div class='container'>
+      
+            <div class='row'>
+        <div class='col-lg-2'><%= render 'layouts/side_nav' %></div>
+         <%= yield %>
+  
+       
       </div>
+      </div>
+
+     
+   
+    
+ 
       
     </div>
 

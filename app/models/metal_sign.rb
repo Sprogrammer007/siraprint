@@ -16,6 +16,10 @@ class MetalSign < ActiveRecord::Base
       self.name.downcase.split(" ").join("_")
     end
   end
+  def has_video?
+    
+    !self.video.nil?
+  end
 
   def current_state?
     status.downcase.inquiry

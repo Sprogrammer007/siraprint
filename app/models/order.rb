@@ -266,7 +266,7 @@ class Order < ActiveRecord::Base
     
       if details[:finishing]
         f_price = 0
-
+        s_price = 0
         if details[:finishing].include?('Gloss lamination') || details[:finishing].include?('Matte Lamination') 
           f_price = sqft
         end
@@ -276,7 +276,8 @@ class Order < ActiveRecord::Base
         end  
 
         if details[:finishing].include?('Step Sticks')
-          f_price += (details[:sticks_quantity].to_i * 0.80)
+          s_ price = (quantity * 0.80)
+          f_price += s_price
         end  
 
         if details[:finishing].include?('Die Cutting')
@@ -291,7 +292,7 @@ class Order < ActiveRecord::Base
       end
 
       if side == 2
-        unit_price = unit_price * 2
+        unit_price = (unit_price * 2) - s_price
       end
 
       return unit_price.to_f

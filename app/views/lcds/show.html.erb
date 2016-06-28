@@ -1,5 +1,5 @@
 
-<div class="col-main">
+<div class="col-lg-6 col-md-6 col-sm-6">
 
   <h2><%= "LCD - #{@lcd.name}" %></h2>
   <div class="galleria" id="galleria" style="height: 518px">
@@ -9,7 +9,14 @@
       <%- end %>
     <%- end %>
   </div>
-
+  <%- if @lcd.has_video? %>
+    <div class='item-video'>
+      <h3>Product Video</h3>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/<%= @lcd.video %>" frameborder="0" allowfullscreen=""></iframe>
+      
+    </div>
+    <hr/>
+   <%- end %>
   <div class="item-description">
     <h3>Item Description</h3>
     <strong>
@@ -21,9 +28,12 @@
   </div>
 </div>
 
-<div class="order_form col-side">
+<div class="col-lg-4 col-md-4 col-sm-4">
+<div class="order_form">
     <%= render 'order_form' %>
    
+</div>
+
 </div>
 
 

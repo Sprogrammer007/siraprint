@@ -16,7 +16,12 @@ class LargeFormat < ActiveRecord::Base
   def current_state?
     status.downcase.inquiry
   end
-
+  
+  def has_video?
+    
+    !self.video.nil?
+  end
+  
   def name_for_db
     if self.name
       self.name.downcase.split(" ").delete_if { |n| n == "+" }.join("_")
