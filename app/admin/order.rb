@@ -32,13 +32,7 @@ ActiveAdmin.register Order do
     column "Delivery Address" do |o|
       o.delivery_address.html_safe() if o.delivery_address
     end
-    column "Express" do |o|
-      if o.express
-        status_tag "Yes", :ok
-      else
-        status_tag "No", :ok
-      end
-    end
+
     column "Order Sub-Total" do |o|
       if o.sub_total
         "$#{o.sub_total}"
@@ -95,13 +89,7 @@ ActiveAdmin.register Order do
           row "Delivery Address" do |o|
             o.delivery_address.html_safe() if o.delivery_address
           end
-          row "Express" do |o|
-            if o.express
-              status_tag "Yes", :ok
-            else
-              status_tag "No", :ok
-            end
-          end
+         
           row "Order Sub-Total" do |o|
             if o.sub_total
               "$#{o.sub_total}"
@@ -152,6 +140,7 @@ ActiveAdmin.register Order do
             column "Length" do |p|
               "#{p.details.length}#{p.details.unit}"
             end
+          
             column "Sqft" do |p|
               "#{p.details.size}"
             end
@@ -168,6 +157,13 @@ ActiveAdmin.register Order do
                 link_to File.basename(p.print_pdf_2), p.print_pdf_2_url
               else
                 "None"
+              end
+            end
+            column "Express" do |p|
+              if o.express
+                status_tag "Yes", :ok
+              else
+                status_tag "No", :ok
               end
             end
             column "Finishing" do |p|
@@ -221,6 +217,13 @@ ActiveAdmin.register Order do
                 "Ask to Upload"
               end
             end
+            column "Express" do |p|
+              if o.express
+                status_tag "Yes", :ok
+              else
+                status_tag "No", :ok
+              end
+            end
             column "User Design 2" do |p|
               if !p.print_pdf_2.nil?
                 link_to File.basename(p.print_pdf_2), p.print_pdf_2_url
@@ -264,6 +267,13 @@ ActiveAdmin.register Order do
                 "Ask to Upload"
               end
             end
+            column "Express" do |p|
+              if o.express
+                status_tag "Yes", :ok
+              else
+                status_tag "No", :ok
+              end
+            end
             column :unit_price
             column :price
             column :comment
@@ -287,6 +297,13 @@ ActiveAdmin.register Order do
                 link_to File.basename(p.print_pdf), p.print_pdf_url
               else
                 "Ask to Upload"
+              end
+            end
+            column "Express" do |p|
+              if o.express
+                status_tag "Yes", :ok
+              else
+                status_tag "No", :ok
               end
             end
             column :unit_price

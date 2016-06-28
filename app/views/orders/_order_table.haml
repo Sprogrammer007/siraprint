@@ -23,12 +23,12 @@
             - if p.details.finishing
               Finishing: 
               = p.details.finishing.join(", ")
-              - if p.express
-                Express Service: 
-              %br
-              - if p.details.finishing.include?('Grommets')
-                Grommnets: 
-                = p.details.grommets_quantity
+            - if p.express
+              Express Service
+            %br
+            - if p.details.finishing.include?('Grommets')
+              Grommnets: 
+              = p.details.grommets_quantity
              
                
           - unless step == "pay"
