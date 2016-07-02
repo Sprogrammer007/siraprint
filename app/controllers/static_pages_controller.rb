@@ -12,7 +12,10 @@ class StaticPagesController < ApplicationController
   def help
     @posts = Post.all()
   end
-
+  def robots
+    respond_to :text
+    expires_in 6.hours, public: true
+  end
   def portfolio
     
   end
