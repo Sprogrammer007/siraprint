@@ -19,7 +19,25 @@ class ApplicationController < ActionController::Base
   def active_signed_in?
     return broker_signed_in? || user_signed_in?
   end
-
+  # FORCE to implement content_for in controller
+  def view_context
+    super.tap do |view|
+      (@_content_for || {}).each do |name,content|
+        view.content_for name, content
+      end
+    end
+  end
+  def content_for(name, content) # no blocks allowed yet
+    @_content_for ||= {}
+    if @_content_for[name].respond_to?(:<<)
+      @_content_for[name] << content
+    else
+      @_content_for[name] = content
+    end
+  end
+  def content_for?(name)
+    @_content_for[name].present?
+  end
   private
     def authenticate_all!
       if user_signed_in?
