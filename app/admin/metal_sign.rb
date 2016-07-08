@@ -3,6 +3,7 @@ ActiveAdmin.register MetalSign do
   menu :parent => "Products"
  
   permit_params :name, :description, :display_image_file_name, :broker_discount, :status, 
+    :meta_description, :page_title,
     :metal_sign_sizes_attributes => [:id, :width, :height, :unit, :price, :_destroy, :_destroy => true] 
   
   #Filters
@@ -105,6 +106,8 @@ ActiveAdmin.register MetalSign do
       f.input :broker_discount, label: "Broker Discount(in %)"
       f.input :display_image_file_name, :as => :file
       f.input :status, :as => :select, :collection => options_for_select(['Active', 'Deactive'], f.object.status)
+      f.input :page_title, label: "Page Tital"
+      f.input :meta_description, label: "Meta Description", :as => :text
     end
     f.inputs do 
       f.has_many :metal_sign_sizes, :allow_destroy => true, :heading => "Sizes", :new_record => true do |s|

@@ -2,7 +2,8 @@ ActiveAdmin.register LargeFormat do
   
   menu :parent => "Products"
 
-  permit_params :name, :description, :broker_discount, :display_image_file_name, :has_two_side, :sides, :status, :max_width, :max_length,
+  permit_params :name, :description, :broker_discount, :display_image_file_name, :has_two_side, :sides, :status, :max_width, :max_length, 
+    :meta_description, :page_title,
     :large_format_thicknesses_attributes => [:id, :thickness, :unit, :_destroy, :_destroy => true,
     :large_format_tiers_attributes => [:id, :level, :min_sqft, :max_sqft, :price, :_destroy => true ] ] 
   
@@ -166,6 +167,8 @@ ActiveAdmin.register LargeFormat do
       f.input :max_length, label: "Max Length(Inchs)"
       f.input :has_two_side, :as => :select, :collection => options_for_select([["Yes", true], ["No", false]], (f.object.has_two_side || false))
       f.input :status, :as => :select, :collection => options_for_select(['Active', 'Deactive'], f.object.status)
+      f.input :page_title, label: "Page Tital"
+      f.input :meta_description, label: "Meta Description", :as => :text
     end
 
     f.has_many :large_format_thicknesses, :allow_destroy => true, :heading => false, :new_record => true do |t|

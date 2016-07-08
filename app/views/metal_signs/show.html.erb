@@ -1,7 +1,7 @@
 
-<div class="col-lg-7 col-md-7 col-sm-7">
+<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
   <h2><%= @metal_sign.name %></h2>
-  <div class="galleria" id="galleria" style="height: 518px">
+  <div class="galleria" id="galleria"  style="height: 518px; width: 100%;">
     <%- if SliderImage.where(product_type: @metal_sign.name_for_db).any? %>
       <%- SliderImage.where(product_type: @metal_sign.name_for_db).each do |image| %>
         <%= image_tag(image.slide_image_file_name.url())  %>
@@ -24,7 +24,7 @@
     </p>
   </div>
 </div>
-<div class="col-lg-3 col-md-3 col-sm-3">
+<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 <div class="order_form">
     <%= form_tag url_for(:controller => 'orders', :action => 'create'), class: "metal-signs-form" do %>
     <div id="product-options" data-price-url="<%=  get_price_metal_sign_path(@metal_sign) %>"  data-u-type="<%=  current_active.class.name %>" data-b-disc="<%=  @metal_sign.broker_discount %>"></div>
@@ -97,7 +97,7 @@
     
     Galleria.configure({
       height: 400, 
-      width: 600, 
+ 
       responsive: true, 
       lightbox: false, 
       autoplay: true,

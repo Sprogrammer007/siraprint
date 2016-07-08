@@ -3,6 +3,7 @@ ActiveAdmin.register Lcd, as: 'LED' do
 	menu :parent => "Products", :label => "LED Panels"
 	
   permit_params :name, :description, :video, :broker_discount, :display_image_file_name, :has_two_side, :status, :max_width, :max_length,
+    :meta_description, :page_title,
     :lcd_thicknesses_attributes => [:id, :thickness, :unit, :_destroy, :_destroy => true,
     :lcd_tiers_attributes => [:id, :level, :min_sqft, :max_sqft, :price, :_destroy => true ] ] 
   
@@ -165,6 +166,8 @@ ActiveAdmin.register Lcd, as: 'LED' do
       f.input :max_length, label: "Max Length(Inchs)"
       f.input :has_two_side, :as => :select, :collection => options_for_select([["Yes", true], ["No", false]], (f.object.has_two_side || false))
       f.input :status, :as => :select, :collection => options_for_select(['Active', 'Deactive'], f.object.status)
+      f.input :page_title, label: "Page Tital"
+      f.input :meta_description, label: "Meta Description", :as => :text
     end
 
     f.has_many :lcd_thicknesses, :allow_destroy => true, :heading => false, :new_record => true do |t|

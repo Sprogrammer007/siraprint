@@ -1,8 +1,8 @@
 
-<div class="col-lg-7 col-md-7 col-sm-7">
+<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7">
 
   <h2><%= "LCD - #{@lcd.name}" %></h2>
-  <div class="galleria" id="galleria" style="height: 518px">
+  <div class="galleria" id="galleria" style="height: 518px; width: 100%;">
     <%- if SliderImage.where(product_type: @lcd.name_for_db).any? %>
       <%- SliderImage.where(product_type: @lcd.name_for_db).each do |image| %>
         <%= image_tag(image.slide_image_file_name.url()) %>
@@ -28,7 +28,7 @@
   </div>
 </div>
 
-<div class="col-lg-3 col-md-3 col-sm-3">
+<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 <div class="order_form">
     <%= render 'order_form' %>
    

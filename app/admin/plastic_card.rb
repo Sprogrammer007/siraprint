@@ -3,6 +3,7 @@ ActiveAdmin.register PlasticCard do
   menu :parent => "Products"
  
   permit_params :name, :description, :display_image_file_name, :broker_discount, :status, 
+    :meta_description, :page_title,  
     :plastic_card_prices_attributes => [:id, :min, :max, :rate, :_destroy, :_destroy => true] 
   
   #Filters
@@ -105,6 +106,8 @@ ActiveAdmin.register PlasticCard do
       f.input :broker_discount, label: "Broker Discount(in %)"
       f.input :display_image_file_name, :as => :file
       f.input :status, :as => :select, :collection => options_for_select(['Active', 'Deactive'], f.object.status)
+      f.input :page_title, label: "Page Tital"
+      f.input :meta_description, label: "Meta Description", :as => :text
     end
     f.inputs do 
       f.has_many :plastic_card_prices, :allow_destroy => true, :heading => "Prices", :new_record => true do |s|
