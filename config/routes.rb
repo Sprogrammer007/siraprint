@@ -65,6 +65,7 @@ Rails.application.routes.draw do
   end
   
   get '/robots.:format' => 'static_pages#robots'
+  get '/sitemap.:format' => 'static_pages#sitemap'
   get 'profile/:id',        to: 'accounts#show',          as: :profile
   get 'my_orders',          to: 'accounts#my_orders',     as: :my_orders
   post 'cancel',            to: 'accounts#cancel',        as: :cancel
