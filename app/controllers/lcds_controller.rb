@@ -9,6 +9,8 @@ class LcdsController < ApplicationController
   def show
 
     @lcd = Lcd.find(params[:id])
+    content_for :title, @lcd.page_title
+    content_for :meta, @lcd.meta_description
     @none = @lcd.lcd_finishings.has_none.any?
   end
   

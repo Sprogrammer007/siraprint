@@ -8,6 +8,8 @@ class PlasticCardsController < ApplicationController
 
   def show
     @plastic_card = PlasticCard.find(params[:id])
+    content_for :title, @plastic_card.page_title
+    content_for :meta, @plastic_card.meta_description
     @price = @plastic_card.plastic_card_prices.rate(1).first
   end
 

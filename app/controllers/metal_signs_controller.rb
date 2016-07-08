@@ -9,6 +9,8 @@ class MetalSignsController < ApplicationController
 
   def show
     @metal_sign = MetalSign.find(params[:id])
+    content_for :title, @metal_sign.page_title
+    content_for :meta, @metal_sign.meta_description
   end
 
   
