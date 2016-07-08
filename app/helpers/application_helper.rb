@@ -2,11 +2,19 @@ module ApplicationHelper
 
 	# Helper Method for Page Title
   def page_title(title)
-    base_title = "Sira Print"
+    base_title = "Sira Print: Toronto Based 24 Hour Printing Services"
     if title.empty?
       base_title
     else
-      "#{title} | #{base_title}"
+      "#{title} | Sira Print"
+    end
+  end  
+  def meta(description)
+ 
+    if description.empty?
+      "Sira Print provides various printing services of decals, banners, posters, canvas, magnets, vinyl, A-frame, die cut stickers, business cards on almost all surfaces."
+    else
+      "#{description}"
     end
   end
 
