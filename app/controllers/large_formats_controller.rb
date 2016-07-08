@@ -8,6 +8,8 @@ class LargeFormatsController < ApplicationController
 
   def show
     @large_format = LargeFormat.find(params[:id])
+    content_for :title, @large_format.page_title
+    content_for :meta, @large_format.meta_description
     @none = @large_format.large_format_finishings.has_none.any?
   end
   
