@@ -1,20 +1,15 @@
-
-<div class="col-lg-5 col-md-5 col-sm-5 col-lg-offset-2">
+<div class='signup-form'>
 
   <%- if(resource_name == :broker ) %>
-  <h2>Login As Broker</h2>
+    <h2>Login As Broker</h2>
   <%- else %>  
     <h2>Login As User</h2>
   <% end %>  
-  <%- if(resource_name == :user ) %>
-  <div>
-    <%= link_to "Login as Broker", new_broker_session_path(), class: "btn btn-login" %>
-  </div>
-  <div class="or-divider">
-    <span>Or</span>
-    
-  </div>
-  <% end %> 
+   <%- if(resource_name == :broker ) %>
+  <div class="col-lg-6 col-md-6 col-xs-6 col-lg-offset-3">
+   <%- else %> 
+      <div class="col-lg-6 col-md-6 col-xs-6 ">
+        <% end %>
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
     <fieldset class="form-field mbs">
@@ -49,4 +44,12 @@
       </p>
     </div>
   <% end %>
+</div>
+  
+  <%- if(resource_name == :user ) %>
+  <div class="col-lg-6 col-md-6 col-xs-6 mts">
+    <%= link_to "Login as Broker", new_broker_session_path(), class: "btn btn-login" %>
+  </div>
+    <% end %>  
+ 
 </div>

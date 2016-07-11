@@ -18,6 +18,7 @@ class BrokersController < Devise::RegistrationsController
 
   # my custom fields are :name, :heard_how
   def configure_permitted_parameters
+    
     devise_parameter_sanitizer.for(:sign_up) do |u|
       u.permit(:email, :password, :password_confirmation,
         :company_name, :company_province, :company_postal,

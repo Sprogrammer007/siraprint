@@ -12,7 +12,7 @@
     <!-- Uncomment to make IE8 render like IE7 -->
     <!-- <meta http-equiv="X-UA-Compatible" content="IE=7" /> -->
     <!-- Set the viewport width to device width for mobile -->
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="width=device-width, initial-scale=1.O0" name="viewport">
     
     <meta name="description" content="<%= meta(yield(:meta)) %>">
   
@@ -50,16 +50,21 @@
 
     <div class="main-content" >
       <div class='container'>
-      
-        <div class='row'>
-          <div class='col-lg-2 col-sm-2 col-md-2 col-xs-2'>
-            <%= render 'layouts/side_nav' %>
-          </div>
-          <%= yield %>
 
+
+        <div class='side-panel'>
+          <%= render 'layouts/side_nav' %>
         </div>
+        <div class='main-panel'>
+          <%= yield %>
+          <div class="clearfix"></div>
+              <%= render 'layouts/footer' %>   
+        </div>
+
+
       </div>
     </div>
+
 
 
     <div id="uploader" class="modal fade">
@@ -101,7 +106,7 @@
         </div>
       </div>
     </script>
-    <%= render 'layouts/footer' %>   
+
   
 
   </body>

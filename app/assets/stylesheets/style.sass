@@ -48,7 +48,18 @@ h1, h2, h3, h4
   margin-bottom: 0.3125em
   margin-top: 0
 
-.main-content
+  
+.side-panel 
+  display: inline-block
+  float: left
+  width: 200px
+
+.main-panel
+  padding: 20px
+  display: inline-block
+  position: absolute
+  float: left
+  width: 930px
 
 .primary-alert
   margin: auto
@@ -125,6 +136,7 @@ span.alert-text
     position: relative
     width: 30px
     display: inline-block
+    
 // Helpers
 .divider
   display: block
@@ -383,12 +395,14 @@ span.alert-text
   padding: 15px 20px
   border-top: 1px solid #EFEFEF
   margin-top: 20px
+  clear: both
 
 .copyright
   float: left
   font-size: 12px
 
 #footer .footer-nav ul
+  text-align: center
   margin-bottom: 0
 
 #footer .footer-nav ul li
@@ -516,7 +530,7 @@ span.alert-text
   vertical-align: top
 
 .signup-form, .signup-sidebar
-  display: inline-block
+  display: block
 
 
 .signup-form .form-field
