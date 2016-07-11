@@ -4,6 +4,7 @@ class PlasticCardsController < ApplicationController
 
   def index
     @plastic_cards = PlasticCard.all
+    content_for :title, "Plastic Business Cards"
   end
 
   def show

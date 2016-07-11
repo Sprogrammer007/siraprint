@@ -4,6 +4,8 @@ class LargeFormatsController < ApplicationController
 
   def index
   	@large_formats = LargeFormat.all
+    content_for :title, "Large Format Printing"
+
   end
 
   def show

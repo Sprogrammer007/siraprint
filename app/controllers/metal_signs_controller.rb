@@ -4,7 +4,7 @@ class MetalSignsController < ApplicationController
 
   def index
     @metal_signs = MetalSign.all
-
+    content_for :title, "Directional Sign Printing"
   end
 
   def show

@@ -4,6 +4,7 @@ class LcdsController < ApplicationController
 
   def index
     @lcds = Lcd.all
+    content_for :title, "LCDS and LED"
   end
 
   def show

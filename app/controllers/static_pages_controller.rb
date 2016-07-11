@@ -5,7 +5,8 @@ class StaticPagesController < ApplicationController
   end
 
   def about
-
+   content_for :title, "About Us"
+  
   end
 
 
@@ -27,6 +28,7 @@ class StaticPagesController < ApplicationController
   end
 
   def contact
+        content_for :title, "Contact Us"
   end
 
   def contact_submit
@@ -36,9 +38,11 @@ class StaticPagesController < ApplicationController
   end
   
   def privacy
+        content_for :title, "Privacy Policy"
   end
 
   def terms
+    content_for :title, "Terms of Use"
   end
   
   def ud
