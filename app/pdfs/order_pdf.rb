@@ -19,6 +19,7 @@ class OrderPdf < Prawn::Document
           416.648.9265"
     move_down 20
     text "Order #: #{@order.order_id}", size: 15, style: :bold, align: :right
+    text "Order Date: #{@order.ordered_date}", size: 12, style: :normal, align: :right
   end
 
   def questions
