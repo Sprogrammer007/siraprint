@@ -366,7 +366,7 @@ DEPENDENCIES
   carrierwave-aws
   coffee-rails
   coffee-script-source (= 1.8.0)
-  devise
+  devise (= 3.5.3)
   factory_girl_rails (= 4.3.0)
   faker (= 1.2.0)
   guard-rspec (= 4.2.0)

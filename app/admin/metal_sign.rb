@@ -47,7 +47,7 @@ ActiveAdmin.register MetalSign do
         attributes_table do
           row :name
           row "Display Image" do |l|
-            image_tag(l.display_image_file_name.url(), class: "display-image")
+#            image_tag(l.display_image_file_name.url(), class: "display-image")
           end
           row :broker_discount do |l|
             "#{l.broker_discount}%"
@@ -70,16 +70,16 @@ ActiveAdmin.register MetalSign do
         end
       end
       div class: "metal-sign-right" do 
-        panel "Slider Images", class: "group" do
-          div class: "slides" do
-            if SliderImage.where(product_type: metal_sign.name_for_db).any?
-              SliderImage.where(product_type: metal_sign.name_for_db).each do |image|
-                render "slider_images/slider_image", slider_image: image
-              end
-            end
-          end
-          render "admin/upload_slider", type: metal_sign.name_for_db
-        end
+#        panel "Slider Images", class: "group" do
+#          div class: "slides" do
+#            if SliderImage.where(product_type: metal_sign.name_for_db).any?
+#              SliderImage.where(product_type: metal_sign.name_for_db).each do |image|
+#                render "slider_images/slider_image", slider_image: image
+#              end
+#            end
+#          end
+#          render "admin/upload_slider", type: metal_sign.name_for_db
+#        end
       end
     end
     panel "Sizes", class: "group" do

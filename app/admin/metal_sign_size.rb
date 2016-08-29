@@ -2,7 +2,7 @@ ActiveAdmin.register MetalSignSize do
 
   menu false
 
-  permit_params :width, :height, :unit
+  permit_params :width, :height, :unit, :price
 
 
   form do |f|
@@ -26,6 +26,7 @@ ActiveAdmin.register MetalSignSize do
     end
 
     def update 
+ 
       super do |format|
         redirect_to admin_metal_sign_path(params[:metal_sign_size][:metal_sign_id])
         return
