@@ -6,7 +6,7 @@ class StaticPagesController < ApplicationController
     @subs = []
     @page.page_contents.each do |c|
       @main_content = c if c.name == 'main'
-      Rails.logger.warn c.content
+     
       if (c.name == 'sub1' || c.name == 'sub2' || c.name =='sub3')
         @subs << c 
       end
@@ -16,6 +16,14 @@ class StaticPagesController < ApplicationController
   end
 
   def about
+    @page =  Page.about[0]
+    @main_content
+
+    @page.page_contents.each do |c|
+      @main_content = c if c.name == 'main' 
+      end
+    end
+    
    content_for :title, "About Us"
   
   end

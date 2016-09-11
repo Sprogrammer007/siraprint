@@ -15,7 +15,7 @@ ActiveAdmin.register Page do
     column :title
     column "" do |p|
       dropdown_menu "Actions" do 
-        item("Edit Page", admin_home_page_path())
+        item("Edit Page", admin_page_builder_path({id: p.id}))
         item("Delete Page", admin_page_path(p), method: :delete, data: {confirm: I18n.t('active_admin.delete_confirmation')})
       end
     end
