@@ -18,13 +18,13 @@ class StaticPagesController < ApplicationController
   def about
     @page =  Page.about[0]
     @main_content
-
+     content_for :title, "About Us"
     @page.page_contents.each do |c|
       @main_content = c if c.name == 'main' 
-      end
+      
     end
     
-   content_for :title, "About Us"
+  
   
   end
 
