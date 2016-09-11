@@ -1,17 +1,17 @@
 class StaticPagesController < ApplicationController
   
   def home
-#    @page =  Page.home[0]
-#    @main_content
-#    @subs = []
-#    @page.page_contents.each do |c|
-#      @main_content = c if c.name == 'main'
-#      Rails.logger.warn c.content
-#      if (c.name == 'sub1' || c.name == 'sub2' || c.name =='sub3')
-#        @subs << c 
-#      end
-#    end
-#    
+    @page =  Page.home[0]
+    @main_content
+    @subs = []
+    @page.page_contents.each do |c|
+      @main_content = c if c.name == 'main'
+      Rails.logger.warn c.content
+      if (c.name == 'sub1' || c.name == 'sub2' || c.name =='sub3')
+        @subs << c 
+      end
+    end
+    
    
   end
 
