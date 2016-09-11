@@ -32,7 +32,7 @@
   <div id="featured-box">
 
     <div class="large_format_featured">
-      <%- @subs.each_with_index do |c, i| %>
+          <%- @subs.each do |c| %>
      	<div class='col-lg-4 col-md-4 col-sm-4'>
 				<div class='feature-wrapper'>
 					 <%= image_tag(c.image_file_name.url()) %>
