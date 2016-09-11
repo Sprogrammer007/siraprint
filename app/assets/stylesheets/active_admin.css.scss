@@ -278,8 +278,10 @@
 .page-content .content-part .actions {
   margin-left: 15px; 
 }
-.page-content .content-image-preview,
-.page-content .content-image-preview img, {
+.page-content .content-image-preview {
+  width: 200px
+}
+.page-content .content-image-preview img {
   width: 100%;
 }
 //  Firefox fix
