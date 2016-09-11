@@ -1,10 +1,10 @@
 ActiveAdmin.register_page "Home Slider Images" do
   menu :parent => "Global"
-
+  images = SliderImage.home
   content do
     div class: "slides" do
-      if SliderImage.home.any?
-        SliderImage.home.each do |image|
+      if images.any?
+        images.each do |image|
           render "slider_images/slider_image", slider_image: image
         end
       end

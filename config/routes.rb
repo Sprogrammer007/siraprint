@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   devise_for( :users, :path => "users/")
 
   resources :users 
+  resources :pages 
+
   resources :brokers 
   resources :delivery_addresses
   resources :slider_images

@@ -266,6 +266,22 @@
   color: #fff;
 }
 
+.page-content .content-part {
+  display: inline-block;
+  width: 48%;
+  margin-right: 20px;
+}
+
+.page-content .content-part:last_child {
+  margin-right: 0;
+}
+.page-content .content-part .actions {
+  margin-left: 15px; 
+}
+.page-content .content-image-preview,
+.page-content .content-image-preview img, {
+  width: 100%;
+}
 //  Firefox fix
 @-moz-document url-prefix() {
     .link_button {

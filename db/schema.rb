@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160708032853) do
+ActiveRecord::Schema.define(version: 20160911042336) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -253,6 +253,20 @@ ActiveRecord::Schema.define(version: 20160708032853) do
     t.string   "express_payer_id"
     t.string   "express_token"
     t.integer  "user_id"
+  end
+
+  create_table "page_contents", force: :cascade do |t|
+    t.integer "page_id"
+    t.string  "name"
+    t.text    "content"
+    t.string  "image_file_name"
+    t.string  "link"
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "plastic_card_prices", force: :cascade do |t|

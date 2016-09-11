@@ -1,28 +1,7 @@
 <div class='col-lg-12' >
   <div class='home-top'>
-    <h2>What we do?</h2>
-    <p>We are a printing company capable of printing on any flat surface up to 1.9" thick
-      <br/>
-      Glass
-          <br/>
-Acrylic / plastic
-          <br/>
-Foamcore, Coroplast, styrene 
-          <br/>
-Leather
-          <br/>
-Hockey Pucks
-          <br/>
-Wood
-          <br/>
-Plastic Business Cards
-          <br/>
-Raised Ink Plastic Business Cards
-          <br/>
-Stickers and labels in all shapes and forms
-          <br/>
-Die-Cut/Contour Cut/Laser Cut any material</p>
-
+    <%= @main_content.content.html_safe %>
+   
   </div>
 <!--
   <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -51,36 +30,20 @@ Die-Cut/Contour Cut/Laser Cut any material</p>
 -->
 	<hr>
   <div id="featured-box">
-   
+
     <div class="large_format_featured">
+      <%- @subs.each_with_index do |c, i| %>
      	<div class='col-lg-4 col-md-4 col-sm-4'>
 				<div class='feature-wrapper'>
-					 <%= image_tag("1497128.jpg")  %>
-            <strong>Print, Signs & Banners</strong>
-          <p>We offer  a wide variety of substrate to print and customize the way you see fit.  Find which would suite you more! </p>
-          <%= link_to 'Shop Now', large_formats_path(), class: 'btn-shop'%>
+					 <%= image_tag(c.image_file_name.url()) %>
+          <%= c.content.html_safe %>
+       
+          <%= link_to 'Shop Now', c.link, class: 'btn-shop'%>
 				</div>
 				
 			</div>
-     	<div class='col-lg-4 col-md-4 col-sm-4'>
-        	<div class='feature-wrapper'>
-            <%= image_tag("9319534.jpeg")  %>
-            <strong>Trafic & Sign Holders</strong>
-          <p>Sign holder and frames vary depending on your objective & vision Explore & Learn </p>
-           <%= link_to 'Shop Now', metal_signs_path(), class: 'btn-shop'%>
-        </div>
-				 
-			</div>
-     	<div class='col-lg-4 col-md-4 col-sm-4'>
-        	<div class='feature-wrapper'>
-					 <%= image_tag("4471447.jpg")  %>
-            <strong>LED & LGP sign </strong>
-          <p>LED and LGP is a canadian manufactured product that will light up your art, your room, your ideas</p>
-           <%= link_to 'Shop Now', lcds_path(), class: 'btn-shop'%>
-           
-        </div>
-				
-			</div>
+      <% end %>
+
     </div>
   </div>
 </div>

@@ -1,0 +1,20 @@
+<div class="page-content">
+  <% page.page_contents.each do |content| %>
+
+    <div class="content-part">
+      <div class="content-image-preview">
+        <%= image_tag(content.image_file_name.url()) %>
+      </div>
+      <%= form_for [:admin, content], builder: ActiveAdmin::FormBuilder, :html => {:multipart => true} do |f| %>
+        <%=   f.inputs do %>
+          <%=  f.input :name %>
+          <%=  f.input :content, input_html: { class: "tinymce" }, :as => :text %>
+           <%=  f.input  :image_file_name, :as => :file %>
+           <%=  f.input :link %>
+          <%=   f.actions %>   
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+</div>
