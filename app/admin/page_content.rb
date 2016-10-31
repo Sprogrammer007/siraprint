@@ -16,14 +16,14 @@ ActiveAdmin.register PageContent do
     def create
 
       super do |format|
-        redirect_to admin_home_page_path()
+        redirect_to admin_pages_path()
         return
       end
     end
 
     def update 
       super do |format|
-        redirect_to admin_home_page_path()
+        redirect_to admin_pages_path()
         return
       end
     end

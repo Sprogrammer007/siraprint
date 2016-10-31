@@ -26,7 +26,7 @@
             - if p.express
               Express Service
             %br
-            - if p.details.finishing.include?('Grommets')
+            - if p.details.finishing && p.details.finishing.include?('Grommets')
               Grommnets: 
               = p.details.grommets_quantity
              
