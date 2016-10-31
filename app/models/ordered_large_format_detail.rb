@@ -2,6 +2,7 @@ class OrderedLargeFormatDetail < ActiveRecord::Base
   validates :length, :width, :thickness_id,:unit, :side, presence: true
   serialize :finishing
   def size
+
     if self.unit == "inch"
       size = ((self.width * self.length) / 144.0).round(2)
     else

@@ -3,7 +3,7 @@
     %tr
       %th 
       %th Product Detail
-      %th Print Size(Sqft)
+      %th Print Size
       %th Quantity
       %th Design
       %th Sub-Total
@@ -60,7 +60,7 @@
 %table.cart-totals{:border => "0", :cellpadding => "0", :cellspacing => "0", :width => "100%"}
   %tbody
     %tr
-      %td{:width => "550"} 
+      %td{:width => "450"}
 
       %td.totals-section
         - if step == "pay" || order.delivery_method()

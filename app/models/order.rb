@@ -80,7 +80,7 @@ class Order < ActiveRecord::Base
     end
     
     unit_price = if (params[:product_type] == 'large_format' || params[:product_type] == 'lcd')
-      calc_unit_price(params[:details], rate, params[:quantity].to_i, params[:product_id], params[:product_type])
+      calc_unit_price(params[:details], rate, params[:quantity].to_i, params[:product_type])
     elsif params[:product_type] == 'plastic_card'
       plastic_card_unit_price(rate, params[:product_id], params[:quantity].to_i)
     else
@@ -89,6 +89,7 @@ class Order < ActiveRecord::Base
 
     unit_price = round(unit_price.to_f)
     total_price = (unit_price.to_f * params[:quantity].to_i)
+    total_price = applyBrokerDiscount(total_price, params[:product_type], params[:product_id] )
     if (params[:express]) 
       total_price = (total_price * 1.75)
     end
@@ -226,7 +227,7 @@ class Order < ActiveRecord::Base
     end
 
     def calc_sqft(w, l, unit)
-      (unit == "inch") ? ((w * l) / 144) : (w * l)
+      (unit == "inch") ? ((w * l) / 144.00) : (w * l)
     end
 
     def get_rate(id, s, side, quantity,type)
@@ -249,24 +250,17 @@ class Order < ActiveRecord::Base
       return rate.first.price
     end
 
-    def calc_unit_price(details, rate, quantity, id, type)
+    def calc_unit_price(details, rate, quantity, type)
       width = details[:width].to_f
       length = details[:length].to_f
-      if type == 'large_format'
-        brokerDiscount = (LargeFormat.find(id).broker_discount).to_f
-      else
-        brokerDiscount = (Lcd.find(id).broker_discount).to_f
-      end
+
       unit = details [:unit]
       side = details[:side].to_i
       sqft = calc_sqft(width, length, unit).to_f
       rate = (rate || get_rate(details[:thickness_id], sqft, side, quantity, type)) 
 
       unit_price = (sqft * rate.to_f)
-      if self.user!.is_a?(Broker) && brokerDiscount != 0
-        unit_price = (unit_price - ((unit_price * brokerDiscount) / 100.0));
-      end
-    
+
       if details[:finishing]
         f_price = 0
         s_price = 0
@@ -301,6 +295,17 @@ class Order < ActiveRecord::Base
       return unit_price.to_f
     end
 
+    def applyBrokerDiscount(price, type, id)
+      if type == 'large_format'
+        brokerDiscount = (LargeFormat.find(id).broker_discount).to_f
+      else
+        brokerDiscount = (Lcd.find(id).broker_discount).to_f
+      end
+      if self.user!.is_a?(Broker) && brokerDiscount != 0
+        price = (price - ((price * brokerDiscount) / 100.0));
+      end
+      return price
+    end
     def metal_sign_unit_price(price, size, id)
       brokerDiscount = (MetalSign.find(id).broker_discount).to_f
       if self.user!.is_a?(Broker) && brokerDiscount != 0
