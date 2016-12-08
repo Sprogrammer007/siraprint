@@ -13,7 +13,9 @@ ActiveAdmin.register_page "Dashboard" do
             column :company_hst
             column :last_sign_in_at
             column "Joined At" do |u|
-              u.created_at.strftime("%m-%d-%Y")
+              if  u.created_at
+                u.created_at.strftime("%m-%d-%Y")
+              end
             end
             column "Status" do |u|
               if u.status == "Approved"
@@ -32,7 +34,9 @@ ActiveAdmin.register_page "Dashboard" do
             column :email
             column :last_sign_in_at
             column "Joined At" do |u|
-              u.created_at.strftime("%m-%d-%Y")
+              if u.created_at
+                u.created_at.strftime("%m-%d-%Y")
+              end
             end
             column "Status" do |u|
               if u.status == "Approved"

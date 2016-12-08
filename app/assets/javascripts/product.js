@@ -613,26 +613,28 @@ ready = function() {
 
     if ($('#fileupload').length > 0) { e.preventDefault(); return }
     e.preventDefault();
-    var e = false;
+    var err = false;
     if ($(this).hasClass('large-formats-form')) {
       if ($widthOption.val() === '') {
         error($widthOption, "Enter width");
-        e = true;
+        err = true;
       } else if ($lengthOption.val() === '') {
         error($widthOption, "Enter length");
-        e = true;
+        err = true;
       } else if ($thicknessOption.val() === '') {
         error($thicknessOption, 'Select Thickness')
-        e = true;
+        err = true;
       } else if ($('input[value="Grommets"]').is(':checked') && $('.grommets-field').val() === '')  {
         error($('.grommets-field'), 'Enter # Grommets');
-        e = true;
+        err = true;
       };
     };
-  
-    if (e) { return };
+
+    if (err) { return };
+
     var data = $(this).serialize();
     var url = $(this).attr('action');
+    console.log(url)
     $.post(url, data, null, 'script' );
   });
 

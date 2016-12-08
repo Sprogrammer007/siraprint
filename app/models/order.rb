@@ -296,16 +296,14 @@ class Order < ActiveRecord::Base
     end
 
     def applyBrokerDiscount(price, type, id)
-      if type == 'large_format'
-        brokerDiscount = (LargeFormat.find(id).broker_discount).to_f
-      else
-        brokerDiscount = (Lcd.find(id).broker_discount).to_f
-      end
+      brokerDiscount = (type.camelize.constantize.find(id).broker_discount).to_f || 0
+
       if self.user!.is_a?(Broker) && brokerDiscount != 0
         price = (price - ((price * brokerDiscount) / 100.0));
       end
       return price
     end
+
     def metal_sign_unit_price(price, size, id)
       brokerDiscount = (MetalSign.find(id).broker_discount).to_f
       if self.user!.is_a?(Broker) && brokerDiscount != 0
